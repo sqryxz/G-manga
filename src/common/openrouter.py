@@ -3,6 +3,7 @@ OpenRouter LLM Client - Unified API for 100+ AI models
 """
 
 import json
+import logging
 import time
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -11,6 +12,7 @@ from datetime import datetime
 import requests
 
 from config import get_settings
+from common.logging import get_logger
 
 
 @dataclass
@@ -36,6 +38,7 @@ class OpenRouterClient:
         Args:
             api_key: OpenRouter API key (optional, loads from config/env)
         """
+        self.logger = get_logger(__name__)
         settings = get_settings()
         llm = settings.llm
 
@@ -48,6 +51,7 @@ class OpenRouterClient:
         self.fallback_models = llm.fallback_models
 
         if not self.api_key:
+            self.logger.warning("No API key configured. Set OPENROUTER_API_KEY or configure in config.yaml")
             raise ValueError(
                 "OpenRouter API key not configured. "
                 "Set OPENROUTER_API_KEY env var or configure in config.yaml"
@@ -233,7 +237,7 @@ class OpenRouterClient:
                 for m in data.get("data", [])
             ]
         except Exception as e:
-            print(f"Failed to fetch models: {e}")
+            self.logger.error(f"Failed to fetch models: {e}")
             return []
 
     def estimate_cost(self, model: str, prompt_tokens: int, completion_tokens: int) -> float:
@@ -354,18 +358,18 @@ def generate_with_openrouter(
 
 if __name__ == "__main__":
     # Test the client
-    print("OpenRouter Client Test")
-    print("=" * 50)
+    logger = logging.getLogger("g_manga")
+    logger.info("OpenRouter Client Test")
 
     try:
         client = create_openrouter_client()
 
         # List available models
-        print("\nFetching available models...")
+        logger.info("Fetching available models...")
         models = client.get_available_models()
-        print(f"Found {len(models)} models")
+        logger.info(f"Found {len(models)} models")
 
-        # Show top 5 models by provider
+        # Show models by provider
         providers = {}
         for m in models:
             p = m["provider"]
@@ -374,26 +378,25 @@ if __name__ == "__main__":
             providers[p].append(m)
 
         for provider, model_list in providers.items():
-            print(f"\n{provider}: {len(model_list)} models")
+            logger.info(f"{provider}: {len(model_list)} models")
 
         # Test generation
-        print("\n" + "=" * 50)
-        print("Testing generation...")
+        logger.info("Testing generation...")
         result = client.generate(
             prompt="Say hello in exactly 3 words.",
             model="openai/gpt-4o-mini"
         )
 
         if result.success:
-            print(f"✓ Response: {result.text}")
-            print(f"  Model: {result.model}")
-            print(f"  Tokens: {result.tokens_used}")
-            print(f"  Cost: ${result.cost_usd:.6f}")
-            print(f"  Latency: {result.latency_ms}ms")
+            logger.info(f"Response: {result.text}")
+            logger.info(f"Model: {result.model}")
+            logger.info(f"Tokens: {result.tokens_used}")
+            logger.info(f"Cost: ${result.cost_usd:.6f}")
+            logger.info(f"Latency: {result.latency_ms}ms")
         else:
-            print(f"✗ Failed: {result.error}")
+            logger.error(f"Generation failed: {result.error}")
 
     except ValueError as e:
-        print(f"Configuration error: {e}")
-        print("\nTo configure, set your API key:")
-        print("  export OPENROUTER_API_KEY='sk-or-v1-...'")
+        logger.error(f"Configuration error: {e}")
+        logger.info("To configure, set your API key:")
+        logger.info("  export OPENROUTER_API_KEY='sk-or-v1-...'")

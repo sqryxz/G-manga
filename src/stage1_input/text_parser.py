@@ -4,9 +4,12 @@ Parses Project Gutenberg content and extracts main text.
 """
 
 import html
+import logging
 import re
 from pathlib import Path
 from typing import Tuple
+
+from common.logging import get_logger
 
 
 class TextParser:
@@ -26,6 +29,7 @@ class TextParser:
 
     def __init__(self):
         """Initialize the Text Parser."""
+        self.logger = get_logger(__name__)
         # Compile regex patterns for efficiency
         self.start_patterns = [re.compile(marker, re.IGNORECASE) for marker in self.START_MARKERS]
         self.end_patterns = [re.compile(marker, re.IGNORECASE) for marker in self.END_MARKERS]
@@ -108,13 +112,17 @@ class TextParser:
         Returns:
             Tuple of (cleaned_text, content_type)
         """
+        self.logger.info(f"Parsing content ({len(raw_content):,} characters)")
+
         # Detect content type
         content_type = self.detect_content_type(raw_content)
+        self.logger.debug(f"Detected content type: {content_type}")
 
         # Strip HTML if necessary
         content = raw_content
         if content_type == "html":
             content = self._strip_html(content)
+            self.logger.debug("Stripped HTML tags")
 
         # Find main content boundaries
         start_idx = self._find_start_index(content)
@@ -127,6 +135,12 @@ class TextParser:
 
         # Preserve multiple newlines (they often indicate section breaks)
         cleaned_text = re.sub(r'\n{3,}', '\n\n', cleaned_text)
+
+        chars_removed = len(raw_content) - len(cleaned_text)
+        self.logger.info(
+            f"Parsed text: {len(cleaned_text):,} characters "
+            f"({chars_removed:,} removed)"
+        )
 
         return cleaned_text, content_type
 
