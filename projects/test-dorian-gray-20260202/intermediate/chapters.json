@@ -1,0 +1,326 @@
+{
+  "chapters": [
+    {
+      "id": "chapter-1",
+      "number": 1,
+      "title": "I.",
+      "length": 0,
+      "start": 9,
+      "end": 10
+    },
+    {
+      "id": "chapter-2",
+      "number": 2,
+      "title": "II.",
+      "length": 0,
+      "start": 10,
+      "end": 11
+    },
+    {
+      "id": "chapter-3",
+      "number": 3,
+      "title": "III.",
+      "length": 0,
+      "start": 11,
+      "end": 12
+    },
+    {
+      "id": "chapter-4",
+      "number": 4,
+      "title": "IV.",
+      "length": 0,
+      "start": 12,
+      "end": 13
+    },
+    {
+      "id": "chapter-5",
+      "number": 5,
+      "title": "V.",
+      "length": 0,
+      "start": 13,
+      "end": 14
+    },
+    {
+      "id": "chapter-6",
+      "number": 6,
+      "title": "VI.",
+      "length": 0,
+      "start": 14,
+      "end": 15
+    },
+    {
+      "id": "chapter-7",
+      "number": 7,
+      "title": "VII.",
+      "length": 0,
+      "start": 15,
+      "end": 16
+    },
+    {
+      "id": "chapter-8",
+      "number": 8,
+      "title": "VIII.",
+      "length": 0,
+      "start": 16,
+      "end": 17
+    },
+    {
+      "id": "chapter-9",
+      "number": 9,
+      "title": "IX.",
+      "length": 0,
+      "start": 17,
+      "end": 18
+    },
+    {
+      "id": "chapter-10",
+      "number": 10,
+      "title": "X.",
+      "length": 0,
+      "start": 18,
+      "end": 19
+    },
+    {
+      "id": "chapter-11",
+      "number": 11,
+      "title": "XI.",
+      "length": 0,
+      "start": 19,
+      "end": 20
+    },
+    {
+      "id": "chapter-12",
+      "number": 12,
+      "title": "XII.",
+      "length": 0,
+      "start": 20,
+      "end": 21
+    },
+    {
+      "id": "chapter-13",
+      "number": 13,
+      "title": "XIII.",
+      "length": 0,
+      "start": 21,
+      "end": 22
+    },
+    {
+      "id": "chapter-14",
+      "number": 14,
+      "title": "XIV.",
+      "length": 0,
+      "start": 22,
+      "end": 23
+    },
+    {
+      "id": "chapter-15",
+      "number": 15,
+      "title": "XV.",
+      "length": 0,
+      "start": 23,
+      "end": 24
+    },
+    {
+      "id": "chapter-16",
+      "number": 16,
+      "title": "XVI.",
+      "length": 0,
+      "start": 24,
+      "end": 25
+    },
+    {
+      "id": "chapter-17",
+      "number": 17,
+      "title": "XVII.",
+      "length": 0,
+      "start": 25,
+      "end": 26
+    },
+    {
+      "id": "chapter-18",
+      "number": 18,
+      "title": "XVIII.",
+      "length": 0,
+      "start": 26,
+      "end": 27
+    },
+    {
+      "id": "chapter-19",
+      "number": 19,
+      "title": "XIX.",
+      "length": 0,
+      "start": 27,
+      "end": 28
+    },
+    {
+      "id": "chapter-20",
+      "number": 20,
+      "title": "XX.",
+      "length": 0,
+      "start": 28,
+      "end": 55
+    },
+    {
+      "id": "chapter-21",
+      "number": 21,
+      "title": "I.",
+      "length": 0,
+      "start": 55,
+      "end": 254
+    },
+    {
+      "id": "chapter-22",
+      "number": 22,
+      "title": "II.",
+      "length": 0,
+      "start": 254,
+      "end": 576
+    },
+    {
+      "id": "chapter-23",
+      "number": 23,
+      "title": "III.",
+      "length": 0,
+      "start": 576,
+      "end": 808
+    },
+    {
+      "id": "chapter-24",
+      "number": 24,
+      "title": "IV.",
+      "length": 0,
+      "start": 808,
+      "end": 1058
+    },
+    {
+      "id": "chapter-25",
+      "number": 25,
+      "title": "V.",
+      "length": 0,
+      "start": 1058,
+      "end": 1307
+    },
+    {
+      "id": "chapter-26",
+      "number": 26,
+      "title": "VI.",
+      "length": 0,
+      "start": 1307,
+      "end": 1440
+    },
+    {
+      "id": "chapter-27",
+      "number": 27,
+      "title": "VII.",
+      "length": 0,
+      "start": 1440,
+      "end": 1607
+    },
+    {
+      "id": "chapter-28",
+      "number": 28,
+      "title": "VIII.",
+      "length": 0,
+      "start": 1607,
+      "end": 1809
+    },
+    {
+      "id": "chapter-29",
+      "number": 29,
+      "title": "IX.",
+      "length": 0,
+      "start": 1809,
+      "end": 1963
+    },
+    {
+      "id": "chapter-30",
+      "number": 30,
+      "title": "X.",
+      "length": 0,
+      "start": 1963,
+      "end": 2097
+    },
+    {
+      "id": "chapter-31",
+      "number": 31,
+      "title": "XI.",
+      "length": 0,
+      "start": 2097,
+      "end": 2220
+    },
+    {
+      "id": "chapter-32",
+      "number": 32,
+      "title": "XII.",
+      "length": 0,
+      "start": 2220,
+      "end": 2319
+    },
+    {
+      "id": "chapter-33",
+      "number": 33,
+      "title": "XIII.",
+      "length": 0,
+      "start": 2319,
+      "end": 2467
+    },
+    {
+      "id": "chapter-34",
+      "number": 34,
+      "title": "XIV.",
+      "length": 0,
+      "start": 2467,
+      "end": 2717
+    },
+    {
+      "id": "chapter-35",
+      "number": 35,
+      "title": "XV.",
+      "length": 0,
+      "start": 2717,
+      "end": 2906
+    },
+    {
+      "id": "chapter-36",
+      "number": 36,
+      "title": "XVI.",
+      "length": 0,
+      "start": 2906,
+      "end": 3098
+    },
+    {
+      "id": "chapter-37",
+      "number": 37,
+      "title": "XVII.",
+      "length": 0,
+      "start": 3098,
+      "end": 3343
+    },
+    {
+      "id": "chapter-38",
+      "number": 38,
+      "title": "XVIII.",
+      "length": 0,
+      "start": 3343,
+      "end": 3570
+    },
+    {
+      "id": "chapter-39",
+      "number": 39,
+      "title": "XIX.",
+      "length": 0,
+      "start": 3570,
+      "end": 3700
+    },
+    {
+      "id": "chapter-40",
+      "number": 40,
+      "title": "XX.",
+      "length": 0,
+      "start": 3700,
+      "end": 3767
+    }
+  ],
+  "total_chapters": 40,
+  "saved_at": "2026-02-02T17:01:43.667513+00:00"
+}

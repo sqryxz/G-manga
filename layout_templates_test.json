@@ -1,0 +1,515 @@
+{
+  "templates": {
+    "4-panel-grid": {
+      "name": "4-panel-grid",
+      "description": "Classic 2x2 grid layout",
+      "panel_count": 4,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.505,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.015,
+          "y": 0.505,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 3
+        },
+        {
+          "slot_id": "4",
+          "x": 0.505,
+          "y": 0.505,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 4
+        }
+      ]
+    },
+    "4-panel-staggered": {
+      "name": "4-panel-staggered",
+      "description": "4 panels: 3 top, 1 full-width bottom",
+      "panel_count": 4,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.32,
+          "height": 0.48,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.345,
+          "y": 0.015,
+          "width": 0.32,
+          "height": 0.48,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.675,
+          "y": 0.015,
+          "width": 0.31,
+          "height": 0.48,
+          "order": 3
+        },
+        {
+          "slot_id": "4",
+          "x": 0.015,
+          "y": 0.505,
+          "width": 0.97,
+          "height": 0.48,
+          "order": 4
+        }
+      ]
+    },
+    "4-panel-tiered": {
+      "name": "4-panel-tiered",
+      "description": "4 panels: 1 full-width top, 2 middle, 1 full-width bottom",
+      "panel_count": 4,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.97,
+          "height": 0.32,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.015,
+          "y": 0.345,
+          "width": 0.48,
+          "height": 0.32,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.505,
+          "y": 0.345,
+          "width": 0.48,
+          "height": 0.32,
+          "order": 3
+        },
+        {
+          "slot_id": "4",
+          "x": 0.015,
+          "y": 0.675,
+          "width": 0.97,
+          "height": 0.31,
+          "order": 4
+        }
+      ]
+    },
+    "5-panel-standard": {
+      "name": "5-panel-standard",
+      "description": "5 panels: balanced distribution",
+      "panel_count": 5,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.505,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.32,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.505,
+          "y": 0.345,
+          "width": 0.48,
+          "height": 0.31,
+          "order": 3
+        },
+        {
+          "slot_id": "4",
+          "x": 0.015,
+          "y": 0.505,
+          "width": 0.32,
+          "height": 0.48,
+          "order": 4
+        },
+        {
+          "slot_id": "5",
+          "x": 0.345,
+          "y": 0.505,
+          "width": 0.64,
+          "height": 0.48,
+          "order": 5
+        }
+      ]
+    },
+    "5-panel-asymmetric": {
+      "name": "5-panel-asymmetric",
+      "description": "5 panels: full-width top, 4 middle, full-width bottom",
+      "panel_count": 5,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.97,
+          "height": 0.32,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.015,
+          "y": 0.345,
+          "width": 0.32,
+          "height": 0.32,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.345,
+          "y": 0.345,
+          "width": 0.32,
+          "height": 0.32,
+          "order": 3
+        },
+        {
+          "slot_id": "4",
+          "x": 0.675,
+          "y": 0.345,
+          "width": 0.31,
+          "height": 0.32,
+          "order": 4
+        },
+        {
+          "slot_id": "5",
+          "x": 0.015,
+          "y": 0.675,
+          "width": 0.97,
+          "height": 0.31,
+          "order": 5
+        }
+      ]
+    },
+    "6-panel-grid": {
+      "name": "6-panel-grid",
+      "description": "6-panel 2x3 grid layout",
+      "panel_count": 6,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.32,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.505,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.32,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.015,
+          "y": 0.345,
+          "width": 0.48,
+          "height": 0.32,
+          "order": 3
+        },
+        {
+          "slot_id": "4",
+          "x": 0.505,
+          "y": 0.345,
+          "width": 0.48,
+          "height": 0.32,
+          "order": 4
+        },
+        {
+          "slot_id": "5",
+          "x": 0.015,
+          "y": 0.675,
+          "width": 0.48,
+          "height": 0.31,
+          "order": 5
+        },
+        {
+          "slot_id": "6",
+          "x": 0.505,
+          "y": 0.675,
+          "width": 0.48,
+          "height": 0.31,
+          "order": 6
+        }
+      ]
+    },
+    "6-panel-comic": {
+      "name": "6-panel-comic",
+      "description": "6 panels: 2 large top, 3 middle, 1 large bottom",
+      "panel_count": 6,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.505,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.015,
+          "y": 0.505,
+          "width": 0.32,
+          "height": 0.48,
+          "order": 3
+        },
+        {
+          "slot_id": "4",
+          "x": 0.345,
+          "y": 0.505,
+          "width": 0.32,
+          "height": 0.48,
+          "order": 4
+        },
+        {
+          "slot_id": "5",
+          "x": 0.675,
+          "y": 0.505,
+          "width": 0.31,
+          "height": 0.48,
+          "order": 5
+        },
+        {
+          "slot_id": "6",
+          "x": 0.015,
+          "y": 0.505,
+          "width": 0.99,
+          "height": 0.48,
+          "order": 6
+        }
+      ]
+    },
+    "8-panel-grid": {
+      "name": "8-panel-grid",
+      "description": "8-panel 4x2 grid layout",
+      "panel_count": 8,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.24,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.505,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.24,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.015,
+          "y": 0.265,
+          "width": 0.48,
+          "height": 0.24,
+          "order": 3
+        },
+        {
+          "slot_id": "4",
+          "x": 0.505,
+          "y": 0.265,
+          "width": 0.48,
+          "height": 0.24,
+          "order": 4
+        },
+        {
+          "slot_id": "5",
+          "x": 0.015,
+          "y": 0.515,
+          "width": 0.48,
+          "height": 0.24,
+          "order": 5
+        },
+        {
+          "slot_id": "6",
+          "x": 0.505,
+          "y": 0.515,
+          "width": 0.48,
+          "height": 0.24,
+          "order": 6
+        },
+        {
+          "slot_id": "7",
+          "x": 0.015,
+          "y": 0.765,
+          "width": 0.48,
+          "height": 0.22,
+          "order": 7
+        },
+        {
+          "slot_id": "8",
+          "x": 0.505,
+          "y": 0.765,
+          "width": 0.48,
+          "height": 0.22,
+          "order": 8
+        }
+      ]
+    },
+    "splash-full": {
+      "name": "splash-full",
+      "description": "Full-page splash panel",
+      "panel_count": 1,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.97,
+          "height": 0.97,
+          "order": 1
+        }
+      ]
+    },
+    "splash-tiered": {
+      "name": "splash-tiered",
+      "description": "Full-width splash top, 2 panels bottom",
+      "panel_count": 3,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.97,
+          "height": 0.48,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.015,
+          "y": 0.505,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.505,
+          "y": 0.505,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 3
+        }
+      ]
+    },
+    "diagonal-flow": {
+      "name": "diagonal-flow",
+      "description": "4 panels with diagonal reading flow",
+      "panel_count": 4,
+      "reading_direction": "left-to-right",
+      "gutter_size": 0.01,
+      "border_thickness": 2,
+      "slots": [
+        {
+          "slot_id": "1",
+          "x": 0.015,
+          "y": 0.015,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 1
+        },
+        {
+          "slot_id": "2",
+          "x": 0.505,
+          "y": 0.345,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 2
+        },
+        {
+          "slot_id": "3",
+          "x": 0.015,
+          "y": 0.505,
+          "width": 0.48,
+          "height": 0.48,
+          "order": 3
+        },
+        {
+          "slot_id": "4",
+          "x": 0.505,
+          "y": 0.675,
+          "width": 0.48,
+          "height": 0.31,
+          "order": 4
+        }
+      ]
+    }
+  },
+  "total_templates": 11
+}

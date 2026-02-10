@@ -1,0 +1,14 @@
+{
+  "chapters": [
+    {
+      "id": "chapter-1",
+      "number": 1,
+      "title": "Test Chapter",
+      "start": 0,
+      "end": 100,
+      "length": 0
+    }
+  ],
+  "total_chapters": 1,
+  "saved_at": "2026-02-02T11:55:00.904465"
+}

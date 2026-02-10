@@ -1,0 +1,30 @@
+{
+  "chapters": [
+    {
+      "id": "chapter-1",
+      "number": 1,
+      "title": "I.",
+      "length": 0,
+      "start": 9,
+      "end": 10
+    },
+    {
+      "id": "chapter-2",
+      "number": 2,
+      "title": "II.",
+      "length": 0,
+      "start": 10,
+      "end": 11
+    },
+    {
+      "id": "chapter-3",
+      "number": 3,
+      "title": "III.",
+      "length": 0,
+      "start": 11,
+      "end": 12
+    }
+  ],
+  "total_chapters": 3,
+  "saved_at": "2026-02-02T17:14:07.201775+00:00"
+}

@@ -1,0 +1,21 @@
+{
+  "scenes": [
+    {
+      "id": "chapter-1-scene-1",
+      "chapter_id": "chapter-1",
+      "number": 1,
+      "summary": "Two characters discuss art and beauty in a studio",
+      "location": "Basil's studio",
+      "characters": [
+        "Basil",
+        "Lord Henry"
+      ],
+      "text": "CHAPTER I.",
+      "length": 10,
+      "start": 0,
+      "end": 1
+    }
+  ],
+  "total_scenes": 1,
+  "saved_at": "2026-02-02T17:01:43.668721+00:00"
+}

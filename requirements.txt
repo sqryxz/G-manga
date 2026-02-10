@@ -1,0 +1,35 @@
+# G-Manga Dependencies
+
+# HTTP requests
+requests>=2.31.0
+
+# Data validation
+pydantic>=2.0.0
+
+# CLI
+typer>=0.9.0
+
+# Terminal output
+rich>=13.0.0
+
+# Image processing
+Pillow>=10.0.0
+
+# JSON handling (optional, for advanced features)
+orjson>=3.9.0
+
+# Progress bars (if using rich is not enough)
+tqdm>=4.65.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Type checking
+mypy>=1.0.0
+
+# Code formatting
+black>=23.0.0
+
+# Linting
+ruff>=0.1.0

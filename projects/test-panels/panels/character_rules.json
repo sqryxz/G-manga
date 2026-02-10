@@ -1,0 +1,22 @@
+{
+  "characters": {
+    "Basil": {
+      "key_features": [
+        "dark wavy hair",
+        "brown eyes"
+      ],
+      "clothing": "Victorian artist smock",
+      "accessories": "paintbrush",
+      "expressions": "contemplative"
+    },
+    "Lord Henry": {
+      "key_features": [
+        "blonde hair",
+        "gray eyes"
+      ],
+      "clothing": "Victorian gentleman's suit",
+      "accessories": "cane",
+      "expressions": "cynical"
+    }
+  }
+}
