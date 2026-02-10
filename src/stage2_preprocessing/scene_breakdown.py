@@ -5,7 +5,7 @@ Identifies scene breaks within chapters using LLM.
 
 import json
 import re
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from datetime import datetime, timezone
 
 import sys
@@ -13,17 +13,53 @@ sys.path.insert(0, '/home/clawd/projects/g-manga/src')
 from models.project import Scene, TextRange
 
 
+class MockLLMClient:
+    """Mock LLM client for testing without API calls."""
+    
+    def __init__(self, response_delay: float = 0.1):
+        self.response_delay = response_delay
+        self.call_count = 0
+        self.last_prompt = None
+        self.responses: Dict[str, str] = {}
+    
+    def set_response(self, prompt_pattern: str, response: str) -> None:
+        self.responses[prompt_pattern] = response
+    
+    def generate(self, prompt: str, **kwargs) -> str:
+        import time
+        time.sleep(self.response_delay)
+        self.call_count += 1
+        self.last_prompt = prompt
+        if prompt in self.responses:
+            return self.responses[prompt]
+        return self._generate_default_response(prompt)
+    
+    def _generate_default_response(self, prompt: str) -> str:
+        return '[{"id": "scene-1", "number": 1, "summary": "Scene summary", "location": "Unknown", "characters": [], "text_range": {"start": 0, "end": 50}}]'
+
+
 class SceneBreakdown:
     """Breaks chapters into scenes using LLM."""
 
-    def __init__(self, llm_client=None):
+    def __init__(self, llm_client=None, model: Optional[str] = None):
         """
         Initialize Scene Breakdown.
 
         Args:
             llm_client: Optional LLM client (for testing/mocking)
+            model: Optional model name (defaults to config setting)
         """
         self.llm_client = llm_client
+        self.model = model
+        
+        # Load model from config if not provided
+        if self.model is None:
+            try:
+                from config import get_settings
+                settings = get_settings()
+                self.model = settings.get_llm_model("scene_breakdown")
+            except ImportError:
+                self.model = "gpt-4o"
 
     def _build_prompt(self, chapter_text: str, chapter_number: int) -> str:
         """

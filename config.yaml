@@ -1,0 +1,59 @@
+# G-Manga Configuration
+# Transform Project Gutenberg literature into manga-styled comics
+
+# LLM Models for each stage
+llm:
+  # Scene breakdown and summarization
+  scene_breakdown_model: "gpt-4o"
+  
+  # Character extraction and descriptions
+  character_extraction_model: "gpt-4o"
+  
+  # Prose to visual adaptation
+  visual_adaptation_model: "gpt-4o"
+  
+  # Panel breakdown and pacing
+  panel_breakdown_model: "gpt-4o-mini"
+  
+  # Detailed storyboard generation
+  storyboard_generation_model: "gpt-4o"
+  
+  # API settings
+  api_base_url: "https://api.openai.com/v1"
+  api_timeout: 60
+  max_retries: 3
+
+# Image Generation Settings
+image:
+  default_provider: "dalle3"
+  
+  # DALL-E 3
+  dalle_model: "dall-e-3"
+  dalle_size: "1024x1024"
+  dalle_quality: "hd"
+  
+  # SDXL
+  sdxl_model: "stabilityai/stable-diffusion-xl-base-1.0"
+  
+  # Midjourney (requires additional setup)
+  midjourney_enabled: false
+
+# Manga Styling
+manga:
+  reading_direction: "left_to_right"  # or "right_to_left"
+  line_weight: "medium"  # thin, medium, bold
+  shading_style: "screen_tones"  # hatching, screen_tones, solid
+  color_mode: "black_and_white"  # black_and_white, grayscale, color
+  panel_style: "traditional_borders"  # traditional_borders, modern, none
+  default_page_size: "A4"  # A4, Letter, etc.
+
+# Storage and Paths
+storage:
+  cache_dir: "./cache"
+  output_dir: "./output"
+  projects_dir: "./projects"
+  keep_intermediates: false
+
+# Global Settings
+debug_mode: false
+log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
