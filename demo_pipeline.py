@@ -4,19 +4,21 @@ Demonstrates all completed functionality.
 """
 
 import sys
-sys.path.insert(0, '/home/clawd/projects/g-manga/src')
-sys.path.insert(0, '/home/clawd/projects/g-manga/src/stage1_input')
-sys.path.insert(0, '/home/clawd/projects/g-manga/src/stage2_preprocessing')
+from pathlib import Path
 
-from url_fetcher import URLFetcher
-from text_parser import TextParser
-from metadata_extractor import MetadataExtractor
-from project import ProjectInitializer
+# Use proper package imports
+sys.path.insert(0, str(Path(__file__).parent / 'src'))
+
+from stage1_input.url_fetcher import URLFetcher
+from stage1_input.text_parser import TextParser
+from stage1_input.metadata_extractor import MetadataExtractor
+from stage1_input.project import ProjectInitializer
 from models.project import Metadata, Chapter, Scene, TextRange
-from text_cleaner import TextCleaner
-from chapter_segmenter import ChapterSegmenter
-from scene_breakdown import SceneBreakdown, MockLLMClient
-from state import StatePersistence
+from stage2_preprocessing.text_cleaner import TextCleaner
+from stage2_preprocessing.chapter_segmenter import ChapterSegmenter
+from stage2_preprocessing.scene_breakdown import SceneBreakdown
+from stage2_preprocessing.state import StatePersistence
+from common.mocking import MockLLMClient
 
 
 def demo_pipeline():
