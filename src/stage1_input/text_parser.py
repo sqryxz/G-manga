@@ -3,7 +3,9 @@ Text Parser - Stage 1.1.2
 Parses Project Gutenberg content and extracts main text.
 """
 
+import html
 import re
+from pathlib import Path
 from typing import Tuple
 
 
@@ -77,7 +79,7 @@ class TextParser:
 
     def _strip_html(self, content: str) -> str:
         """
-        Remove HTML tags (basic implementation).
+        Remove HTML tags and decode entities.
 
         Args:
             content: HTML content
@@ -91,13 +93,8 @@ class TextParser:
         # Remove HTML tags
         content = re.sub(r'<[^>]+>', ' ', content)
 
-        # Decode HTML entities
-        content = content.replace('&nbsp;', ' ')
-        content = content.replace('&lt;', '<')
-        content = content.replace('&gt;', '>')
-        content = content.replace('&amp;', '&')
-        content = content.replace('&quot;', '"')
-        content = content.replace('&apos;', "'")
+        # Decode HTML entities using standard library
+        content = html.unescape(content)
 
         return content
 
@@ -139,9 +136,10 @@ def main():
     test_url = "https://www.gutenberg.org/files/174/174-0.txt"
 
     # Import directly for testing
+    from pathlib import Path
     import sys
-    sys.path.insert(0, '/home/clawd/projects/g-manga/src/stage1_input')
-    from url_fetcher import URLFetcher
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+    from stage1_input.url_fetcher import URLFetcher
 
     fetcher = URLFetcher()
     raw_content = fetcher.fetch(test_url)

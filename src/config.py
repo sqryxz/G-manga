@@ -82,15 +82,45 @@ class LLMSettings(BaseSettings):
     )
     
     def get_api_key(self) -> str:
-        """Get API key from config or environment."""
+        """
+        Get API key from config or environment.
+
+        Returns:
+            API key string
+
+        Raises:
+            ValueError: If no API key is configured
+        """
+        import warnings
+
         if self.api_key:
             return self.api_key
-        
+
         # Check environment variables
         if self.provider == "openrouter":
-            return os.getenv("OPENROUTER_API_KEY", "")
+            key = os.getenv("OPENROUTER_API_KEY", "")
         else:
-            return os.getenv("OPENAI_API_KEY", "")
+            key = os.getenv("OPENAI_API_KEY", "")
+
+        if not key:
+            warnings.warn(
+                f"No API key configured for {self.provider}. "
+                "Set OPENROUTER_API_KEY or OPENAI_API_KEY environment variable, "
+                "or configure in config.yaml",
+                UserWarning
+            )
+            return ""
+
+        return key
+
+    def validate_api_key(self) -> bool:
+        """
+        Validate that an API key is configured.
+
+        Returns:
+            True if API key is available, False otherwise
+        """
+        return bool(self.get_api_key())
 
 
 class ImageGenerationSettings(BaseSettings):
