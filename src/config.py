@@ -2,8 +2,9 @@
 Settings Management - Centralized configuration for G-Manga
 """
 
+import os
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -12,31 +13,31 @@ class LLMSettings(BaseSettings):
     """LLM-related settings."""
     model_config = SettingsConfigDict(env_prefix="LLM_")
     
-    # Stage-specific model configurations
-    scene_breakdown_model: str = Field(
-        default="gpt-4o",
-        description="Model for scene breakdown and summarization"
+    # Provider selection
+    provider: str = Field(
+        default="openrouter",
+        description="LLM provider: openai or openrouter"
     )
-    character_extraction_model: str = Field(
-        default="gpt-4o",
-        description="Model for character extraction and descriptions"
+    
+    # OpenRouter/OpenAI API key
+    api_key: str = Field(
+        default="",
+        description="API key (set via OPENROUTER_API_KEY or OPENAI_API_KEY env var)"
     )
-    visual_adaptation_model: str = Field(
-        default="gpt-4o",
-        description="Model for prose-to-visual adaptation"
+    
+    # Optional attribution for OpenRouter
+    http_referer: str = Field(
+        default="",
+        description="Website URL for OpenRouter rankings"
     )
-    panel_breakdown_model: str = Field(
-        default="gpt-4o-mini",
-        description="Model for panel breakdown and pacing"
-    )
-    storyboard_generation_model: str = Field(
-        default="gpt-4o",
-        description="Model for detailed storyboard generation"
+    x_title: str = Field(
+        default="G-Manga",
+        description="Application name for OpenRouter"
     )
     
     # API settings
     api_base_url: str = Field(
-        default="https://api.openai.com/v1",
+        default="https://openrouter.ai/api/v1",
         description="Base URL for LLM API"
     )
     api_timeout: int = Field(
@@ -47,6 +48,49 @@ class LLMSettings(BaseSettings):
         default=3,
         description="Maximum retries for failed API calls"
     )
+    
+    # Stage-specific model configurations
+    scene_breakdown_model: str = Field(
+        default="openai/gpt-4o",
+        description="Model for scene breakdown and summarization"
+    )
+    character_extraction_model: str = Field(
+        default="openai/gpt-4o",
+        description="Model for character extraction and descriptions"
+    )
+    visual_adaptation_model: str = Field(
+        default="anthropic/claude-sonnet-4-20250514",
+        description="Model for prose-to-visual adaptation"
+    )
+    panel_breakdown_model: str = Field(
+        default="openai/gpt-4o-mini",
+        description="Model for panel breakdown and pacing"
+    )
+    storyboard_generation_model: str = Field(
+        default="openai/gpt-4o",
+        description="Model for detailed storyboard generation"
+    )
+    
+    # Fallback models (tried in order if primary fails)
+    fallback_models: List[str] = Field(
+        default_factory=lambda: [
+            "openai/gpt-4o",
+            "anthropic/claude-sonnet-4-20250514",
+            "google/gemini-2.5-pro"
+        ],
+        description="Fallback model chain for reliability"
+    )
+    
+    def get_api_key(self) -> str:
+        """Get API key from config or environment."""
+        if self.api_key:
+            return self.api_key
+        
+        # Check environment variables
+        if self.provider == "openrouter":
+            return os.getenv("OPENROUTER_API_KEY", "")
+        else:
+            return os.getenv("OPENAI_API_KEY", "")
 
 
 class ImageGenerationSettings(BaseSettings):

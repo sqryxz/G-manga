@@ -15,16 +15,16 @@ from models.project import Scene, TextRange
 
 class MockLLMClient:
     """Mock LLM client for testing without API calls."""
-    
+
     def __init__(self, response_delay: float = 0.1):
         self.response_delay = response_delay
         self.call_count = 0
         self.last_prompt = None
         self.responses: Dict[str, str] = {}
-    
+
     def set_response(self, prompt_pattern: str, response: str) -> None:
         self.responses[prompt_pattern] = response
-    
+
     def generate(self, prompt: str, **kwargs) -> str:
         import time
         time.sleep(self.response_delay)
@@ -33,7 +33,7 @@ class MockLLMClient:
         if prompt in self.responses:
             return self.responses[prompt]
         return self._generate_default_response(prompt)
-    
+
     def _generate_default_response(self, prompt: str) -> str:
         return '[{"id": "scene-1", "number": 1, "summary": "Scene summary", "location": "Unknown", "characters": [], "text_range": {"start": 0, "end": 50}}]'
 
@@ -41,17 +41,25 @@ class MockLLMClient:
 class SceneBreakdown:
     """Breaks chapters into scenes using LLM."""
 
-    def __init__(self, llm_client=None, model: Optional[str] = None):
+    def __init__(
+        self,
+        llm_client=None,
+        model: Optional[str] = None,
+        use_openrouter: bool = True
+    ):
         """
         Initialize Scene Breakdown.
 
         Args:
             llm_client: Optional LLM client (for testing/mocking)
             model: Optional model name (defaults to config setting)
+            use_openrouter: Use OpenRouter client if no client provided
         """
         self.llm_client = llm_client
         self.model = model
-        
+        self.use_openrouter = use_openrouter
+        self.openrouter_client = None
+
         # Load model from config if not provided
         if self.model is None:
             try:
@@ -59,7 +67,29 @@ class SceneBreakdown:
                 settings = get_settings()
                 self.model = settings.get_llm_model("scene_breakdown")
             except ImportError:
-                self.model = "gpt-4o"
+                self.model = "openai/gpt-4o"
+
+    def _get_openrouter_client(self):
+        """Get or create OpenRouter client."""
+        if self.openrouter_client is None:
+            from common.openrouter import OpenRouterClient
+            self.openrouter_client = OpenRouterClient()
+        return self.openrouter_client
+
+    def _call_llm(self, prompt: str) -> str:
+        """Call LLM with prompt."""
+        if self.llm_client:
+            return self.llm_client.generate(prompt, model=self.model)
+
+        if self.use_openrouter:
+            client = self._get_openrouter_client()
+            result = client.generate(prompt, model=self.model)
+            if result.success:
+                return result.text
+            else:
+                raise RuntimeError(f"OpenRouter error: {result.error}")
+
+        raise ValueError("No LLM client configured")
 
     def _build_prompt(self, chapter_text: str, chapter_number: int) -> str:
         """

@@ -1,27 +1,45 @@
 # G-Manga Configuration
 # Transform Project Gutenberg literature into manga-styled comics
 
-# LLM Models for each stage
+# LLM Provider Configuration
 llm:
-  # Scene breakdown and summarization
-  scene_breakdown_model: "gpt-4o"
-  
-  # Character extraction and descriptions
-  character_extraction_model: "gpt-4o"
-  
-  # Prose to visual adaptation
-  visual_adaptation_model: "gpt-4o"
-  
-  # Panel breakdown and pacing
-  panel_breakdown_model: "gpt-4o-mini"
-  
-  # Detailed storyboard generation
-  storyboard_generation_model: "gpt-4o"
-  
-  # API settings
-  api_base_url: "https://api.openai.com/v1"
+  # LLM Provider: "openai" or "openrouter"
+  provider: "openrouter"
+
+  # OpenRouter API settings
+  # Get your API key from https://openrouter.ai/keys
+  api_key: ""  # Set via env: OPENROUTER_API_KEY
+
+  # Optional attribution (for OpenRouter rankings)
+  http_referer: ""  # Your website URL (optional)
+  x_title: "G-Manga"  # Your app name (optional)
+
+  # Base URL (default: OpenRouter)
+  api_base_url: "https://openrouter.ai/api/v1"
+
+  # Request timeout (seconds)
   api_timeout: 60
+
+  # Max retries for failed requests
   max_retries: 3
+
+  # Models per stage (using OpenRouter model IDs)
+  # See available models: https://openrouter.ai/docs
+  scene_breakdown_model: "openai/gpt-4o"
+
+  character_extraction_model: "openai/gpt-4o"
+
+  visual_adaptation_model: "anthropic/claude-sonnet-4-20250514"
+
+  panel_breakdown_model: "openai/gpt-4o-mini"
+
+  storyboard_generation_model: "openai/gpt-4o"
+
+  # Fallback model chain (tries in order if primary fails)
+  fallback_models:
+    - "openai/gpt-4o"
+    - "anthropic/claude-sonnet-4-20250514"
+    - "google/gemini-2.5-pro"
 
 # Image Generation Settings
 image:
