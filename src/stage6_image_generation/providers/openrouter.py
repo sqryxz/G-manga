@@ -37,21 +37,25 @@ class OpenRouterImageProvider(ImageProvider):
     - and many others available on OpenRouter
     """
 
-    def __init__(self, config: ProviderConfig):
+    def __init__(self, config: ProviderConfig, model: str = "google/gemini-2.5-flash-image"):
         """
         Initialize OpenRouter Image Provider.
 
         Args:
             config: Provider configuration
+            model: Model identifier (overrides provider_type)
         """
         super().__init__(config)
         self.base_url = config.base_url or "https://openrouter.ai/api/v1"
         
-        # Use provider_type to determine model
-        self.model = config.provider_type.value if config.provider_type else "stabilityai/stable-diffusion-xl-base-1.0"
+        # Use explicitly passed model, fallback to provider_type.value
+        self.model = model if model else (
+            config.provider_type.value if config.provider_type 
+            else "google/gemini-2.5-flash-image"
+        )
         
         # OpenRouter costs vary by model (approximate)
-        self.cost_per_image = config.cost_per_image or 0.01  # Default estimate
+        self.cost_per_image = config.cost_per_image or 0.02  # Gemini default
 
         # Rate limiting
         self.request_times = []
@@ -99,26 +103,30 @@ class OpenRouterImageProvider(ImageProvider):
             "X-Title": getattr(self.config, 'x_title', '') or "G-Manga"
         }
 
-        # Prepare payload
+        # Prepare payload - OpenRouter uses chat/completions with modalities
         width, height = size.value
-        
+
+        # Calculate aspect ratio from dimensions
+        def gcd(a, b):
+            while b:
+                a, b = b, a % b
+            return a
+        ratio_gcd = gcd(width, height)
+        aspect_ratio = f"{width//ratio_gcd}:{height//ratio_gcd}"
+
         payload = {
             "model": self.model,
-            "prompt": prompt,
-            "n": 1,
-            "size": f"{width}x{height}",
-            "steps": steps,
-            "cfg_scale": cfg_scale,
-            "response_format": "base64"
+            "messages": [
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            "modalities": ["image", "text"],
+            "image_config": {
+                "aspect_ratio": aspect_ratio
+            }
         }
-
-        # Add negative prompt if provided
-        if negative_prompt:
-            payload["negative_prompt"] = negative_prompt
-
-        # Add quality parameter if supported by model
-        if quality == ImageQuality.HD:
-            payload["quality"] = "hd"
 
         # Retry logic
         last_error = None
@@ -129,9 +137,9 @@ class OpenRouterImageProvider(ImageProvider):
                     backoff = 2 ** attempt
                     time.sleep(backoff)
 
-                # Make request
+                # Make request to chat/completions endpoint
                 response = requests.post(
-                    f"{self.base_url}/images/generations",
+                    f"{self.base_url}/chat/completions",
                     headers=headers,
                     json=payload,
                     timeout=self.config.timeout
@@ -148,8 +156,11 @@ class OpenRouterImageProvider(ImageProvider):
                 elif response.status_code == 429:
                     raise RateLimitError("Rate limit exceeded")
                 else:
-                    error_data = response.json()
-                    error_msg = error_data.get("error", {}).get("message", "Unknown error")
+                    try:
+                        error_data = response.json()
+                        error_msg = error_data.get("error", {}).get("message", "Unknown error")
+                    except:
+                        error_msg = f"HTTP {response.status_code}: {response.text[:200]}"
                     raise GenerationError(f"API error: {error_msg}")
 
             except (RateLimitError, AuthenticationError) as e:
@@ -356,26 +367,56 @@ class OpenRouterImageProvider(ImageProvider):
         """
         data = response.json()
 
-        if not data.get("data") or len(data["data"]) == 0:
+        # Check for OpenRouter chat/completions response format
+        if not data.get("choices") or len(data["choices"]) == 0:
             return self._create_error_result(
                 prompt=prompt,
-                error="No image data in response",
+                error="No choices in response",
+                cost=self.estimate_cost(1, size, quality)
+            )
+
+        message = data["choices"][0].get("message", {})
+        images = message.get("images", [])
+
+        if not images:
+            # Check if there's content text
+            content = message.get("content", "")
+            return self._create_error_result(
+                prompt=prompt,
+                error=f"No images in response. Content: {content[:200]}",
                 cost=self.estimate_cost(1, size, quality)
             )
 
         # Extract base64 image data
-        image_data = data["data"][0].get("b64_json", "")
-        if not image_data:
+        image_info = images[0]
+        image_url = image_info.get("image_url", {})
+        b64_data = image_url.get("url", "")
+
+        if not b64_data:
             return self._create_error_result(
                 prompt=prompt,
-                error="No base64 image data in response",
+                error="No image URL in response",
                 cost=self.estimate_cost(1, size, quality)
             )
 
-        image_bytes = base64.b64decode(image_data)
+        # Parse base64 data URL
+        if b64_data.startswith("data:image"):
+            # data:image/png;base64,...
+            header, b64_body = b64_data.split(",", 1)
+            image_format = header.split("/")[1].split(";")[0]
+        else:
+            # Direct base64
+            b64_body = b64_data
+            image_format = "png"
 
-        # Determine image format
-        image_format = "png"
+        try:
+            image_bytes = base64.b64decode(b64_body)
+        except Exception as e:
+            return self._create_error_result(
+                prompt=prompt,
+                error=f"Failed to decode base64 image: {e}",
+                cost=self.estimate_cost(1, size, quality)
+            )
 
         # Build metadata
         metadata = {
@@ -398,7 +439,7 @@ class OpenRouterImageProvider(ImageProvider):
 
 def create_openrouter_provider(
     api_key: str,
-    model: str = "stabilityai/stable-diffusion-xl-base-1.0",
+    model: str = "google/gemini-2.5-flash-image",
     **kwargs
 ) -> OpenRouterImageProvider:
     """
@@ -406,23 +447,23 @@ def create_openrouter_provider(
 
     Args:
         api_key: OpenRouter API key
-        model: Model identifier (default: SDXL)
+        model: Model identifier (default: google/gemini-2.5-flash-image)
         **kwargs: Additional configuration options
 
     Returns:
         OpenRouterImageProvider instance
     """
     config = ProviderConfig(
-        provider_type=ProviderType.SDXL,
+        provider_type=ProviderType.SDXL,  # Placeholder, actual model is passed separately
         api_key=api_key,
         default_size=ImageSize.SQUARE_1024,
         quality=ImageQuality.STANDARD,
         rate_limit=20,
-        cost_per_image=0.01,
+        cost_per_image=0.02,  # Gemini pricing
         **kwargs
     )
 
-    return OpenRouterImageProvider(config)
+    return OpenRouterImageProvider(config, model=model)
 
 
 def main():
