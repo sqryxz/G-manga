@@ -3,7 +3,7 @@
 
 # LLM Provider Configuration
 llm:
-  # LLM Provider: "openai" or "openrouter"
+  # LLM Provider: "openai", "openrouter", or "zai"
   provider: "openrouter"
 
   # OpenRouter API settings
@@ -23,8 +23,27 @@ llm:
   # Max retries for failed requests
   max_retries: 3
 
-  # Models per stage (using OpenRouter model IDs)
-  # See available models: https://openrouter.ai/docs
+  # Z.AI Configuration (https://z.ai)
+  # Alternative LLM provider with GLM-4.7 models
+  zai:
+    enabled: false  # Set to true to enable Z.AI
+    api_key: ""  # Set via env: ZAI_API_KEY
+    base_url: "https://api.z.ai/api/paas/v4/"  # International endpoint
+    # base_url: "https://open.bigmodel.cn/api/paas/v4/"  # Chinese endpoint
+    default_model: "glm-4.7"
+    available_models:
+      - "glm-4.7"          # General purpose
+      - "glm-4.5"          # Previous generation
+      - "glm-4.5-flash"    # Fast, cost-effective
+      - "glm-4.7-coding"   # Code-optimized
+    timeout: 60
+    max_retries: 3
+
+  # Models per stage
+  # Use format: "provider/model" (e.g., "openai/gpt-4o", "zai/glm-4.7")
+  # See available models:
+  #   - OpenRouter: https://openrouter.ai/docs
+  #   - Z.AI: https://docs.z.ai/guides/overview/quick-start
   scene_breakdown_model: "openai/gpt-4o"
 
   character_extraction_model: "openai/gpt-4o"
@@ -36,10 +55,12 @@ llm:
   storyboard_generation_model: "openai/gpt-4o"
 
   # Fallback model chain (tries in order if primary fails)
+  # Supports mixed providers: openai/gpt-4o, zai/glm-4.7, anthropic/claude-sonnet-4-20250514
   fallback_models:
     - "openai/gpt-4o"
     - "anthropic/claude-sonnet-4-20250514"
     - "google/gemini-2.5-pro"
+    # - "zai/glm-4.7"  # Uncomment to add Z.AI as fallback
 
 # Image Generation Settings
 image:

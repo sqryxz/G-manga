@@ -8,6 +8,13 @@ from .openrouter import (
     GenerationResult,
     cost_tracker
 )
+from .zai_client import (
+    ZAIClient,
+    ZAIClientAdapter,
+    ZAIGenerationResult,
+    create_zai_client,
+    generate_with_zai
+)
 from .logging import (
     setup_logger,
     get_logger,
@@ -27,6 +34,12 @@ __all__ = [
     "generate_with_openrouter",
     "GenerationResult",
     "cost_tracker",
+    # Z.AI
+    "ZAIClient",
+    "ZAIClientAdapter",
+    "ZAIGenerationResult",
+    "create_zai_client",
+    "generate_with_zai",
     # Logging
     "setup_logger",
     "get_logger",

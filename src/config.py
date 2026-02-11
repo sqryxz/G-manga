@@ -9,6 +9,57 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+class ZAISettings(BaseSettings):
+    """Z.AI LLM-specific settings."""
+    model_config = SettingsConfigDict(env_prefix="ZAI_")
+    
+    enabled: bool = Field(
+        default=False,
+        description="Enable Z.AI as an LLM provider"
+    )
+    
+    api_key: str = Field(
+        default="",
+        description="Z.AI API key (set via ZAI_API_KEY env var)"
+    )
+    
+    base_url: str = Field(
+        default="https://api.z.ai/api/paas/v4/",
+        description="Z.AI API base URL"
+    )
+    
+    default_model: str = Field(
+        default="glm-4.7",
+        description="Default Z.AI model to use"
+    )
+    
+    available_models: List[str] = Field(
+        default_factory=lambda: [
+            "glm-4.7",
+            "glm-4.5",
+            "glm-4.5-flash",
+            "glm-4.7-coding"
+        ],
+        description="Available Z.AI models"
+    )
+    
+    timeout: int = Field(
+        default=60,
+        description="Timeout for Z.AI API calls in seconds"
+    )
+    
+    max_retries: int = Field(
+        default=3,
+        description="Maximum retries for failed Z.AI API calls"
+    )
+    
+    def get_api_key(self) -> str:
+        """Get Z.AI API key from config or environment."""
+        if self.api_key:
+            return self.api_key
+        return os.getenv("ZAI_API_KEY", "")
+
+
 class LLMSettings(BaseSettings):
     """LLM-related settings."""
     model_config = SettingsConfigDict(env_prefix="LLM_")
@@ -16,7 +67,7 @@ class LLMSettings(BaseSettings):
     # Provider selection
     provider: str = Field(
         default="openrouter",
-        description="LLM provider: openai or openrouter"
+        description="LLM provider: openai, openrouter, or zai"
     )
     
     # OpenRouter/OpenAI API key
@@ -49,7 +100,14 @@ class LLMSettings(BaseSettings):
         description="Maximum retries for failed API calls"
     )
     
+    # Z.AI settings
+    zai: ZAISettings = Field(
+        default_factory=ZAISettings,
+        description="Z.AI LLM configuration"
+    )
+    
     # Stage-specific model configurations
+    # Can use zai/ prefix for Z.AI models: "zai/glm-4.7", "zai/glm-4.5", etc.
     scene_breakdown_model: str = Field(
         default="openai/gpt-4o",
         description="Model for scene breakdown and summarization"
@@ -72,6 +130,7 @@ class LLMSettings(BaseSettings):
     )
     
     # Fallback models (tried in order if primary fails)
+    # Supports mixed providers: openai/gpt-4o, zai/glm-4.7, anthropic/claude-sonnet-4-20250514
     fallback_models: List[str] = Field(
         default_factory=lambda: [
             "openai/gpt-4o",
