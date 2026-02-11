@@ -33,12 +33,12 @@ class CharacterEmbeddingTracker:
         # Character name patterns for recognition
         self.name_patterns = [
             # Full name patterns
-            r"\b[A-Z][a-z]+\b [A-Z][a-z]+\b (?:[A-Z][a-z]+|Mr|Mrs|Miss|Dr|Prof)\.? [A-Z][a-z]+)",  # "Basil Hallward", "Mr. Dorian"
+            r"\b[A-Z][a-z]+\b [A-Z][a-z]+\b(?: [A-Z][a-z]+| Mr| Mrs| Miss| Dr| Prof)\.? [A-Z][a-z]+",  # "Basil Hallward", "Mr. Dorian"
             # First/last name only
             r"\b[A-Z][a-z]+\b [A-Z][a-z]+",  # "Basil Hallward"
 
             # Title patterns
-            r"(?:Lord|Lady|Mr|Mrs|Miss|Dr|Prof|Sir|Dame|Father|Mother|Master) \.? [A-Z][a-z]+)",  # "Lord Henry"
+            r"(?:Lord|Lady|Mr|Mrs|Miss|Dr|Prof|Sir|Dame|Father|Mother|Master) [A-Z][a-z]+",  # "Lord Henry"
 
             # Nickname patterns
             r"(?:Basil|Dorian|Harry|Ron|Tom|Jane|Mary) \b",  # First name only
@@ -356,6 +356,30 @@ class CharacterEmbeddingTracker:
         # Mock role lookup based on character ID
         # In production, this would be stored with the character
         return "protagonist" if "basil" in character_id.lower() else None
+
+    def update_characters(self, characters: List[Dict[str, Any]]) -> None:
+        """
+        Update tracker with character data.
+
+        Args:
+            characters: List of character data dictionaries
+        """
+        self.characters = characters
+        print(f"✓ Updated tracker with {len(characters)} characters")
+
+    def get_statistics(self) -> Dict[str, Any]:
+        """
+        Get character tracking statistics.
+
+        Returns:
+            Dictionary of statistics
+        """
+        stats = {
+            "total_characters": len(getattr(self, 'characters', [])),
+            "patterns_loaded": len(self.compiled_patterns),
+            "has_embedding_client": self.embedding_client is not None
+        }
+        return stats
 
 
 def main():

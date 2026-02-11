@@ -62,7 +62,8 @@ class ImageQueueManager:
 
     def __init__(
         self,
-        providers: Dict[str, ImageProvider],
+        project_dir: str = None,
+        providers: Dict[str, ImageProvider] = None,
         max_concurrent: int = 3,
         enable_rate_limiting: bool = True
     ):
@@ -70,13 +71,15 @@ class ImageQueueManager:
         Initialize queue manager.
 
         Args:
+            project_dir: Project directory path (optional, for simple interface)
             providers: Dictionary of provider name -> provider
             max_concurrent: Maximum concurrent generations
             enable_rate_limiting: Enable per-provider rate limiting
         """
-        self.providers = providers
+        self.providers = providers or {}
         self.max_concurrent = max_concurrent
         self.enable_rate_limiting = enable_rate_limiting
+        self.project_dir = project_dir
 
         # Queue
         self.queue: Queue = Queue()
@@ -95,6 +98,42 @@ class ImageQueueManager:
         self.total_processed = 0
         self.total_success = 0
         self.total_failed = 0
+
+    def add_to_queue(self, panel_id: str, prompt: str) -> QueueTask:
+        """
+        Add a panel to the queue (simple interface).
+
+        Args:
+            panel_id: Panel ID
+            prompt: Image prompt
+
+        Returns:
+            QueueTask
+        """
+        return self.add_task(
+            task_id=panel_id,
+            prompt=prompt,
+            provider_name="mock",
+            size=None,
+            quality=None
+        )
+
+    def get_queue_status(self) -> Dict[str, Any]:
+        """
+        Get queue status.
+
+        Returns:
+            Status dictionary
+        """
+        return {
+            "queue_size": self.queue.qsize(),
+            "total_tasks": len(self.tasks),
+            "workers_active": len(self.workers),
+            "is_running": self.is_running,
+            "total_processed": self.total_processed,
+            "total_success": self.total_success,
+            "total_failed": self.total_failed
+        }
 
     def add_task(
         self,

@@ -155,6 +155,10 @@ Generate descriptions for all {len(panel_plan)} panels specified in the panel pl
         # Extract JSON from response
         try:
             data = json.loads(response_text)
+            # Handle case where response is a list directly
+            if isinstance(data, list):
+                return data
+            # Handle case where response is a dict with "panels" key
             return data.get("panels", [])
         except json.JSONDecodeError:
             # Try to extract JSON from markdown code block
@@ -207,9 +211,9 @@ Generate descriptions for all {len(panel_plan)} panels specified in the panel pl
         panels = []
         for i, panel_data in enumerate(panels_data):
             panel = PanelDescription(
-                id=f"p{scene_number}-{panel_data['number']}",
+                id=f"p{scene_number}-{panel_data.get('number', i + 1)}",
                 page_number=1,  # Will be calculated by page calculator
-                panel_number=panel_data["number"],
+                panel_number=panel_data.get("number", i + 1),
                 type=panel_data.get("type", "medium"),
                 description=panel_data.get("description", ""),
                 camera=panel_data.get("camera", "eye-level"),

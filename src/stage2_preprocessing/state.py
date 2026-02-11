@@ -240,6 +240,43 @@ class StatePersistence:
             path.unlink()
             print(f"✓ Cleared checkpoint: {checkpoint_type}")
 
+    def save_storyboard(self, storyboard: dict) -> None:
+        """
+        Save storyboard to JSON.
+
+        Args:
+            storyboard: Storyboard dictionary
+        """
+        storyboard_path = self.intermediate_dir / "storyboard.json"
+
+        # Add metadata
+        storyboard_data = {
+            **storyboard,
+            "saved_at": datetime.now(timezone.utc).isoformat()
+        }
+
+        with open(storyboard_path, 'w', encoding='utf-8') as f:
+            json.dump(storyboard_data, f, indent=2, ensure_ascii=False)
+
+        print(f"✓ Saved storyboard to {storyboard_path}")
+
+    def load_storyboard(self) -> dict:
+        """
+        Load storyboard from JSON.
+
+        Returns:
+            Storyboard dictionary or empty dict if not found
+        """
+        storyboard_path = self.intermediate_dir / "storyboard.json"
+
+        if not storyboard_path.exists():
+            return {}
+
+        with open(storyboard_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        return data
+
 
 def main():
     """Test State Persistence."""

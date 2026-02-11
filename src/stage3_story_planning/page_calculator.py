@@ -86,6 +86,29 @@ class PageCalculator:
 
         return result
 
+    def calculate_page_number(self, panel_id: str, scene_number: int) -> int:
+        """
+        Calculate page number for a single panel.
+
+        Args:
+            panel_id: Panel ID string (e.g., "p1-3" for scene 1, panel 3)
+            scene_number: Scene number
+
+        Returns:
+            Page number (1-based)
+        """
+        # Parse panel number from ID
+        try:
+            panel_num = int(panel_id.split('-')[1]) if '-' in panel_id else 1
+        except (ValueError, IndexError):
+            panel_num = 1
+
+        # Calculate based on panel limits
+        panels_per_page = self.panel_limits.get(self.default_layout, 6)
+        page_number = ((panel_num - 1) // panels_per_page) + 1
+
+        return page_number
+
 
 def main():
     """Test Page Calculator."""

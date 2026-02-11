@@ -54,6 +54,15 @@ class LayoutTemplateLibrary:
         """Initialize layout template library."""
         self.templates = self._build_templates()
 
+    def get_template_names(self) -> List[str]:
+        """
+        Get list of template names.
+
+        Returns:
+            List of template names
+        """
+        return list(self.templates.keys())
+
     def _build_templates(self) -> Dict[str, LayoutTemplate]:
         """
         Build all layout templates.

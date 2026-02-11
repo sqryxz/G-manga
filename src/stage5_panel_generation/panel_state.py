@@ -66,23 +66,29 @@ class PanelStateManager:
 
             print(f"✓ Loaded {len(self.panels)} panels from {self.panels_file}")
 
-    def save_panel(self, panel_data: PanelData):
+    def save_panel(self, panel_data):
         """
         Save a panel to state.
 
         Args:
-            panel_data: PanelData object to save
+            panel_data: PanelData object or dict to save
         """
+        # Convert dict to PanelData if needed
+        if isinstance(panel_data, dict):
+            panel_data_obj = PanelData(**panel_data)
+        else:
+            panel_data_obj = panel_data
+
         # Update last_updated timestamp
-        panel_data.last_updated = datetime.utcnow().isoformat()
+        panel_data_obj.last_updated = datetime.utcnow().isoformat()
 
         # Save to in-memory state
-        self.panels[panel_data.panel_id] = panel_data
+        self.panels[panel_data_obj.panel_id] = panel_data_obj
 
         # Persist to JSON
         self._persist_panels()
 
-        print(f"✓ Saved panel {panel_data.panel_id}")
+        print(f"✓ Saved panel {panel_data_obj.panel_id}")
 
     def get_panel(self, panel_id: str) -> Optional[PanelData]:
         """
