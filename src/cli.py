@@ -37,6 +37,8 @@ from stage2_preprocessing.state import StatePersistence
 from stage2_preprocessing.text_cleaner import TextCleaner
 from stage2_preprocessing.chapter_segmenter import ChapterSegmenter
 from stage2_preprocessing.scene_breakdown import SceneBreakdown
+from stage3_story_planning.storyboard_generator import StoryboardGenerator
+from stage3_story_planning.storyboard_storage import StoryboardStorage, Storyboard, StoryboardPanel
 from common.mocking import MockLLMClient
 
 app = typer.Typer(
@@ -117,6 +119,137 @@ def save_project_state(project_id: str, state: dict) -> None:
 
 
 @app.command()
+def storyboard(
+    project_id: str = typer.Argument(..., help="Project ID"),
+    scene_id: Optional[str] = typer.Option(None, "--scene", "-s", help="Scene ID to generate storyboard for"),
+    use_mock: bool = typer.Option(True, "--mock/--no-mock", help="Use mock LLM (default: True)"),
+):
+    """
+    Generate a storyboard for a project or scene.
+
+    Examples:
+        g-manga storyboard dorian-gray-20260210
+        g-manga storyboard dorian-gray-20260210 --scene scene-1
+        g-manga storyboard dorian-gray-20260210 --no-mock
+    """
+    project_dir = find_project_dir(project_id)
+
+    if not project_dir:
+        console.print(f"[red]Error: Project '{project_id}' not found[/red]")
+        raise typer.Exit(1)
+
+    # Load project config
+    config_path = project_dir / "config.json"
+    if not config_path.exists():
+        console.print(f"[red]Error: Project config not found[/red]")
+        raise typer.Exit(1)
+
+    with open(config_path, 'r') as f:
+        config = json.load(f)
+
+    console.print(f"[bold]Generating storyboard for: {project_id}[/bold]")
+
+    # Initialize storage
+    storage = StoryboardStorage(str(project_dir))
+
+    # Load scenes if available
+    state_path = project_dir / "state.json"
+    scenes = []
+
+    if state_path.exists():
+        with open(state_path, 'r') as f:
+            state = json.load(f)
+        scenes = state.get("scenes", [])
+
+    if not scenes:
+        # Generate scenes from text
+        console.print("[yellow]No scenes found. Using mock data...[/yellow]")
+        scenes = [
+            {
+                "id": "scene-1",
+                "chapter_id": "chapter-1",
+                "number": 1,
+                "summary": "Basil's studio introduction",
+                "location": "Art Studio"
+            }
+        ]
+
+    # Determine which scenes to storyboard
+    scenes_to_process = [s for s in scenes if scene_id is None or s["id"] == scene_id]
+
+    if not scenes_to_process:
+        console.print(f"[yellow]No matching scenes found[/yellow]")
+        raise typer.Exit(0)
+
+    console.print(f"Processing {len(scenes_to_process)} scene(s)...")
+
+    # Generate storyboards for each scene
+    for scene in scenes_to_process:
+        console.print(f"\n[cyan]Generating storyboard for {scene['id']}...[/cyan]")
+
+        # Use mock or real LLM
+        if use_mock:
+            llm_client = MockLLMClient()
+            generator = StoryboardGenerator(llm_client=llm_client)
+        else:
+            generator = StoryboardGenerator(llm_client=None)
+
+        # Generate panel descriptions (simplified - would integrate with full pipeline)
+        mock_panels = [
+            StoryboardPanel(
+                panel_id="p1",
+                page_number=1,
+                panel_number=1,
+                description=f"Establishing shot of {scene.get('location', 'the scene')}",
+                camera="wide",
+                mood="neutral",
+                lighting="natural",
+                composition="centered",
+                thumbnail_prompt=f"Quick sketch, {scene.get('location', 'scene')}, wide shot"
+            ),
+            StoryboardPanel(
+                panel_id="p2",
+                page_number=1,
+                panel_number=2,
+                description="Character introduction",
+                camera="medium",
+                mood="neutral",
+                thumbnail_prompt="Character sketch, medium shot"
+            ),
+            StoryboardPanel(
+                panel_id="p3",
+                page_number=1,
+                panel_number=3,
+                description="Key action or dialogue",
+                camera="eye-level",
+                mood="neutral",
+                thumbnail_prompt="Action sketch, dialogue"
+            )
+        ]
+
+        # Create storyboard
+        import uuid
+        storyboard = Storyboard(
+            storyboard_id=f"sb-{uuid.uuid4().hex[:8]}",
+            project_id=project_id,
+            scene_id=scene["id"],
+            chapter_number=scene.get("chapter_number"),
+            panels=mock_panels
+        )
+
+        # Save storyboard
+        storage.save_storyboard(storyboard)
+
+        console.print(f"  ✓ Created storyboard with {len(mock_panels)} panels")
+        console.print(f"    ID: {storyboard.storyboard_id}")
+
+    console.print(f"\n[bold green]✓ Storyboard generation complete![/bold green]")
+    console.print(f"\nTo review and edit:")
+    console.print(f"  g-manga storyboard list {project_id}")
+    console.print(f"  g-manga storyboard view {project_id} <storyboard_id>")
+
+
+@app.command()
 def generate(
     url: Optional[str] = typer.Option(None, "--url", "-u", help="Project Gutenberg URL to fetch"),
     file: Optional[Path] = typer.Option(None, "--file", "-f", help="Local text file path"),
@@ -124,6 +257,8 @@ def generate(
     project_name: Optional[str] = typer.Option(None, "--name", "-n", help="Project name (auto-generated if not provided)"),
     use_mock: bool = typer.Option(True, "--mock/--no-mock", help="Use mock data for testing (default: True)"),
     run_all: bool = typer.Option(False, "--all", "-a", help="Run all pipeline stages (default: only stage 1)"),
+    skip_storyboard: bool = typer.Option(False, "--skip-storyboard", help="Skip storyboard generation"),
+    storyboard_id: Optional[str] = typer.Option(None, "--storyboard-id", "-sb", help="Use existing storyboard ID for image generation"),
 ):
     """
     Generate manga from a Gutenberg URL or local file.
@@ -251,27 +386,31 @@ def generate(
 
         # 2.1.3 Scene Breakdown (first 3 chapters for demo)
         console.print("  [2.1.3] Breaking down scenes...")
-        llm_client = MockLLMClient() if use_mock else None
-
-        if llm_client:
+        
+        if use_mock:
+            llm_client = MockLLMClient()
             breakdown = SceneBreakdown(llm_client=llm_client)
-
-            all_scenes = []
-            for i, chapter_data in enumerate(chapters_data[:3]):  # Only first 3 for demo
-                lines = super_clean.split("\n")
-                chapter_text = "\n".join(lines[chapter_data.start_line:chapter_data.end_line])
-
-                scenes = breakdown.breakdown_chapter(
-                    chapter_text,
-                    f"chapter-{chapter_data.chapter_number}",
-                    chapter_data.chapter_number
-                )
-                all_scenes.extend(scenes)
-                console.print(f"    ✓ Chapter {chapter_data.chapter_number}: {len(scenes)} scenes")
-
-            persistence.save_scenes(all_scenes)
+            use_or_msg = "Using mock LLM"
         else:
-            console.print("    ⚠ LLM client not available, skipping scene breakdown")
+            # SceneBreakdown will use OpenRouter when llm_client is None
+            breakdown = SceneBreakdown(llm_client=None, use_openrouter=True)
+            use_or_msg = "Using OpenRouter LLM"
+
+        all_scenes = []
+        for i, chapter_data in enumerate(chapters_data[:3]):  # Only first 3 for demo
+            lines = super_clean.split("\n")
+            chapter_text = "\n".join(lines[chapter_data.start_line:chapter_data.end_line])
+
+            scenes = breakdown.breakdown_chapter(
+                chapter_text,
+                f"chapter-{chapter_data.chapter_number}",
+                chapter_data.chapter_number
+            )
+            all_scenes.extend(scenes)
+            console.print(f"    ✓ Chapter {chapter_data.chapter_number}: {len(scenes)} scenes")
+
+        console.print(f"    ✓ {use_or_msg}")
+        persistence.save_scenes(all_scenes)
 
         # Update state to preprocessing complete
         persistence.save_state("preprocessing", ["input", "preprocessing"])
@@ -374,25 +513,31 @@ def resume(
 
                     # Scene Breakdown
                     console.print("  [2.1.3] Breaking down scenes...")
-                    llm_client = MockLLMClient() if use_mock else None
-
-                    if llm_client:
+                    
+                    if use_mock:
+                        llm_client = MockLLMClient()
                         breakdown = SceneBreakdown(llm_client=llm_client)
+                        use_or_msg = "Using mock LLM"
+                    else:
+                        # SceneBreakdown will use OpenRouter when llm_client is None
+                        breakdown = SceneBreakdown(llm_client=None, use_openrouter=True)
+                        use_or_msg = "Using OpenRouter LLM"
 
-                        all_scenes = []
-                        for i, chapter_data in enumerate(chapters_data[:3]):
-                            lines = super_clean.split("\n")
-                            chapter_text = "\n".join(lines[chapter_data.start_line:chapter_data.end_line])
+                    all_scenes = []
+                    for i, chapter_data in enumerate(chapters_data[:3]):
+                        lines = super_clean.split("\n")
+                        chapter_text = "\n".join(lines[chapter_data.start_line:chapter_data.end_line])
 
-                            scenes = breakdown.breakdown_chapter(
-                                chapter_text,
-                                f"chapter-{chapter_data.chapter_number}",
-                                chapter_data.chapter_number
-                            )
-                            all_scenes.extend(scenes)
-                            console.print(f"    ✓ Chapter {chapter_data.chapter_number}: {len(scenes)} scenes")
+                        scenes = breakdown.breakdown_chapter(
+                            chapter_text,
+                            f"chapter-{chapter_data.chapter_number}",
+                            chapter_data.chapter_number
+                        )
+                        all_scenes.extend(scenes)
+                        console.print(f"    ✓ Chapter {chapter_data.chapter_number}: {len(scenes)} scenes")
 
-                        persistence.save_scenes(all_scenes)
+                    console.print(f"    ✓ {use_or_msg}")
+                    persistence.save_scenes(all_scenes)
 
                     # Update state
                     persistence.save_state("preprocessing", ["input", "preprocessing"])
