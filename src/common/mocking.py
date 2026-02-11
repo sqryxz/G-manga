@@ -89,16 +89,18 @@ class MockLLMClient(BaseLLMClient):
         prompt_lower = prompt.lower()
         
         if "scene" in prompt_lower and ("breakdown" in prompt_lower or "summary" in prompt_lower):
-            return """[
-                {
-                    "id": "scene-mocked-1",
-                    "number": 1,
-                    "summary": "Introduction scene",
-                    "location": "Unknown location",
-                    "characters": [],
-                    "text_range": {"start": 0, "end": 50}
-                }
-            ]"""
+            return """{
+  "scenes": [
+    {
+      "id": "scene-mocked-1",
+      "number": 1,
+      "summary": "Introduction scene",
+      "location": "Unknown location",
+      "characters": [],
+      "text_range": {"start": 0, "end": 50}
+    }
+  ]
+}"""
         
         elif "character" in prompt_lower and "extract" in prompt_lower:
             return """[

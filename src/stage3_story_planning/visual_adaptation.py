@@ -158,7 +158,7 @@ Be thorough but stay focused on the most visual moments. Dialogue-heavy moments 
 
         # Call LLM
         if self.llm_client:
-            response = self.llm_client.call(prompt)
+            response = self.llm_client.generate(prompt)
         else:
             # Mock response for testing
             response = self._mock_llm_response(scene_text)

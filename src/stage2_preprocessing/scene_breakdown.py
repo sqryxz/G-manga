@@ -210,7 +210,7 @@ Be thorough but don't over-segment. A scene can be 5-50 paragraphs."""
 
         # Call LLM
         if self.llm_client:
-            response = self.llm_client.call(prompt)
+            response = self.llm_client.generate(prompt, model=self.model)
         else:
             # Mock response for testing
             response = self._mock_llm_response(chapter_number)

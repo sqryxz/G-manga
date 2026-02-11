@@ -195,7 +195,7 @@ Generate descriptions for all {len(panel_plan)} panels specified in the panel pl
 
         # Call LLM
         if self.llm_client:
-            response = self.llm_client.call(prompt)
+            response = self.llm_client.generate(prompt)
         else:
             # Mock response for testing
             response = self._mock_llm_response(panels_list)

@@ -170,7 +170,7 @@ Be specific and match panels to the visual beats provided. Each panel should cap
 
         # Call LLM
         if self.llm_client:
-            response = self.llm_client.call(prompt)
+            response = self.llm_client.generate(prompt)
         else:
             # Mock response for testing
             response = self._mock_llm_response(visual_beats, scene_summary)
