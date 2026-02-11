@@ -14,23 +14,30 @@ Usage:
 import json
 import sys
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 import typer
 from rich.console import Console
 from rich.table import Table
 from rich.text import Text
+from rich.panel import Panel
 
 # Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent))
+src_path = Path(__file__).parent
+sys.path.insert(0, str(src_path))
 
 from config import Settings, get_settings
-from models.project import Project, Metadata, generate_project_id
+from models.project import Project, Metadata, Chapter, Scene, TextRange, generate_project_id
 from stage1_input.url_fetcher import URLFetcher
 from stage1_input.text_parser import TextParser
 from stage1_input.metadata_extractor import MetadataExtractor
 from stage1_input.project import ProjectInitializer
+from stage2_preprocessing.state import StatePersistence
+from stage2_preprocessing.text_cleaner import TextCleaner
+from stage2_preprocessing.chapter_segmenter import ChapterSegmenter
+from stage2_preprocessing.scene_breakdown import SceneBreakdown
+from common.mocking import MockLLMClient
 
 app = typer.Typer(
     name="g-manga",
@@ -116,6 +123,7 @@ def generate(
     output: str = typer.Option("output", "--output", "-o", help="Output directory for project"),
     project_name: Optional[str] = typer.Option(None, "--name", "-n", help="Project name (auto-generated if not provided)"),
     use_mock: bool = typer.Option(True, "--mock/--no-mock", help="Use mock data for testing (default: True)"),
+    run_all: bool = typer.Option(False, "--all", "-a", help="Run all pipeline stages (default: only stage 1)"),
 ):
     """
     Generate manga from a Gutenberg URL or local file.
@@ -123,7 +131,7 @@ def generate(
     Examples:
         g-manga generate --url "https://www.gutenberg.org/files/174/174-0.txt"
         g-manga generate --file ./book.txt --name "My Project"
-        g-manga generate --url "https://www.gutenberg.org/files/174/174-0.txt" --no-mock
+        g-manga generate --url "https://www.gutenberg.org/files/174/174-0.txt" --all
     """
     if not url and not file:
         console.print("[red]Error: Either --url or --file must be provided[/red]")
@@ -138,7 +146,7 @@ def generate(
         pass
 
     # Stage 1: Fetch and parse content
-    console.print("\n[bold]Stage 1: Fetching and parsing content...[/bold]")
+    console.print("\n[bold cyan]Stage 1: Fetching and parsing content...[/bold cyan]")
 
     fetcher = URLFetcher()
     parser = TextParser()
@@ -174,7 +182,7 @@ def generate(
         name = metadata.title or "untitled-project"
 
     # Create project
-    console.print(f"\n[bold]Creating project: {name}[/bold]")
+    console.print(f"\n[bold cyan]Creating project: {name}[/bold cyan]")
 
     projects_dir = Path(output) / "projects"
     initializer = ProjectInitializer(base_dir=str(projects_dir))
@@ -202,26 +210,82 @@ def generate(
     console.print(f"  Location: {projects_dir / project.id}")
     console.print(f"  Characters in text: {len(cleaned_text):,}")
 
-    # Initialize state
+    # Initialize state persistence
     project_dir = projects_dir / project.id
-    state = {
-        "id": project.id,
-        "current_stage": "input",
-        "stages_completed": ["input"],
-        "updated_at": datetime.now().isoformat(),
-        "use_mock": use_mock,
-        "progress": {
-            "input": {"status": "completed", "progress": 100}
-        }
-    }
+    persistence = StatePersistence(str(project_dir))
 
-    state_path = project_dir / "state.json"
-    with open(state_path, 'w') as f:
-        json.dump(state, f, indent=2, ensure_ascii=False)
+    # Initialize state
+    persistence.save_state("input", ["input"])
+    state = persistence.load_state()
 
-    # Pipeline would continue here with stages 2-9
-    console.print(f"\n[bold yellow]⚠️  Pipeline stages 2-9 not yet implemented in CLI[/bold yellow]")
-    console.print(f"   Use 'g-manga resume --project-id {project.id}' when pipeline is complete")
+    # If --all flag is set, run stages 2-9
+    if run_all:
+        console.print(f"\n[bold cyan]Running full pipeline (Stages 2-9)...[/bold cyan]")
+
+        # Stage 2: Preprocessing
+        console.print("\n[bold]Stage 2: Preprocessing...[/bold]")
+
+        # 2.1.1 Text Cleaning
+        console.print("  [2.1.1] Cleaning text...")
+        cleaner = TextCleaner()
+        super_clean = cleaner.clean(cleaned_text)
+        console.print(f"    ✓ Cleaned text: {len(super_clean):,} characters")
+
+        # 2.1.2 Chapter Segmentation
+        console.print("  [2.1.2] Segmenting chapters...")
+        segmenter = ChapterSegmenter()
+        chapters_data = segmenter.segment(super_clean)
+        console.print(f"    ✓ Found {len(chapters_data)} chapters")
+
+        # Save chapters
+        chapters = []
+        for chapter_data in chapters_data:
+            chapter = Chapter(
+                id=f"chapter-{chapter_data.chapter_number}",
+                number=chapter_data.chapter_number,
+                title=chapter_data.title,
+                text_range=TextRange(start=chapter_data.start_line, end=chapter_data.end_line)
+            )
+            chapters.append(chapter)
+        persistence.save_chapters(chapters)
+
+        # 2.1.3 Scene Breakdown (first 3 chapters for demo)
+        console.print("  [2.1.3] Breaking down scenes...")
+        llm_client = MockLLMClient() if use_mock else None
+
+        if llm_client:
+            breakdown = SceneBreakdown(llm_client=llm_client)
+
+            all_scenes = []
+            for i, chapter_data in enumerate(chapters_data[:3]):  # Only first 3 for demo
+                lines = super_clean.split("\n")
+                chapter_text = "\n".join(lines[chapter_data.start_line:chapter_data.end_line])
+
+                scenes = breakdown.breakdown_chapter(
+                    chapter_text,
+                    f"chapter-{chapter_data.chapter_number}",
+                    chapter_data.chapter_number
+                )
+                all_scenes.extend(scenes)
+                console.print(f"    ✓ Chapter {chapter_data.chapter_number}: {len(scenes)} scenes")
+
+            persistence.save_scenes(all_scenes)
+        else:
+            console.print("    ⚠ LLM client not available, skipping scene breakdown")
+
+        # Update state to preprocessing complete
+        persistence.save_state("preprocessing", ["input", "preprocessing"])
+        state = persistence.load_state()
+
+        console.print(f"\n[bold green]✓ Pipeline execution complete![/bold green]")
+        console.print(f"  Project ID: {project.id}")
+        console.print(f"  Current stage: {state.get('current_stage', 'unknown')}")
+        console.print(f"  Stages completed: {', '.join(state.get('stages_completed', []))}")
+        console.print(f"\n  Use 'g-manga status {project.id}' to check progress")
+        console.print(f"  Use 'g-manga resume {project.id}' to continue from current stage")
+    else:
+        console.print(f"\n[bold yellow]⚠️  Only Stage 1 completed. Run with --all flag for full pipeline.[/bold yellow]")
+        console.print(f"   Use 'g-manga resume {project.id} --all' to continue")
 
     console.print(f"\n[bold green]✓ Generation started successfully![/bold green]")
 
@@ -231,15 +295,24 @@ def resume(
     project_id: str = typer.Argument(..., help="Project ID to resume"),
     from_stage: Optional[str] = typer.Option(None, "--from", help="Stage to resume from (default: current stage)"),
     use_mock: Optional[bool] = typer.Option(None, "--mock/--no-mock", help="Override mock mode"),
+    run_all: bool = typer.Option(False, "--all", "-a", help="Continue pipeline from current stage"),
 ):
     """
     Resume pipeline execution from a checkpoint.
 
     Examples:
         g-manga resume dorian-gray-20260210
-        g-manga resume dorian-gray-20260210 --from stage3
+        g-manga resume dorian-gray-20260210 --all
     """
-    state = load_project_state(project_id)
+    project_dir = find_project_dir(project_id)
+
+    if not project_dir:
+        console.print(f"[red]Error: Project '{project_id}' not found[/red]")
+        raise typer.Exit(1)
+
+    # Load state using StatePersistence
+    persistence = StatePersistence(str(project_dir))
+    state = persistence.load_state()
 
     if not state:
         console.print(f"[red]Error: Project '{project_id}' not found[/red]")
@@ -252,18 +325,98 @@ def resume(
     console.print(f"  Current stage: {current_stage}")
     console.print(f"  Stages completed: {', '.join(stages_completed) if stages_completed else 'None'}")
 
+    # Determine stage to resume from
     if from_stage:
+        resume_from = from_stage
         console.print(f"  Resuming from: {from_stage}")
     else:
-        from_stage = current_stage
+        resume_from = current_stage
 
-    # Pipeline resume logic would go here
-    console.print(f"\n[bold yellow]⚠️  Resume functionality not yet fully implemented[/bold yellow]")
-    console.print(f"   Current stage: {current_stage}")
+    # Continue pipeline based on current stage
+    if run_all or from_stage:
+        console.print(f"\n[bold cyan]Continuing pipeline from {resume_from}...[/bold cyan]")
 
-    # Update state (placeholder)
-    state["updated_at"] = datetime.now().isoformat()
-    save_project_state(project_id, state)
+        if resume_from in ["input", "preprocessing"]:
+            # Run preprocessing stages
+            console.print("\n[bold]Stage 2: Preprocessing...[/bold]")
+
+            # Load cleaned text from config or state
+            config_path = project_dir / "config.json"
+            if config_path.exists():
+                with open(config_path, 'r') as f:
+                    config = json.load(f)
+                cleaned_text = config.get("metadata", {}).get("cleaned_text", "")
+
+                if cleaned_text:
+                    # Text Cleaning
+                    console.print("  [2.1.1] Cleaning text...")
+                    cleaner = TextCleaner()
+                    super_clean = cleaner.clean(cleaned_text)
+                    console.print(f"    ✓ Cleaned text: {len(super_clean):,} characters")
+
+                    # Chapter Segmentation
+                    console.print("  [2.1.2] Segmenting chapters...")
+                    segmenter = ChapterSegmenter()
+                    chapters_data = segmenter.segment(super_clean)
+                    console.print(f"    ✓ Found {len(chapters_data)} chapters")
+
+                    # Save chapters
+                    chapters = []
+                    for chapter_data in chapters_data:
+                        chapter = Chapter(
+                            id=f"chapter-{chapter_data.chapter_number}",
+                            number=chapter_data.chapter_number,
+                            title=chapter_data.title,
+                            text_range=TextRange(start=chapter_data.start_line, end=chapter_data.end_line)
+                        )
+                        chapters.append(chapter)
+                    persistence.save_chapters(chapters)
+
+                    # Scene Breakdown
+                    console.print("  [2.1.3] Breaking down scenes...")
+                    llm_client = MockLLMClient() if use_mock else None
+
+                    if llm_client:
+                        breakdown = SceneBreakdown(llm_client=llm_client)
+
+                        all_scenes = []
+                        for i, chapter_data in enumerate(chapters_data[:3]):
+                            lines = super_clean.split("\n")
+                            chapter_text = "\n".join(lines[chapter_data.start_line:chapter_data.end_line])
+
+                            scenes = breakdown.breakdown_chapter(
+                                chapter_text,
+                                f"chapter-{chapter_data.chapter_number}",
+                                chapter_data.chapter_number
+                            )
+                            all_scenes.extend(scenes)
+                            console.print(f"    ✓ Chapter {chapter_data.chapter_number}: {len(scenes)} scenes")
+
+                        persistence.save_scenes(all_scenes)
+
+                    # Update state
+                    persistence.save_state("preprocessing", ["input", "preprocessing"])
+                    console.print(f"\n[bold green]✓ Preprocessing complete![/bold green]")
+                else:
+                    console.print("  ⚠ No cleaned text found, skipping preprocessing")
+            else:
+                console.print("  ⚠ Config file not found")
+
+        else:
+            console.print(f"\n[bold yellow]⚠️  Resume for stage '{resume_from}' not yet fully implemented[/bold yellow]")
+            console.print(f"   Current stage: {current_stage}")
+
+        # Reload and display updated state
+        state = persistence.load_state()
+        console.print(f"\n[bold]Project Status:[/bold]")
+        console.print(f"  Current stage: {state.get('current_stage', 'unknown')}")
+        console.print(f"  Stages completed: {', '.join(state.get('stages_completed', []))}")
+    else:
+        console.print(f"\n[bold yellow]⚠️  Use --all flag to continue pipeline from current stage[/bold yellow]")
+        console.print(f"   Current stage: {current_stage}")
+
+        # Update state timestamp
+        persistence.save_state(current_stage, stages_completed)
 
     console.print(f"\n[bold green]✓ Resume initiated[/bold green]")
 
