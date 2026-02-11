@@ -4,7 +4,7 @@
 # LLM Provider Configuration
 llm:
   # LLM Provider: "openai", "openrouter", or "zai"
-  provider: "openrouter"
+  provider: "zai"
 
   # OpenRouter API settings
   # Get your API key from https://openrouter.ai/keys
@@ -26,7 +26,7 @@ llm:
   # Z.AI Configuration (https://z.ai)
   # Alternative LLM provider with GLM-4.7 models
   zai:
-    enabled: false  # Set to true to enable Z.AI
+    enabled: true  # Z.AI enabled
     api_key: ""  # Set via env: ZAI_API_KEY
     base_url: "https://api.z.ai/api/paas/v4/"  # International endpoint
     # base_url: "https://open.bigmodel.cn/api/paas/v4/"  # Chinese endpoint

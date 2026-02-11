@@ -66,7 +66,7 @@ class LLMSettings(BaseSettings):
     
     # Provider selection
     provider: str = Field(
-        default="openrouter",
+        default="zai",
         description="LLM provider: openai, openrouter, or zai"
     )
     
