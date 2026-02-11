@@ -820,7 +820,7 @@ class ComicCreationEngine:
     # =========================================================================
     # MAIN RUNNER
     # =========================================================================
-    def run(self, source: str, source_type: str = "url"):
+    def run(self, source: str, source_type: str = "url", max_stage: int = 9):
         """Run the complete comic creation pipeline."""
         self.start_time = time.time()
 
@@ -830,11 +830,28 @@ class ComicCreationEngine:
         self.logger.info("📖 Transforming literature into manga...")
         self.logger.info(f"🔧 Mock Mode: {'Enabled' if self.use_mock else 'Disabled'}")
         self.logger.info(f"📥 Source: {source}")
+        self.logger.info(f"🎯 Max Stage: {max_stage}")
         self.logger.info("")
+
+        stage_names = {
+            1: "INPUT PROCESSING",
+            2: "PREPROCESSING",
+            3: "STORY PLANNING",
+            4: "CHARACTER DESIGN",
+            5: "PANEL GENERATION",
+            6: "IMAGE GENERATION",
+            7: "LAYOUT & ASSEMBLY",
+            8: "POST-PROCESSING",
+            9: "OUTPUT"
+        }
 
         try:
             # Stage 1: Input Processing
             stage1_result = self.run_stage_1(source, source_type)
+
+            if max_stage <= 1:
+                self._print_partial_summary(1, stage_names[1], stage1_result)
+                return True
 
             # Stage 2: Preprocessing
             stage2_result = self.run_stage_2(
@@ -842,11 +859,19 @@ class ComicCreationEngine:
                 stage1_result["project"].id
             )
 
+            if max_stage <= 2:
+                self._print_partial_summary(2, stage_names[2], stage2_result)
+                return True
+
             # Stage 3: Story Planning
             stage3_result = self.run_stage_3(
                 stage2_result["scenes"],
                 stage1_result["project"].id
             )
+
+            if max_stage <= 3:
+                self._print_partial_summary(3, stage_names[3], stage3_result)
+                return True
 
             # Stage 4: Character Design
             stage4_result = self.run_stage_4(
@@ -854,11 +879,19 @@ class ComicCreationEngine:
                 stage1_result["project"].id
             )
 
+            if max_stage <= 4:
+                self._print_partial_summary(4, stage_names[4], stage4_result)
+                return True
+
             # Stage 5: Panel Generation
             stage5_result = self.run_stage_5(
                 stage3_result["storyboards"],
                 stage1_result["project"].id
             )
+
+            if max_stage <= 5:
+                self._print_partial_summary(5, stage_names[5], stage5_result)
+                return True
 
             # Stage 6: Image Generation
             stage6_result = self.run_stage_6(
@@ -866,16 +899,28 @@ class ComicCreationEngine:
                 stage1_result["project"].id
             )
 
+            if max_stage <= 6:
+                self._print_partial_summary(6, stage_names[6], stage6_result)
+                return True
+
             # Stage 7: Layout & Assembly
             stage7_result = self.run_stage_7(
                 stage5_result["panels"],
                 stage1_result["project"].id
             )
 
+            if max_stage <= 7:
+                self._print_partial_summary(7, stage_names[7], stage7_result)
+                return True
+
             # Stage 8: Post-Processing
             stage8_result = self.run_stage_8(
                 stage1_result["project"].id
             )
+
+            if max_stage <= 8:
+                self._print_partial_summary(8, stage_names[8], stage8_result)
+                return True
 
             # Stage 9: Output
             stage9_result = self.run_stage_9(
@@ -894,6 +939,30 @@ class ComicCreationEngine:
             import traceback
             self.logger.error(traceback.format_exc())
             return False
+
+    def _print_partial_summary(self, stage_num: int, stage_name: str, result: dict):
+        """Print summary when stopping at a partial stage."""
+        self.log_header(f"PIPELINE COMPLETE (Stage {stage_num})")
+        runtime = time.time() - self.start_time
+
+        summaries = {
+            1: lambda: f"📊 Project: {result.get('project', {}).get('id', 'unknown')}\n📊 Chapters: {len(result.get('chapters', []))}\n📊 Scenes: {len(result.get('scenes', []))}",
+            2: lambda: f"📊 Chapters: {len(result.get('chapters', []))}\n📊 Scenes: {len(result.get('scenes', []))}",
+            3: lambda: f"📊 Visual Beats: {len(result.get('visual_beats', []))}\n📊 Storyboards: {len(result.get('storyboards', []))}",
+            4: lambda: f"📊 Characters: {len(result.get('characters', []))}",
+            5: lambda: f"📊 Panels: {len(result.get('panels', []))}",
+            6: lambda: f"📊 Images Queued: {result.get('queued', 0)}\n📊 Images Generated: {result.get('generated', 0)}",
+            7: lambda: f"📊 Pages Assembled: {len(result.get('pages', []))}",
+            8: lambda: f"📊 SFX Generated: {len(result.get('sfx', []))}\n📊 Quality Checks: {result.get('quality_passed', 0)}/{result.get('quality_total', 0)}",
+        }
+
+        summary = f"""
+⏱️ Runtime: {runtime:.2f}s
+{summaries[stage_num]()}
+📂 Output: {result.get('output_dir', 'N/A')}
+"""
+        self.logger.info(summary)
+        self.logger.info(f"💡 Run with --stage {stage_num + 1} to continue...")
 
     def _print_summary(self, *stage_results):
         """Print pipeline summary."""
@@ -932,6 +1001,7 @@ Examples:
   python main.py --url "https://www.gutenberg.org/files/174/174-0.txt"
   python main.py --file ./book.txt
   python main.py --url "https://www.gutenberg.org/files/174/174-0.txt" --no-mock
+  python main.py --url "https://www.gutenberg.org/files/174/174-0.txt" --stage 3
         """
     )
 
@@ -940,6 +1010,8 @@ Examples:
     parser.add_argument("--mock", action="store_true", default=True, help="Use mock LLM (default: True)")
     parser.add_argument("--no-mock", dest="mock", action="store_false", help="Use real LLM")
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose logging")
+    parser.add_argument("--stage", "-s", type=int, default=9, choices=range(1, 10),
+                        help="Run up to specified stage (1-9, default: 9)")
 
     args = parser.parse_args()
 
@@ -950,7 +1022,7 @@ Examples:
     source_type = "url" if args.url else "file"
 
     engine = ComicCreationEngine(use_mock=args.mock, verbose=args.verbose)
-    success = engine.run(source, source_type)
+    success = engine.run(source, source_type, max_stage=args.stage)
 
     sys.exit(0 if success else 1)
 
