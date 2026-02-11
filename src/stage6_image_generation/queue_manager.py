@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from queue import Queue
 from threading import Thread, Lock
 
-from .base import (
+from .providers.base import (
     ImageProvider,
     GenerationResult,
     ImageSize,

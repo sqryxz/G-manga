@@ -4,7 +4,7 @@ Tracks characters using text embeddings for consistency.
 """
 
 import re
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Any, Optional
 from dataclasses import dataclass
 from collections import defaultdict
 

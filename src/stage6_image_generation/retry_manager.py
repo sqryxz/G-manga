@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from collections import defaultdict
 
-from .base import (
+from .providers.base import (
     ImageProvider,
     ProviderType,
     GenerationResult,

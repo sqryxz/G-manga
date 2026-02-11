@@ -146,7 +146,6 @@ class StatePersistence:
             scene = Scene(
                 id=scene_data["id"],
                 chapter_id=scene_data["chapter_id"],
-                chapter_number=scene_data["chapter_number"],
                 number=scene_data["number"],
                 summary=scene_data["summary"],
                 location=scene_data["location"],

@@ -9,7 +9,7 @@ from typing import Dict, List, Any, Optional
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .base import GenerationResult, ImageProvider
+from .providers.base import GenerationResult, ImageProvider
 
 
 class ImageStorage:
