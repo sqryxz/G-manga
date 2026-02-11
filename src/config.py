@@ -224,14 +224,16 @@ class OpenRouterSettings(BaseSettings):
         description="Enable OpenRouter provider"
     )
     default_model: str = Field(
-        default="stabilityai/stable-diffusion-xl-base-1.0",
+        default="black-forest-labs/flux.2-klein-4b",
         description="Default model identifier"
     )
     available_models: list = Field(
         default_factory=lambda: [
+            "black-forest-labs/flux.2-klein-4b",
+            "black-forest-labs/flux.2-pro",
+            "black-forest-labs/flux.2-schnell",
+            "google/gemini-2.5-flash-image",
             "stabilityai/stable-diffusion-xl-base-1.0",
-            "stabilityai/stable-diffusion-xl-refiner-1.0",
-            "runwayml/stable-diffusion-v1-5",
         ],
         description="Available models"
     )
@@ -252,7 +254,7 @@ class OpenRouterSettings(BaseSettings):
         description="Application name for OpenRouter"
     )
     cost_per_image: float = Field(
-        default=0.01,
+        default=0.02,
         description="Cost per image in USD (varies by model)"
     )
     rate_limit: int = Field(
@@ -293,7 +295,7 @@ class ImageGenerationSettings(BaseSettings):
     
     # Default provider
     default_provider: str = Field(
-        default="dalle3",
+        default="openrouter",
         description="Default image generation provider"
     )
     

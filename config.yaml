@@ -74,18 +74,19 @@ image:
   # OpenRouter Configuration (supports multiple SD models)
   openrouter:
     enabled: true
-    default_model: "stabilityai/stable-diffusion-xl-base-1.0"
+    default_model: "black-forest-labs/flux.2-klein-4b"
     available_models:
+      - "black-forest-labs/flux.2-klein-4b"
+      - "black-forest-labs/flux.2-pro"
+      - "black-forest-labs/flux.2-schnell"
+      - "google/gemini-2.5-flash-image"
       - "stabilityai/stable-diffusion-xl-base-1.0"
       - "stabilityai/stable-diffusion-xl-refiner-1.0"
-      - "runwayml/stable-diffusion-v1-5"
-      - "runwayml/stable-diffusion-v2-1-base"
-      - "stabilityai/stable-diffusion-2-1-base"
     size: "1024x1024"
     api_key_env: "OPENROUTER_API_KEY"  # Environment variable for API key
     attribution_http_referer: ""  # Your website URL (optional)
     attribution_x_title: "G-Manga"  # Your app name
-    cost_per_image: 0.01  # USD (varies by model)
+    cost_per_image: 0.02  # USD (varies by model)
     rate_limit: 20  # requests per minute
     timeout: 60  # seconds
     max_retries: 3
