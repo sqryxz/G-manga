@@ -123,6 +123,170 @@ class LLMSettings(BaseSettings):
         return bool(self.get_api_key())
 
 
+class DALLESettings(BaseSettings):
+    """DALL-E 3 specific settings."""
+    model_config = SettingsConfigDict(env_prefix="IMAGE_DALLE_")
+    
+    enabled: bool = Field(
+        default=True,
+        description="Enable DALL-E 3 provider"
+    )
+    model: str = Field(
+        default="dall-e-3",
+        description="DALL-E model version"
+    )
+    size: str = Field(
+        default="1024x1024",
+        description="DALL-E image size"
+    )
+    quality: str = Field(
+        default="hd",
+        description="DALL-E image quality (standard or hd)"
+    )
+    style: str = Field(
+        default="vivid",
+        description="Image style (vivid or natural)"
+    )
+    api_key_env: str = Field(
+        default="OPENAI_API_KEY",
+        description="Environment variable for API key"
+    )
+    cost_per_image: float = Field(
+        default=0.04,
+        description="Cost per image in USD"
+    )
+    rate_limit: int = Field(
+        default=10,
+        description="Rate limit (requests per minute)"
+    )
+    timeout: int = Field(
+        default=60,
+        description="Timeout in seconds"
+    )
+    max_retries: int = Field(
+        default=3,
+        description="Maximum retry attempts"
+    )
+
+
+class SDXLSettings(BaseSettings):
+    """Stability AI SDXL specific settings."""
+    model_config = SettingsConfigDict(env_prefix="IMAGE_SDXL_")
+    
+    enabled: bool = Field(
+        default=True,
+        description="Enable SDXL provider"
+    )
+    model: str = Field(
+        default="stable-diffusion-xl-1024-v1-0",
+        description="SDXL model identifier"
+    )
+    size: str = Field(
+        default="1024x1024",
+        description="Default image size"
+    )
+    steps: int = Field(
+        default=30,
+        description="Number of diffusion steps"
+    )
+    cfg_scale: float = Field(
+        default=7.5,
+        description="Classifier-free guidance scale"
+    )
+    api_key_env: str = Field(
+        default="STABILITY_API_KEY",
+        description="Environment variable for API key"
+    )
+    cost_per_image: float = Field(
+        default=0.04,
+        description="Cost per image in USD"
+    )
+    rate_limit: int = Field(
+        default=20,
+        description="Rate limit (requests per minute)"
+    )
+    timeout: int = Field(
+        default=60,
+        description="Timeout in seconds"
+    )
+    max_retries: int = Field(
+        default=3,
+        description="Maximum retry attempts"
+    )
+
+
+class OpenRouterSettings(BaseSettings):
+    """OpenRouter image generation settings."""
+    model_config = SettingsConfigDict(env_prefix="IMAGE_OPENROUTER_")
+    
+    enabled: bool = Field(
+        default=True,
+        description="Enable OpenRouter provider"
+    )
+    default_model: str = Field(
+        default="stabilityai/stable-diffusion-xl-base-1.0",
+        description="Default model identifier"
+    )
+    available_models: list = Field(
+        default_factory=lambda: [
+            "stabilityai/stable-diffusion-xl-base-1.0",
+            "stabilityai/stable-diffusion-xl-refiner-1.0",
+            "runwayml/stable-diffusion-v1-5",
+        ],
+        description="Available models"
+    )
+    size: str = Field(
+        default="1024x1024",
+        description="Default image size"
+    )
+    api_key_env: str = Field(
+        default="OPENROUTER_API_KEY",
+        description="Environment variable for API key"
+    )
+    attribution_http_referer: str = Field(
+        default="",
+        description="Website URL for OpenRouter rankings"
+    )
+    attribution_x_title: str = Field(
+        default="G-Manga",
+        description="Application name for OpenRouter"
+    )
+    cost_per_image: float = Field(
+        default=0.01,
+        description="Cost per image in USD (varies by model)"
+    )
+    rate_limit: int = Field(
+        default=20,
+        description="Rate limit (requests per minute)"
+    )
+    timeout: int = Field(
+        default=60,
+        description="Timeout in seconds"
+    )
+    max_retries: int = Field(
+        default=3,
+        description="Maximum retry attempts"
+    )
+
+
+class MidjourneySettings(BaseSettings):
+    """Midjourney specific settings."""
+    model_config = SettingsConfigDict(env_prefix="IMAGE_MIDJOURNEY_")
+    
+    enabled: bool = Field(
+        default=False,
+        description="Enable Midjourney provider (requires additional setup)"
+    )
+    api_key_env: str = Field(
+        default="MIDJOURNEY_API_KEY",
+        description="Environment variable for API key"
+    )
+    cost_per_image: float = Field(
+        default=0.10,
+        description="Cost per image in USD (approximate)"
+    )
+
+
 class ImageGenerationSettings(BaseSettings):
     """Image generation settings."""
     model_config = SettingsConfigDict(env_prefix="IMAGE_")
@@ -133,30 +297,25 @@ class ImageGenerationSettings(BaseSettings):
         description="Default image generation provider"
     )
     
-    # DALL-E 3 settings
-    dalle_model: str = Field(
-        default="dall-e-3",
-        description="DALL-E model version"
-    )
-    dalle_size: str = Field(
-        default="1024x1024",
-        description="DALL-E image size"
-    )
-    dalle_quality: str = Field(
-        default="hd",
-        description="DALL-E image quality (standard or hd)"
+    # Provider-specific settings
+    dalle: DALLESettings = Field(
+        default_factory=DALLESettings,
+        description="DALL-E 3 configuration"
     )
     
-    # SDXL settings
-    sdxl_model: str = Field(
-        default="stabilityai/stable-diffusion-xl-base-1.0",
-        description="SDXL model identifier"
+    sdxl: SDXLSettings = Field(
+        default_factory=SDXLSettings,
+        description="SDXL configuration"
     )
     
-    # Midjourney settings
-    midjourney_enabled: bool = Field(
-        default=False,
-        description="Enable Midjourney API (requires additional setup)"
+    openrouter: OpenRouterSettings = Field(
+        default_factory=OpenRouterSettings,
+        description="OpenRouter configuration"
+    )
+    
+    midjourney: MidjourneySettings = Field(
+        default_factory=MidjourneySettings,
+        description="Midjourney configuration"
     )
 
 

@@ -24,6 +24,23 @@ from .dalle import (
     create_dalle3_provider
 )
 
+from .sdxl import (
+    SDXLProvider,
+    create_sdxl_provider
+)
+
+from .openrouter import (
+    OpenRouterImageProvider,
+    create_openrouter_provider
+)
+
+from .factory import (
+    ImageProviderFactory,
+    ProviderRegistry,
+    create_image_provider,
+    get_provider_info
+)
+
 __all__ = [
     # Base classes and interfaces
     "ImageProvider",
@@ -43,4 +60,15 @@ __all__ = [
     # DALL-E 3
     "DALLE3Provider",
     "create_dalle3_provider",
+    # SDXL
+    "SDXLProvider",
+    "create_sdxl_provider",
+    # OpenRouter
+    "OpenRouterImageProvider",
+    "create_openrouter_provider",
+    # Factory
+    "ImageProviderFactory",
+    "ProviderRegistry",
+    "create_image_provider",
+    "get_provider_info",
 ]

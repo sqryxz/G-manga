@@ -45,16 +45,56 @@ llm:
 image:
   default_provider: "dalle3"
   
-  # DALL-E 3
-  dalle_model: "dall-e-3"
-  dalle_size: "1024x1024"
-  dalle_quality: "hd"
+  # DALL-E 3 Configuration
+  dalle:
+    enabled: true
+    model: "dall-e-3"
+    size: "1024x1024"
+    quality: "hd"
+    style: "vivid"  # "vivid" or "natural"
+    api_key_env: "OPENAI_API_KEY"  # Environment variable for API key
+    cost_per_image: 0.04  # USD for 1024x1024 standard
+    rate_limit: 10  # requests per minute
+    timeout: 60  # seconds
+    max_retries: 3
   
-  # SDXL
-  sdxl_model: "stabilityai/stable-diffusion-xl-base-1.0"
+  # SDXL (Stability AI) Configuration
+  sdxl:
+    enabled: true
+    model: "stable-diffusion-xl-1024-v1-0"
+    size: "1024x1024"
+    steps: 30
+    cfg_scale: 7.5
+    api_key_env: "STABILITY_API_KEY"  # Environment variable for API key
+    cost_per_image: 0.04  # USD
+    rate_limit: 20  # requests per minute
+    timeout: 60  # seconds
+    max_retries: 3
   
-  # Midjourney (requires additional setup)
-  midjourney_enabled: false
+  # OpenRouter Configuration (supports multiple SD models)
+  openrouter:
+    enabled: true
+    default_model: "stabilityai/stable-diffusion-xl-base-1.0"
+    available_models:
+      - "stabilityai/stable-diffusion-xl-base-1.0"
+      - "stabilityai/stable-diffusion-xl-refiner-1.0"
+      - "runwayml/stable-diffusion-v1-5"
+      - "runwayml/stable-diffusion-v2-1-base"
+      - "stabilityai/stable-diffusion-2-1-base"
+    size: "1024x1024"
+    api_key_env: "OPENROUTER_API_KEY"  # Environment variable for API key
+    attribution_http_referer: ""  # Your website URL (optional)
+    attribution_x_title: "G-Manga"  # Your app name
+    cost_per_image: 0.01  # USD (varies by model)
+    rate_limit: 20  # requests per minute
+    timeout: 60  # seconds
+    max_retries: 3
+  
+  # Midjourney (requires additional setup via Discord)
+  midjourney:
+    enabled: false
+    api_key_env: "MIDJOURNEY_API_KEY"  # Not currently supported
+    cost_per_image: 0.10  # USD (approximate)
 
 # Manga Styling
 manga:
