@@ -1,0 +1,97 @@
+{
+  "total_panels": 60,
+  "panels_per_page": 6,
+  "total_pages": 10,
+  "pages": [
+    {
+      "page_number": 1,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_001.png"
+    },
+    {
+      "page_number": 2,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_002.png"
+    },
+    {
+      "page_number": 3,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_003.png"
+    },
+    {
+      "page_number": 4,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_004.png"
+    },
+    {
+      "page_number": 5,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_005.png"
+    },
+    {
+      "page_number": 6,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_006.png"
+    },
+    {
+      "page_number": 7,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_007.png"
+    },
+    {
+      "page_number": 8,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_008.png"
+    },
+    {
+      "page_number": 9,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_009.png"
+    },
+    {
+      "page_number": 10,
+      "width": 2480,
+      "height": 3508,
+      "panel_count": 0,
+      "reading_order": [],
+      "panel_positions": {},
+      "saved_path": "/home/clawd/projects/g-manga/output/projects/picture-of-dorian-gray-20260212-20260212/output/comic_pages/page_010.png"
+    }
+  ]
+}
