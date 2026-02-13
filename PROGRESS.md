@@ -1,89 +1,164 @@
 # G-Manga Development Progress
 
-**Last Updated:** 2026-02-10 07:45 UTC
+**Last Updated:** 2026-02-13 20:55 UTC
 
 ---
 
-## Overall Progress: 100.0%
-**Subtasks Complete:** 61/61
+## Overall Progress: 70%
+**Coverage:** Chapters 1-4 of 20 (20% of "The Picture of Dorian Gray")
 
 ---
 
-## Stage Breakdown
+## Pipeline Status
 
-### ✅ Stage 1: Input (Gutenberg Fetching) — 100%
-- Subtasks: 6/6 complete
+### ✅ Stage 1: Input Processing — 100%
+- Fetch Gutenberg text (429KB)
+- Parse and clean text
+- Extract metadata (Oscar Wilde, 1890)
+- Initialize project structure
 
 ### ✅ Stage 2: Preprocessing — 100%
-- Subtasks: 6/6 complete
+- Text cleaning (remove Gutenberg headers/footers)
+- Chapter segmentation (20 chapters extracted)
+- Scene breakdown (76 scenes identified)
 
-### ✅ Stage 3: Story Planning — 100%
-- Subtasks: 7/7 complete
+### ✅ Stage 3: Storyboard Generation — 100%
+- Visual beats extraction
+- Panel specifications (60 panels)
+- Victorian-era storyboard content
 
 ### ✅ Stage 4: Character Design — 100%
-- Subtasks: 5/5 complete
+- Character extraction (10 characters)
+- Character profiles (appearance, clothing, personality)
+- **Visual reference sheets generated** (11 images)
+  - 10 individual character sheets
+  - 1 combined grid
 
-### ✅ Stage 5: Panel Generation — 100%
-- Subtasks: 6/6 complete
+### ✅ Stage 5: Panel Prompts — 100%
+- 60 panel prompts generated
+- Victorian manga style (B&W)
+- Dialogue and narration included
 
 ### ✅ Stage 6: Image Generation — 100%
-- Subtasks: 8/8 complete
+- 60 panel images generated
+- **Model:** google/gemini-2.5-flash-image (via OpenRouter)
+- Victorian manga aesthetic
 
 ### ✅ Stage 7: Layout & Assembly — 100%
-- Subtasks: 6/6 complete
+- 10 comic pages composed
+- 6 panels per page grid layout
+- Panel borders and reading order
 
-### ✅ Stage 8: Post-Processing — 100%
-- Subtasks: 4/4 complete
+### 🚧 Stage 8: Post-Processing — Pending
+- Speech bubbles (not yet added)
+- SFX overlay (not yet added)
+- Quality checks (not yet run)
 
-### ✅ Stage 9: Output — 100%
-- Subtasks: 5/5 complete
-
----
-
-## Pipeline Complete! 🎉
-
-All 9 stages of the G-Manga pipeline are now complete:
-
-1. **Input** - Fetch and parse Gutenberg texts
-2. **Preprocessing** - Clean text, segment chapters, scene breakdown
-3. **Story Planning** - Convert prose to visual storyboards
-4. **Character Design** - Extract characters, generate reference sheets
-5. **Panel Generation** - Build optimized image prompts
-6. **Image Generation** - DALL-E 3, SDXL integration
-7. **Layout & Assembly** - Compose panels into manga pages
-8. **Post-Processing** - Speech bubbles, SFX, quality checks
-9. **Output** - PDF, CBZ, Image, Metadata exporters
+### 🚧 Stage 9: Output — Pending
+- PDF export
+- CBZ comic archive
+- Metadata export
 
 ---
 
-## Recently Completed (Feb 10, 2026)
+## Character Consistency System
 
-- **SFX Generator** (`src/stage8_postprocessing/sfx_generator.py`) - Full implementation with impact, speed, movement, sensory, and abstract SFX types with multiple style options
+### ✅ Character Reference Sheets Generated
+**Location:** `output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/`
 
-- **Metadata Exporter** (`src/stage9_output/exporters/metadata.py`) - JSON/CSV/YAML export of project metadata, character sheets, and story summaries
+| File | Character |
+|------|-----------|
+| 01_Dorian_Gray_reference.png | Dorian Gray |
+| 02_Basil_Hallward_reference.png | Basil Hallward |
+| 03_Lord_Henry_Wotton_reference.png | Lord Henry Wotton |
+| 04_Sibyl_Vane_reference.png | Sibyl Vane |
+| 05_James_Vane_reference.png | James Vane |
+| 06_Lady_Victoria_Wotton_reference.png | Lady Victoria Wotton |
+| 07_Alan_Campbell_reference.png | Alan Campbell |
+| 08_Lady_Narborough_reference.png | Lady Narborough |
+| 09_Adrian_Singleton_reference.png | Adrian Singleton |
+| 10_The_Painter_reference.png | The Painter |
+| 99_combined_reference_sheet.png | All characters |
 
-- **Integration Test** (`tests/test_stage9_output.py`) - Comprehensive test suite for all output exporters
+### ✅ Character Mapping Created
+**Location:** `output/projects/picture-of-dorian-gray-20260213-20260213/intermediate/character_mapping.json`
+
+Includes:
+- Color palettes (hex codes)
+- Key physical features
+- Clothing descriptions
+- Personality traits
+- Reference sheet paths
+
+### ✅ Panel Prompts Updated
+**Location:** `output/projects/picture-of-dorian-gray-20260213-20260213/intermediate/panel_prompts.json`
+
+- **54 of 60 panels** now include character references
+- Each reference includes: name, appearance, clothing, reference sheet path, style note
+- Style note: "B&W manga style - maintain consistent character design"
+
+---
+
+## Output Files Generated
+
+```
+output/projects/picture-of-dorian-gray-20260213-20260213/
+├── intermediate/
+│   ├── characters.json (10 character profiles)
+│   ├── character_reference_sheets.json (detailed reference data)
+│   ├── character_mapping.json (character → reference sheet mapping)
+│   ├── storyboard.json (60 panels)
+│   └── panel_prompts.json (60 prompts with character refs)
+└── output/
+    ├── character_refs/ (11 visual reference sheets)
+    └── panels/ (60 generated panel images)
+
+output/projects/picture-of-dorian-gray-20260212-20260212/
+└── output/
+    ├── panels/ (60 panel images)
+    └── comic_pages/ (10 composed pages)
+```
+
+---
+
+## Git Commits
+
+| Date | Commit | Description |
+|------|--------|-------------|
+| 2026-02-13 | aa086d2 | Fix: Regenerate comic pages with visible panel content |
+| 2026-02-13 | 5242d47 | Add visual character reference sheets (11 images) |
+| 2026-02-13 | 1375867 | Add character references to panel prompts for consistency |
+
+---
+
+## Known Issues
+
+1. **6 panels without character references** - Chapter 2, Scene 3 (ballroom scenes with generic guests)
+2. **Stage 8 pending** - Speech bubbles and SFX not yet added
+3. **Panel ID mismatch in original run** - Fixed by custom layout script
 
 ---
 
 ## Next Steps
 
-The core pipeline is complete. Potential enhancements:
-
-1. **Install fpdf** for full PDF support: `pip install fpdf`
-2. **CLI Integration** - Create main entry point
-3. **End-to-End Test** - Run full pipeline with actual Gutenberg book
-4. **UI Dashboard** - Web interface for monitoring progress
+1. **Run Stage 8** - Add speech bubbles and SFX
+2. **Run Stage 9** - Generate PDF and CBZ exports
+3. **Continue pipeline** - Process remaining 16 chapters
+4. **Regenerate panels with character refs** - For true visual consistency
 
 ---
 
 ## Statistics
 
-- **Total Subtasks:** 61/61
-- **Completed:** 61/61 (100%)
-- **In Progress:** 0/61
-- **Pending:** 0/61
-- **Overall Completion:** 100%
+- **Total Chapters:** 20
+- **Chapters Processed:** 4 (20%)
+- **Total Scenes:** 76
+- **Scenes Processed:** 12 (partial)
+- **Total Panels:** 60
+- **Panels Generated:** 60
+- **Characters Extracted:** 10
+- **Character Reference Sheets:** 11 images
+- **Comic Pages:** 10
 
 ---
 
