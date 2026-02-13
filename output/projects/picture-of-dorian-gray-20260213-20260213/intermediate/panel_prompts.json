@@ -1,0 +1,2304 @@
+{
+  "panels": [
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-1-scene-1",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. The scene opens in a lavish Victorian studio, adorned with intricate woodwork and tall bookcases filled with leather-bound volumes. An oil portrait dominates one wall, capturing the viewer's attention with its lifelike detail. In the center, a vase overflows with freshly cut roses, lending a delicate fragrance to the air.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: warm gaslight, amber tones\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "The scene opens in a lavish Victorian studio, adorned with intricate woodwork and tall bookcases filled with leather-bound volumes. An oil portrait dominates one wall, capturing the viewer's attention with its lifelike detail. In the center, a vase overflows with freshly cut roses, lending a delicate fragrance to the air.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat, cravat with pearl pin",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers, dark frock coat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-1-scene-1",
+      "panel_number": 2,
+      "prompt": "Manga panel, TWO-SHOT shot, three-quarter angle. Basil Hallward stands beside Lord Henry Wotton, his expression a mix of pride and apprehension as he gestures towards the portrait. Lord Henry, with a curious glint in his eye, leans slightly forward, scrutinizing the work with interest.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: refined elegance\nLighting: soft daylight filtering through lace curtains\nCharacters: Basil Hallward, Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Basil Hallward stands beside Lord Henry Wotton, his expression a mix of pride and apprehension as he gestures towards the portrait. Lord Henry, with a curious glint in his eye, leans slightly forward, scrutinizing the work with interest.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-1-scene-1",
+      "panel_number": 3,
+      "prompt": "Manga panel, CLOSE-UP shot, profile angle. A close-up of Basil's face reveals his deep concern, his eyes glancing nervously at Lord Henry. The soft glow of an oil lamp casts gentle shadows, highlighting the lines of worry etched into his forehead.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: Victorian intrigue\nLighting: subtle oil lamp glow\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "A close-up of Basil's face reveals his deep concern, his eyes glancing nervously at Lord Henry. The soft glow of an oil lamp casts gentle shadows, highlighting the lines of worry etched into his forehead.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-1-scene-1",
+      "panel_number": 4,
+      "prompt": "Manga panel, MEDIUM SHOT shot, over-the-shoulder angle. The perspective shifts to over Lord Henry's shoulder, revealing the stunning portrait of a young man, Dorian Gray. The painting is vibrant, capturing the essence of youth and beauty. Lord Henry's hand holds a handwritten letter, partially visible.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: captivating, enigmatic\nLighting: natural daylight\nCharacters: Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "The perspective shifts to over Lord Henry's shoulder, revealing the stunning portrait of a young man, Dorian Gray. The painting is vibrant, capturing the essence of youth and beauty. Lord Henry's hand holds a handwritten letter, partially visible.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-1-scene-1",
+      "panel_number": 5,
+      "prompt": "Manga panel, REACTION SHOT shot, eye-level angle. Lord Henry's eyes widen in fascination, a slight smile playing on his lips. He appears both intrigued and slightly amused, as if contemplating the untapped potential of the young man in the painting.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: intriguing, charming\nLighting: dappled daylight\nCharacters: Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Lord Henry's eyes widen in fascination, a slight smile playing on his lips. He appears both intrigued and slightly amused, as if contemplating the untapped potential of the young man in the painting.",
+      "character_refs": [
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-1-scene-1",
+      "panel_number": 6,
+      "prompt": "Manga panel, WIDE SHOT shot, high-angle angle. The studio is bathed in a warm glow as the afternoon sun streams through the lace curtains. Basil and Lord Henry stand amidst the artistic clutter of the studio, the portrait serving as a focal point. The scene captures a moment of quiet contemplation, laden with unspoken possibilities.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic romance\nLighting: golden afternoon light\nCharacters: Basil Hallward, Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "The studio is bathed in a warm glow as the afternoon sun streams through the lace curtains. Basil and Lord Henry stand amidst the artistic clutter of the studio, the portrait serving as a focal point. The scene captures a moment of quiet contemplation, laden with unspoken possibilities.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-1-scene-2",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. A sprawling Victorian rose garden bathed in the soft glow of late afternoon sunlight. The scene is serene, with meticulously manicured rose bushes and a stone pathway leading to an ornate wrought-iron bench. In the distance, the silhouette of a grand Gothic manor looms, hinting at opulence and mystery.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: natural daylight through lace curtains\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "A sprawling Victorian rose garden bathed in the soft glow of late afternoon sunlight. The scene is serene, with meticulously manicured rose bushes and a stone pathway leading to an ornate wrought-iron bench. In the distance, the silhouette of a grand Gothic manor looms, hinting at opulence and mystery.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat, cravat with pearl pin",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-1-scene-2",
+      "panel_number": 2,
+      "prompt": "Manga panel, MEDIUM shot, over-the-shoulder angle. Lord Henry Wotton, dressed in an elegant frock coat and waistcoat, sits casually on the wrought-iron bench. His posture is relaxed yet commanding as he gazes at Dorian Gray, who stands nearby, listening intently. The roses behind them are in full bloom, their vibrant colors contrasting with the somber tone of the conversation.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: intriguing, elegant\nLighting: dappled sunlight through rose petals\nCharacters: Lord Henry Wotton, Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Lord Henry Wotton, dressed in an elegant frock coat and waistcoat, sits casually on the wrought-iron bench. His posture is relaxed yet commanding as he gazes at Dorian Gray, who stands nearby, listening intently. The roses behind them are in full bloom, their vibrant colors contrasting with the somber tone of the conversation.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-1-scene-2",
+      "panel_number": 3,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. A close-up of Dorian Gray's face, capturing the moment of intrigue and subtle seduction by Lord Henry's words. His youthful features are highlighted by the soft, warm light filtering through the roses, his expression one of captivated curiosity.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: captivated, contemplative\nLighting: warm natural light\nCharacters: Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "A close-up of Dorian Gray's face, capturing the moment of intrigue and subtle seduction by Lord Henry's words. His youthful features are highlighted by the soft, warm light filtering through the roses, his expression one of captivated curiosity.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-1-scene-2",
+      "panel_number": 4,
+      "prompt": "Manga panel, TWO-SHOT shot, eye-level angle. Lord Henry leans forward slightly, his expression a mix of amusement and cunning. Dorian stands opposite him, holding a single rose, his attention fully captured. The surrounding garden seems to close in, creating an intimate and conspiratorial atmosphere.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: conspiratorial, intimate\nLighting: soft, enveloping\nCharacters: Lord Henry Wotton, Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Lord Henry leans forward slightly, his expression a mix of amusement and cunning. Dorian stands opposite him, holding a single rose, his attention fully captured. The surrounding garden seems to close in, creating an intimate and conspiratorial atmosphere.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-1-scene-2",
+      "panel_number": 5,
+      "prompt": "Manga panel, MEDIUM shot, eye-level angle. A pensive Dorian Gray looks down at the rose in his hand, as if contemplating its beauty and the fleeting nature of life. The manor in the background casts long shadows, emphasizing the themes of beauty and decay.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: pensive, reflective\nLighting: soft, fading daylight\nCharacters: Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "original_description": "A pensive Dorian Gray looks down at the rose in his hand, as if contemplating its beauty and the fleeting nature of life. The manor in the background casts long shadows, emphasizing the themes of beauty and decay.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray"
+      ]
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-1-scene-2",
+      "panel_number": 6,
+      "prompt": "Manga panel, WIDE shot, eye-level angle. The garden path stretches ahead, lined with roses and leading towards the imposing entrance of the Gothic manor. Lord Henry walks slightly ahead, turning back with a knowing smile, while Dorian hesitantly follows, the rose still in hand.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: anticipatory, inviting\nLighting: twilight glow\nCharacters: Lord Henry Wotton, Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "The garden path stretches ahead, lined with roses and leading towards the imposing entrance of the Gothic manor. Lord Henry walks slightly ahead, turning back with a knowing smile, while Dorian hesitantly follows, the rose still in hand.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-1-scene-3",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. The scene opens in Basil's studio, a richly furnished Victorian room. An ornate gas lamp casts a warm, amber glow over the space, highlighting rows of leather-bound books in the mahogany bookcase. A large oil portrait of Dorian Gray dominates one wall, surrounded by vases of fresh roses. The intricate patterns of the oriental rug add elegance to the room.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: warm gaslight, amber tones\nCharacters: \nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "The scene opens in Basil's studio, a richly furnished Victorian room. An ornate gas lamp casts a warm, amber glow over the space, highlighting rows of leather-bound books in the mahogany bookcase. A large oil portrait of Dorian Gray dominates one wall, surrounded by vases of fresh roses. The intricate patterns of the oriental rug add elegance to the room.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-1-scene-3",
+      "panel_number": 2,
+      "prompt": "Manga panel, MEDIUM shot, three-quarter angle. Basil Hallward stands near the portrait, holding a paintbrush, his gaze fixed on his work. He is dressed in a dark frock coat with a waistcoat, embodying Victorian refinement. The gaslight reflects off his concentrated expression as he adds final touches to the canvas.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: refined elegance\nLighting: soft gaslight\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "Basil Hallward stands near the portrait, holding a paintbrush, his gaze fixed on his work. He is dressed in a dark frock coat with a waistcoat, embodying Victorian refinement. The gaslight reflects off his concentrated expression as he adds final touches to the canvas.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-1-scene-3",
+      "panel_number": 3,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. Dorian Gray sits on a velvet divan, his face illuminated by the gentle glow of the lamp. His expression is introspective, eyes slightly downcast and lips pursed in thought. He wears an impeccably tailored waistcoat and cravat, embodying youthful elegance.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: introspective\nLighting: soft lamp light\nCharacters: Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "original_description": "Dorian Gray sits on a velvet divan, his face illuminated by the gentle glow of the lamp. His expression is introspective, eyes slightly downcast and lips pursed in thought. He wears an impeccably tailored waistcoat and cravat, embodying youthful elegance.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray"
+      ]
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-1-scene-3",
+      "panel_number": 4,
+      "prompt": "Manga panel, MEDIUM shot, over-the-shoulder angle. From behind Dorian, the viewer sees his gaze shift toward the large portrait across the room. The painting captures the youthful beauty he is known for, but under the soft light, the viewer senses the foreboding nature of its perfection.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: Victorian intrigue\nLighting: ambient\nCharacters: Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "original_description": "From behind Dorian, the viewer sees his gaze shift toward the large portrait across the room. The painting captures the youthful beauty he is known for, but under the soft light, the viewer senses the foreboding nature of its perfection.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray"
+      ]
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-1-scene-3",
+      "panel_number": 5,
+      "prompt": "Manga panel, MEDIUM CLOSE-UP shot, eye-level angle. Basil pauses, his hand hovering over a palette as he observes Dorian. His eyes, filled with a mix of admiration and concern, convey his internal struggle over the influence he fears Dorian is under.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: concerned, contemplative\nLighting: dim gaslight\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "original_description": "Basil pauses, his hand hovering over a palette as he observes Dorian. His eyes, filled with a mix of admiration and concern, convey his internal struggle over the influence he fears Dorian is under.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        },
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward",
+        "Dorian Gray"
+      ]
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-1-scene-3",
+      "panel_number": 6,
+      "prompt": "Manga panel, WIDE shot, eye-level angle. The studio is quiet, with only the soft crackle of a distant fireplace. Dorian stands, moving toward the portrait with a determined look, as if confronting his own image. The room, filled with classic Victorian decor, seems to hold its breath in anticipation.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: dramatic tension\nLighting: flickering candlelight\nCharacters: Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "original_description": "The studio is quiet, with only the soft crackle of a distant fireplace. Dorian stands, moving toward the portrait with a determined look, as if confronting his own image. The room, filled with classic Victorian decor, seems to hold its breath in anticipation.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray"
+      ]
+    },
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-2-scene-1",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. The scene opens in a lavish Victorian study, with walls lined by towering bookcases filled with leather-bound volumes. A large oil portrait dominates one wall, subtly illuminated by the gentle glow of a gaslamp. A vase of fresh roses sits on a mahogany desk, their fragrance permeating the air.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: warm gaslight, amber tones\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "The scene opens in a lavish Victorian study, with walls lined by towering bookcases filled with leather-bound volumes. A large oil portrait dominates one wall, subtly illuminated by the gentle glow of a gaslamp. A vase of fresh roses sits on a mahogany desk, their fragrance permeating the air.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-2-scene-1",
+      "panel_number": 2,
+      "prompt": "Manga panel, MEDIUM shot, over-the-shoulder angle. Basil Hallward stands by the portrait, his gaze contemplative as he admires his own masterpiece. The soft light from the gaslamp casts gentle shadows on the painting, enhancing its lifelike quality.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: introspective, artistic intrigue\nLighting: gaslamp casting shadows\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "Basil Hallward stands by the portrait, his gaze contemplative as he admires his own masterpiece. The soft light from the gaslamp casts gentle shadows on the painting, enhancing its lifelike quality.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-2-scene-1",
+      "panel_number": 3,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. A close-up of the portrait reveals a strikingly handsome young man, his expression captured with an almost ethereal quality. The intricate details of the face are highlighted by the soft light, showcasing the artist's meticulous skill.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: captivating, enigmatic\nLighting: soft focus on portrait\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "A close-up of the portrait reveals a strikingly handsome young man, his expression captured with an almost ethereal quality. The intricate details of the face are highlighted by the soft light, showcasing the artist's meticulous skill.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers, dark frock coat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-2-scene-1",
+      "panel_number": 4,
+      "prompt": "Manga panel, WIDE shot, eye-level angle. The camera pulls back to reveal the entire study, with a large window adorned with lace curtains filtering the daylight. The room is a blend of luxury and comfort, with plush divans and rich tapestries.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: refined elegance\nLighting: natural daylight through lace\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "The camera pulls back to reveal the entire study, with a large window adorned with lace curtains filtering the daylight. The room is a blend of luxury and comfort, with plush divans and rich tapestries.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers, dark frock coat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-2-scene-1",
+      "panel_number": 5,
+      "prompt": "Manga panel, MEDIUM shot, eye-level angle. Basil turns towards a small table where a handwritten letter rests, its seal already broken. The letter's contents are obscured, but its presence hints at messages yet to be revealed.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: anticipation, mystery\nLighting: soft daylight\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "Basil turns towards a small table where a handwritten letter rests, its seal already broken. The letter's contents are obscured, but its presence hints at messages yet to be revealed.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-2-scene-1",
+      "panel_number": 6,
+      "prompt": "Manga panel, MEDIUM shot, eye-level angle. A horse-drawn carriage is seen through the window, approaching the manor. Its arrival suggests an impending visit, adding to the air of expectation within the room.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: expectant, intriguing\nLighting: daylight casting soft shadows\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "A horse-drawn carriage is seen through the window, approaching the manor. Its arrival suggests an impending visit, adding to the air of expectation within the room.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers, dark frock coat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-2-scene-2",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. A lavish Victorian study with tall bookcases lining the walls. The room is bathed in warm, amber tones from the gas lamps, casting intricate shadows on the ornate wallpaper. A large, oil portrait of a distinguished gentleman hangs above a marble fireplace, and a vase of fresh roses sits on a polished mahogany desk.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: warm gaslight, amber tones\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "A lavish Victorian study with tall bookcases lining the walls. The room is bathed in warm, amber tones from the gas lamps, casting intricate shadows on the ornate wallpaper. A large, oil portrait of a distinguished gentleman hangs above a marble fireplace, and a vase of fresh roses sits on a polished mahogany desk.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat, cravat with pearl pin",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-2-scene-2",
+      "panel_number": 2,
+      "prompt": "Manga panel, MEDIUM shot, over-the-shoulder angle. Lord Henry Wotton, dressed in an elegant frock coat and waistcoat, stands by the window, peering through lace curtains at the rose garden below. His expression is one of intrigue as he observes something unseen.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: refined elegance, intrigue\nLighting: natural daylight\nCharacters: Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Lord Henry Wotton, dressed in an elegant frock coat and waistcoat, stands by the window, peering through lace curtains at the rose garden below. His expression is one of intrigue as he observes something unseen.",
+      "character_refs": [
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-2-scene-2",
+      "panel_number": 3,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. A handwritten letter rests on the desk, sealed with a wax stamp. The elegant penmanship hints at secrets and promises contained within the delicate pages.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: dark secrets, anticipation\nLighting: soft candlelight\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "A handwritten letter rests on the desk, sealed with a wax stamp. The elegant penmanship hints at secrets and promises contained within the delicate pages.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat, cravat with pearl pin",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-2-scene-2",
+      "panel_number": 4,
+      "prompt": "Manga panel, WIDE shot, high-angle angle. The ballroom, illuminated by a grand crystal chandelier, is filled with elegantly dressed guests in ball gowns and top hats. The air is a blend of music and whispered conversations, creating an atmosphere of refined elegance.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: elegance, social intrigue\nLighting: chandelier glow\nCharacters: Guests\nArt style: black and white manga with screen tones",
+      "original_description": "The ballroom, illuminated by a grand crystal chandelier, is filled with elegantly dressed guests in ball gowns and top hats. The air is a blend of music and whispered conversations, creating an atmosphere of refined elegance.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat, cravat with pearl pin",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-2-scene-2",
+      "panel_number": 5,
+      "prompt": "Manga panel, MEDIUM shot, profile angle. Dorian Gray, in a finely tailored waistcoat, stands beside a divan, holding a fresh rose. His youthful features are illuminated by the soft glow of an oil lamp, casting a contemplative shadow across his face.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: romantic, introspective\nLighting: soft oil lamp\nCharacters: Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "original_description": "Dorian Gray, in a finely tailored waistcoat, stands beside a divan, holding a fresh rose. His youthful features are illuminated by the soft glow of an oil lamp, casting a contemplative shadow across his face.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray"
+      ]
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-2-scene-2",
+      "panel_number": 6,
+      "prompt": "Manga panel, CLOSE-UP shot, low-angle angle. A horse-drawn carriage waits outside under the gaslit streetlamps. The carriage driver, wearing a top hat, holds the reins with quiet patience, ready to whisk the occupants away into the night.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: mysterious, anticipatory\nLighting: gaslit street\nCharacters: Carriage Driver\nArt style: black and white manga with screen tones",
+      "original_description": "A horse-drawn carriage waits outside under the gaslit streetlamps. The carriage driver, wearing a top hat, holds the reins with quiet patience, ready to whisk the occupants away into the night.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat, cravat with pearl pin",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-2-scene-3",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. The panel opens to a grand Victorian study illuminated by the warm glow of gas lamps. A large, ornate bookcase lines the wall, filled with leather-bound volumes. A majestic oil portrait hangs above a marble fireplace, casting an enigmatic aura.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: warm gaslight, amber tones\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "The panel opens to a grand Victorian study illuminated by the warm glow of gas lamps. A large, ornate bookcase lines the wall, filled with leather-bound volumes. A majestic oil portrait hangs above a marble fireplace, casting an enigmatic aura.",
+      "character_refs": [],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-2-scene-3",
+      "panel_number": 2,
+      "prompt": "Manga panel, MEDIUM shot, eye-level angle. A gentleman in a tailored frock coat stands by a window, gazing through lace curtains. His expression is thoughtful, almost melancholic. A handwritten letter lies open on a nearby mahogany desk.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: refined elegance, contemplation\nLighting: natural daylight through lace curtains\nCharacters: Unnamed Gentleman\nArt style: black and white manga with screen tones",
+      "original_description": "A gentleman in a tailored frock coat stands by a window, gazing through lace curtains. His expression is thoughtful, almost melancholic. A handwritten letter lies open on a nearby mahogany desk.",
+      "character_refs": [],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-2-scene-3",
+      "panel_number": 3,
+      "prompt": "Manga panel, CLOSE-UP shot, over-the-shoulder angle. A delicately gloved hand holds a rose, its deep red petals contrasting with the white lace glove. The background is softly blurred, highlighting the rose's vivid color.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: romantic, intriguing\nLighting: soft, diffused\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "A delicately gloved hand holds a rose, its deep red petals contrasting with the white lace glove. The background is softly blurred, highlighting the rose's vivid color.",
+      "character_refs": [],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-2-scene-3",
+      "panel_number": 4,
+      "prompt": "Manga panel, WIDE shot, high angle. A grand ballroom filled with elegantly dressed guests. The crystal chandeliers cast dazzling reflections, and the air is alive with the sound of music and soft conversation. A couple waltzes gracefully across the polished wooden floor.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: elegant, lively\nLighting: chandelier light\nCharacters: Dancing Couple, Guests\nArt style: black and white manga with screen tones",
+      "original_description": "A grand ballroom filled with elegantly dressed guests. The crystal chandeliers cast dazzling reflections, and the air is alive with the sound of music and soft conversation. A couple waltzes gracefully across the polished wooden floor.",
+      "character_refs": [],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-2-scene-3",
+      "panel_number": 5,
+      "prompt": "Manga panel, MEDIUM shot, eye-level angle. In a shadowy corner of the ballroom, a man in a waistcoat and top hat converses discreetly with a woman in a crinoline gown. Their expressions are serious, hinting at a secret shared.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: intriguing, secretive\nLighting: dim, candlelit\nCharacters: Man, Woman\nArt style: black and white manga with screen tones",
+      "original_description": "In a shadowy corner of the ballroom, a man in a waistcoat and top hat converses discreetly with a woman in a crinoline gown. Their expressions are serious, hinting at a secret shared.",
+      "character_refs": [],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-2-scene-3",
+      "panel_number": 6,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. A beautifully handwritten invitation lies atop a polished silver tray. The elegant script and ornate border reflect the refined taste of the host.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: sophisticated, formal\nLighting: soft candlelight\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "A beautifully handwritten invitation lies atop a polished silver tray. The elegant script and ornate border reflect the refined taste of the host.",
+      "character_refs": [],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-3-scene-1",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. The panel opens to an elegant Victorian studio, illuminated by warm gaslight that casts a soft amber glow. Tall bookcases line the walls, filled with leather-bound volumes. An ornate oil portrait of a young man hangs prominently, surrounded by roses in vases on a polished wooden table.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: warm gaslight, amber tones\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "The panel opens to an elegant Victorian studio, illuminated by warm gaslight that casts a soft amber glow. Tall bookcases line the walls, filled with leather-bound volumes. An ornate oil portrait of a young man hangs prominently, surrounded by roses in vases on a polished wooden table.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers, dark frock coat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-3-scene-1",
+      "panel_number": 2,
+      "prompt": "Manga panel, TWO-SHOT shot, over-the-shoulder angle. Basil Hallward stands beside Lord Henry Wotton, both dressed in immaculate frock coats and waistcoats. The focus is on Basil as he gestures towards the portrait with a look of both pride and concern. Lord Henry, with a curious expression, leans slightly forward.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: intrigued, elegant\nLighting: soft gaslight\nCharacters: Basil Hallward, Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Basil Hallward stands beside Lord Henry Wotton, both dressed in immaculate frock coats and waistcoats. The focus is on Basil as he gestures towards the portrait with a look of both pride and concern. Lord Henry, with a curious expression, leans slightly forward.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-3-scene-1",
+      "panel_number": 3,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. A close-up of Lord Henry's face, capturing his enigmatic smile. His eyes glint with intrigue as he contemplates Basil's words.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: mysterious, calculating\nLighting: highlighted by gaslight\nCharacters: Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "A close-up of Lord Henry's face, capturing his enigmatic smile. His eyes glint with intrigue as he contemplates Basil's words.",
+      "character_refs": [
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        },
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Lord Henry Wotton",
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-3-scene-1",
+      "panel_number": 4,
+      "prompt": "Manga panel, MEDIUM SHOT shot, three-quarter angle. Basil turns away slightly, his gaze fixed on the portrait. His expression is thoughtful, almost troubled, as if the painting holds a power he cannot quite grasp.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: reflective, tense\nLighting: soft shadows\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "Basil turns away slightly, his gaze fixed on the portrait. His expression is thoughtful, almost troubled, as if the painting holds a power he cannot quite grasp.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-3-scene-1",
+      "panel_number": 5,
+      "prompt": "Manga panel, CUTAWAY shot, eye-level angle. A handwritten letter lies on a nearby table, sealed with a wax stamp. The letter hints at secrets and invitations, a world of Victorian intrigue waiting to unfold.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: secretive, anticipatory\nLighting: soft candlelight\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "A handwritten letter lies on a nearby table, sealed with a wax stamp. The letter hints at secrets and invitations, a world of Victorian intrigue waiting to unfold.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers, dark frock coat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-3-scene-1",
+      "panel_number": 6,
+      "prompt": "Manga panel, WIDE SHOT shot, high-angle angle. The studio is shown in its entirety, a place of artistic refuge. The gas lamps flicker gently, casting intricate shadows that dance across the room, as if whispering the secrets of the past.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: elegant, serene\nLighting: dim gaslight\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "The studio is shown in its entirety, a place of artistic refuge. The gas lamps flicker gently, casting intricate shadows that dance across the room, as if whispering the secrets of the past.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers, dark frock coat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-3-scene-2",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. A grand Victorian garden, lush with blooming roses and manicured hedges, under the warm glow of the setting sun. The garden is surrounded by intricate wrought-iron fencing. In the background, the silhouette of a Gothic manor is visible, its pointed arches and spires lending an air of mystery.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: natural daylight, warm golden tones\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "A grand Victorian garden, lush with blooming roses and manicured hedges, under the warm glow of the setting sun. The garden is surrounded by intricate wrought-iron fencing. In the background, the silhouette of a Gothic manor is visible, its pointed arches and spires lending an air of mystery.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat, cravat with pearl pin",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-3-scene-2",
+      "panel_number": 2,
+      "prompt": "Manga panel, MEDIUM shot, eye-level angle. Lord Henry Wotton stands in the garden, dressed in an elegant frock coat and waistcoat, holding a single rose delicately between his fingers. His expression is one of amused contemplation, as he gazes at the rose.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: refined elegance\nLighting: soft daylight, filtered through foliage\nCharacters: Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Lord Henry Wotton stands in the garden, dressed in an elegant frock coat and waistcoat, holding a single rose delicately between his fingers. His expression is one of amused contemplation, as he gazes at the rose.",
+      "character_refs": [
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-3-scene-2",
+      "panel_number": 3,
+      "prompt": "Manga panel, MEDIUM shot, eye-level angle. Dorian Gray, with youthful charm, listens intently to Lord Henry, his eyes wide with curiosity. He is dressed in a tailored waistcoat and cravat, embodying the elegance of the era.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: intrigued, curious\nLighting: dappled sunlight through lace curtains\nCharacters: Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Dorian Gray, with youthful charm, listens intently to Lord Henry, his eyes wide with curiosity. He is dressed in a tailored waistcoat and cravat, embodying the elegance of the era.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-3-scene-2",
+      "panel_number": 4,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. A close-up of Lord Henry's face, his expression cunning and persuasive. His eyes twinkle with a knowledge that is both alluring and dangerous.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: dark secrets\nLighting: shadows accentuating features\nCharacters: Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "A close-up of Lord Henry's face, his expression cunning and persuasive. His eyes twinkle with a knowledge that is both alluring and dangerous.",
+      "character_refs": [
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-3-scene-2",
+      "panel_number": 5,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. Dorian's face, a mix of fascination and hesitation, as he grapples with the new ideas being presented to him.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: internal conflict\nLighting: soft highlights on features\nCharacters: Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "original_description": "Dorian's face, a mix of fascination and hesitation, as he grapples with the new ideas being presented to him.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray"
+      ]
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-3-scene-2",
+      "panel_number": 6,
+      "prompt": "Manga panel, WIDE shot, eye-level angle. The garden path stretches out, with Lord Henry and Dorian walking together, the Gothic manor looming behind them. The atmosphere is thick with the scent of roses and the promise of secrets yet to be uncovered.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic romance\nLighting: evening shadows lengthening\nCharacters: Lord Henry Wotton, Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "The garden path stretches out, with Lord Henry and Dorian walking together, the Gothic manor looming behind them. The atmosphere is thick with the scent of roses and the promise of secrets yet to be uncovered.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-3-scene-3",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. The panel opens with a wide view of Basil's studio, a large, richly decorated room filled with the soft glow of gaslights. The walls are lined with shelves of leather-bound books, and the centerpiece is a grand, unfinished portrait of Dorian Gray. Vases of roses add splashes of color, their petals catching the warm, amber light.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: warm gaslight, amber tones\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "The panel opens with a wide view of Basil's studio, a large, richly decorated room filled with the soft glow of gaslights. The walls are lined with shelves of leather-bound books, and the centerpiece is a grand, unfinished portrait of Dorian Gray. Vases of roses add splashes of color, their petals catching the warm, amber light.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-3-scene-3",
+      "panel_number": 2,
+      "prompt": "Manga panel, MEDIUM shot, three-quarter angle. Dorian Gray stands elegantly in the studio, his expression thoughtful, wearing a tailored frock coat over a crisp waistcoat. His eyes reflect a newfound depth as he contemplates Lord Henry's influence. The ambient light casts soft shadows across his face, enhancing his youthful beauty.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: intriguing, contemplative\nLighting: soft gaslight\nCharacters: Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Dorian Gray stands elegantly in the studio, his expression thoughtful, wearing a tailored frock coat over a crisp waistcoat. His eyes reflect a newfound depth as he contemplates Lord Henry's influence. The ambient light casts soft shadows across his face, enhancing his youthful beauty.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-3-scene-3",
+      "panel_number": 3,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. A close-up of Lord Henry Wotton, his charismatic smile hinting at secrets untold. He leans slightly forward, a rose in hand, as he speaks with a casual elegance. The gaslight catches the sharp lines of his face, reflecting his charming yet dangerous allure.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: charming, enigmatic\nLighting: warm gaslight\nCharacters: Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "A close-up of Lord Henry Wotton, his charismatic smile hinting at secrets untold. He leans slightly forward, a rose in hand, as he speaks with a casual elegance. The gaslight catches the sharp lines of his face, reflecting his charming yet dangerous allure.",
+      "character_refs": [
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-3-scene-3",
+      "panel_number": 4,
+      "prompt": "Manga panel, MEDIUM shot, over-the-shoulder angle. Over Basil's shoulder, we see Dorian posing for his portrait. Basil is focused, his brush poised over the canvas. The studio is bathed in a soft glow, with shadows dancing gracefully across the walls, creating an atmosphere of creation and introspection.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: creative, focused\nLighting: gentle gaslight\nCharacters: Basil Hallward, Dorian Gray\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "Over Basil's shoulder, we see Dorian posing for his portrait. Basil is focused, his brush poised over the canvas. The studio is bathed in a soft glow, with shadows dancing gracefully across the walls, creating an atmosphere of creation and introspection.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-3-scene-3",
+      "panel_number": 5,
+      "prompt": "Manga panel, TWO-SHOT shot, eye-level angle. Dorian and Lord Henry are seated on a plush divan, deep in conversation. The room's rich textures and dim light create a cozy yet opulent setting. Lord Henry's relaxed posture contrasts with Dorian's attentive listening, emphasizing their mentor-mentee dynamic.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: engaging, intimate\nLighting: soft shadows\nCharacters: Dorian Gray, Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Dorian and Lord Henry are seated on a plush divan, deep in conversation. The room's rich textures and dim light create a cozy yet opulent setting. Lord Henry's relaxed posture contrasts with Dorian's attentive listening, emphasizing their mentor-mentee dynamic.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-3-scene-3",
+      "panel_number": 6,
+      "prompt": "Manga panel, WIDE shot, eye-level angle. The scene closes with a wide shot of the studio, capturing the tranquil ambiance as the session concludes. The unfinished portrait of Dorian stands prominently, symbolizing both the potential and the peril of his journey. The gaslights flicker gently, casting an air of mystery over the room.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: reflective, foreboding\nLighting: flickering gaslight\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "original_description": "The scene closes with a wide shot of the studio, capturing the tranquil ambiance as the session concludes. The unfinished portrait of Dorian stands prominently, symbolizing both the potential and the peril of his journey. The gaslights flicker gently, casting an air of mystery over the room.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        },
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward",
+        "Dorian Gray"
+      ]
+    },
+    {
+      "panel_id": "panel-1",
+      "scene_id": "chapter-4-scene-1",
+      "panel_number": 1,
+      "prompt": "Manga panel, ESTABLISHING shot, eye-level angle. The panel reveals a lavish Victorian studio, dimly lit by gas lamps casting a warm amber glow. Tall bookcases filled with leather-bound volumes line the walls, and a large oil portrait rests on an easel in the foreground. The room exudes a sense of gothic elegance, adorned with vases of roses and intricate lace curtains framing tall windows.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: gothic, mysterious\nLighting: warm gaslight, amber tones\nCharacters: \nArt style: black and white manga with screen tones",
+      "original_description": "The panel reveals a lavish Victorian studio, dimly lit by gas lamps casting a warm amber glow. Tall bookcases filled with leather-bound volumes line the walls, and a large oil portrait rests on an easel in the foreground. The room exudes a sense of gothic elegance, adorned with vases of roses and intricate lace curtains framing tall windows.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat, cravat with pearl pin",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers, dark frock coat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat, elegant cravat",
+          "style_note": "B&W manga style - maintain consistent character design"
+        }
+      ],
+      "detected_characters": []
+    },
+    {
+      "panel_id": "panel-2",
+      "scene_id": "chapter-4-scene-1",
+      "panel_number": 2,
+      "prompt": "Manga panel, MID-SHOT shot, three-quarter angle. Basil Hallward stands beside the portrait, his expression anxious and contemplative as he gazes at the artwork. His attire is a classic Victorian frock coat, with a waistcoat peeking through. The gaslight creates soft shadows on his face, enhancing the tension in the room.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: intrigue, hesitation\nLighting: gaslight with soft shadows\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "original_description": "Basil Hallward stands beside the portrait, his expression anxious and contemplative as he gazes at the artwork. His attire is a classic Victorian frock coat, with a waistcoat peeking through. The gaslight creates soft shadows on his face, enhancing the tension in the room.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward"
+      ]
+    },
+    {
+      "panel_id": "panel-3",
+      "scene_id": "chapter-4-scene-1",
+      "panel_number": 3,
+      "prompt": "Manga panel, CLOSE-UP shot, eye-level angle. A detailed close-up of Lord Henry Wotton's face, a hint of a sly smile on his lips. His eyes gleam with curiosity and mischief as he listens intently. He wears a top hat and a sharply tailored waistcoat, epitomizing the refined elegance of the era.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: mischievous, curious\nLighting: soft gaslight\nCharacters: Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "A detailed close-up of Lord Henry Wotton's face, a hint of a sly smile on his lips. His eyes gleam with curiosity and mischief as he listens intently. He wears a top hat and a sharply tailored waistcoat, epitomizing the refined elegance of the era.",
+      "character_refs": [
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-4",
+      "scene_id": "chapter-4-scene-1",
+      "panel_number": 4,
+      "prompt": "Manga panel, WIDE SHOT shot, over-the-shoulder angle. The scene captures Basil and Lord Henry in conversation, with the portrait of Dorian Gray visibly dominating the background. The studio's gaslit ambiance envelops them, creating a contrast between Basil's concerned demeanor and Lord Henry's relaxed posture.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: tension, contrast\nLighting: soft, warm gaslight\nCharacters: Basil Hallward, Lord Henry Wotton\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "The scene captures Basil and Lord Henry in conversation, with the portrait of Dorian Gray visibly dominating the background. The studio's gaslit ambiance envelops them, creating a contrast between Basil's concerned demeanor and Lord Henry's relaxed posture.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray",
+        "Basil Hallward",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-5",
+      "scene_id": "chapter-4-scene-1",
+      "panel_number": 5,
+      "prompt": "Manga panel, MID-SHOT shot, eye-level angle. Basil turns away from Lord Henry, his hand resting on the edge of a divan, as if seeking support. The light from a nearby oil lamp highlights the tension in his furrowed brow, emphasizing his inner turmoil about Dorian's potential fate.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: internal conflict, concern\nLighting: oil lamp accent\nCharacters: Basil Hallward\nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Basil Hallward: average, slender, dark wavy hair, brown eyes, slender artistic build, Victorian artist smock, paint-stained fingers | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png\n- Lord Henry Wotton: tall, lean, blonde hair, gray eyes, elegant distinguished posture, Victorian gentleman's suit, tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "original_description": "Basil turns away from Lord Henry, his hand resting on the edge of a divan, as if seeking support. The light from a nearby oil lamp highlights the tension in his furrowed brow, emphasizing his inner turmoil about Dorian's potential fate.",
+      "character_refs": [
+        {
+          "name": "Basil Hallward",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+          "appearance": "average, slender, dark wavy hair, brown eyes, slender artistic build",
+          "clothing": "Victorian artist smock, paint-stained fingers",
+          "color_palette": {
+            "hair": "#4A3728",
+            "eyes": "#654321",
+            "skin": "#DEB887",
+            "clothing_primary": "#2F2F2F",
+            "clothing_secondary": "#556B2F"
+          },
+          "key_features": [
+            "dark wavy hair",
+            "brown eyes",
+            "slender artistic build",
+            "intellectual appearance",
+            "sensitive face"
+          ],
+          "height": "average",
+          "build": "slender"
+        },
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        },
+        {
+          "name": "Lord Henry Wotton",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+          "appearance": "tall, lean, blonde hair, gray eyes, elegant distinguished posture",
+          "clothing": "Victorian gentleman's suit, tailored waistcoat",
+          "color_palette": {
+            "hair": "#D4AF37",
+            "eyes": "#708090",
+            "skin": "#FFE4C4",
+            "clothing_primary": "#000080",
+            "clothing_secondary": "#8B4513"
+          },
+          "key_features": [
+            "blonde hair",
+            "gray eyes",
+            "elegant distinguished posture",
+            "aristocratic features",
+            "sophisticated appearance"
+          ],
+          "height": "tall",
+          "build": "lean"
+        }
+      ],
+      "detected_characters": [
+        "Basil Hallward",
+        "Dorian Gray",
+        "Lord Henry Wotton"
+      ]
+    },
+    {
+      "panel_id": "panel-6",
+      "scene_id": "chapter-4-scene-1",
+      "panel_number": 6,
+      "prompt": "Manga panel, CLOSE-UP shot, downward angle. A close-up of the portrait of Dorian Gray, capturing the youthful beauty and serene expression of the subject. The gas lamps' warm glow adds a lifelike quality to the painted visage, hinting at the supernatural elements that will unfold.\n\nStyle: Victorian era, gothic atmosphere, detailed linework\nMood: supernatural, enigmatic\nLighting: soft gaslight\nCharacters: \nArt style: black and white manga with screen tones\n\nCHARACTER REFERENCES:\n- Dorian Gray: tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes, elegant Victorian frock coat, impeccably tailored waistcoat | Reference: output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "original_description": "A close-up of the portrait of Dorian Gray, capturing the youthful beauty and serene expression of the subject. The gas lamps' warm glow adds a lifelike quality to the painted visage, hinting at the supernatural elements that will unfold.",
+      "character_refs": [
+        {
+          "name": "Dorian Gray",
+          "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+          "appearance": "tall, slender athletic, strikingly handsome young man, jet black curly hair, intense blue eyes",
+          "clothing": "elegant Victorian frock coat, impeccably tailored waistcoat",
+          "color_palette": {
+            "hair": "#2C1810",
+            "eyes": "#4169E1",
+            "skin": "#F5E6D3",
+            "clothing_primary": "#1A1A1A",
+            "clothing_secondary": "#8B0000"
+          },
+          "key_features": [
+            "strikingly handsome young man",
+            "jet black curly hair",
+            "intense blue eyes",
+            "pale ivory skin",
+            "perfect porcelain complexion",
+            "youthful angelic beauty"
+          ],
+          "height": "tall",
+          "build": "slender athletic"
+        }
+      ],
+      "detected_characters": [
+        "Dorian Gray"
+      ]
+    }
+  ],
+  "metadata": {
+    "total_panels": 60,
+    "panels_with_characters": 40,
+    "processed_with_character_refs": true
+  }
+}

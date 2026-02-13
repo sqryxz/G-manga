@@ -1,0 +1,341 @@
+{
+  "characters": {
+    "Dorian Gray": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/01_Dorian_Gray_reference.png",
+      "color_palette": {
+        "hair": "#2C1810",
+        "eyes": "#4169E1",
+        "skin": "#F5E6D3",
+        "clothing_primary": "#1A1A1A",
+        "clothing_secondary": "#8B0000"
+      },
+      "key_features": [
+        "strikingly handsome young man",
+        "jet black curly hair",
+        "intense blue eyes",
+        "pale ivory skin",
+        "perfect porcelain complexion",
+        "youthful angelic beauty"
+      ],
+      "clothing": [
+        "elegant Victorian frock coat",
+        "impeccably tailored waistcoat",
+        "cravat with pearl pin",
+        "fine silk shirt",
+        "tailored trousers",
+        "polished leather shoes"
+      ],
+      "height": "tall",
+      "build": "slender athletic",
+      "age": "early 20s",
+      "personality_traits": [
+        "charming",
+        "naive",
+        "manipulable",
+        "self-absorbed",
+        "beautiful"
+      ]
+    },
+    "Basil Hallward": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/02_Basil_Hallward_reference.png",
+      "color_palette": {
+        "hair": "#4A3728",
+        "eyes": "#654321",
+        "skin": "#DEB887",
+        "clothing_primary": "#2F2F2F",
+        "clothing_secondary": "#556B2F"
+      },
+      "key_features": [
+        "dark wavy hair",
+        "brown eyes",
+        "slender artistic build",
+        "intellectual appearance",
+        "sensitive face"
+      ],
+      "clothing": [
+        "Victorian artist smock",
+        "paint-stained fingers",
+        "dark frock coat",
+        "waistcoat",
+        "comfortable trousers"
+      ],
+      "height": "average",
+      "build": "slender",
+      "age": "30s",
+      "personality_traits": [
+        "artistic",
+        "contemplative",
+        "intense when painting",
+        "nervous when anxious",
+        "devoted to his art"
+      ]
+    },
+    "Lord Henry Wotton": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/03_Lord_Henry_Wotton_reference.png",
+      "color_palette": {
+        "hair": "#D4AF37",
+        "eyes": "#708090",
+        "skin": "#FFE4C4",
+        "clothing_primary": "#000080",
+        "clothing_secondary": "#8B4513"
+      },
+      "key_features": [
+        "blonde hair",
+        "gray eyes",
+        "elegant distinguished posture",
+        "aristocratic features",
+        "sophisticated appearance"
+      ],
+      "clothing": [
+        "Victorian gentleman's suit",
+        "tailored waistcoat",
+        "elegant cravat",
+        "top hat",
+        "cane",
+        "watch chain"
+      ],
+      "height": "tall",
+      "build": "lean",
+      "age": "40s",
+      "personality_traits": [
+        "cynical",
+        "witty",
+        "manipulative",
+        "charming",
+        "dangerous"
+      ]
+    },
+    "Sibyl Vane": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/04_Sibyl_Vane_reference.png",
+      "color_palette": {
+        "hair": "#8B4513",
+        "eyes": "#228B22",
+        "skin": "#FFDAB9",
+        "clothing_primary": "#FA8072",
+        "clothing_secondary": "#FF69B4"
+      },
+      "key_features": [
+        "beautiful actress",
+        "expressive features",
+        "dark hair",
+        "green eyes",
+        "dramatic presence"
+      ],
+      "clothing": [
+        "theatrical costumes",
+        "dresses",
+        "stage makeup",
+        "elegant evening gowns"
+      ],
+      "height": "average",
+      "build": "graceful",
+      "age": "late teens/early 20s",
+      "personality_traits": [
+        "dramatic",
+        "romantic",
+        "naive",
+        "passionate",
+        "innocent"
+      ]
+    },
+    "James Vane": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/05_James_Vane_reference.png",
+      "color_palette": {
+        "hair": "#654321",
+        "eyes": "#000080",
+        "skin": "#F5DEB3",
+        "clothing_primary": "#2F4F4F",
+        "clothing_secondary": "#8B0000"
+      },
+      "key_features": [
+        "sailor",
+        "muscular build",
+        "weathered features",
+        "determined expression",
+        "protective nature"
+      ],
+      "clothing": [
+        "sailor's uniform",
+        "peacoat",
+        "trousers",
+        "boots"
+      ],
+      "height": "medium",
+      "build": "muscular",
+      "age": "20s",
+      "personality_traits": [
+        "protective",
+        "vengeful",
+        "determined",
+        "suspicious"
+      ]
+    },
+    "Lady Victoria Wotton": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/06_Lady_Victoria_Wotton_reference.png",
+      "color_palette": {
+        "hair": "#FFD700",
+        "eyes": "#4169E1",
+        "skin": "#FFE4E1",
+        "clothing_primary": "#9932CC",
+        "clothing_secondary": "#DDA0DD"
+      },
+      "key_features": [
+        "young aristocrat",
+        "blonde hair",
+        "blue eyes",
+        "innocent appearance",
+        "well-dressed"
+      ],
+      "clothing": [
+        "Victorian lady's gown",
+        "crinoline",
+        "gloves",
+        "jewelry",
+        "bonnet"
+      ],
+      "height": "average",
+      "build": "slim",
+      "age": "late teens",
+      "personality_traits": [
+        "innocent",
+        "curious",
+        "proper",
+        "sweet"
+      ]
+    },
+    "Alan Campbell": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/07_Alan_Campbell_reference.png",
+      "color_palette": {
+        "hair": "#696969",
+        "eyes": "#2F4F4F",
+        "skin": "#FFECD4",
+        "clothing_primary": "#1C1C1C",
+        "clothing_secondary": "#4A4A4A"
+      },
+      "key_features": [
+        "intellectual",
+        "clean-shaven",
+        "sharp features",
+        "serious demeanor",
+        "professional appearance"
+      ],
+      "clothing": [
+        "Victorian gentleman's attire",
+        "formal suit",
+        "waistcoat",
+        "cravat"
+      ],
+      "height": "average",
+      "build": "average",
+      "age": "30s",
+      "personality_traits": [
+        "reserved",
+        "intelligent",
+        "distant",
+        "professional"
+      ]
+    },
+    "Lady Narborough": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/08_Lady_Narborough_reference.png",
+      "color_palette": {
+        "hair": "#C0C0C0",
+        "eyes": "#708090",
+        "skin": "#FFE4C4",
+        "clothing_primary": "#800020",
+        "clothing_secondary": "#DAA520"
+      },
+      "key_features": [
+        "elderly aristocrat",
+        "silver hair",
+        "piercing gray eyes",
+        "refined features",
+        "haughty demeanor"
+      ],
+      "clothing": [
+        "elderly lady's gown",
+        "expensive jewelry",
+        "feathers",
+        "elegant dress"
+      ],
+      "height": "average",
+      "build": "slim",
+      "age": "60+",
+      "personality_traits": [
+        "haughty",
+        "witty",
+        "worldly",
+        "skeptical"
+      ]
+    },
+    "Adrian Singleton": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/09_Adrian_Singleton_reference.png",
+      "color_palette": {
+        "hair": "#A0522D",
+        "eyes": "#556B2F",
+        "skin": "#DEB887",
+        "clothing_primary": "#2E8B57",
+        "clothing_secondary": "#8B4513"
+      },
+      "key_features": [
+        "gentleman friend",
+        "stylish appearance",
+        "well-groomed",
+        "fashionable",
+        "companionable"
+      ],
+      "clothing": [
+        "fashionable gentleman's suit",
+        "stylish waistcoat",
+        "cravat",
+        "top hat"
+      ],
+      "height": "average",
+      "build": "slim",
+      "age": "20s-30s",
+      "personality_traits": [
+        "stylish",
+        "companionable",
+        "fashionable",
+        "social"
+      ]
+    },
+    "The Painter": {
+      "reference_sheet": "output/projects/picture-of-dorian-gray-20260213-20260213/output/character_refs/10_The_Painter_(Van_Gogh_reference)_reference.png",
+      "color_palette": {
+        "hair": "#8B4513",
+        "eyes": "#4682B4",
+        "skin": "#FFDEAD",
+        "clothing_primary": "#556B2F",
+        "clothing_secondary": "#2F4F4F"
+      },
+      "key_features": [
+        "inspired by Van Gogh",
+        "intense gaze",
+        "expressive features",
+        "artist's appearance",
+        "creative energy"
+      ],
+      "clothing": [
+        "artist's smock",
+        "paint-stained clothing",
+        "beret",
+        "comfortable working attire"
+      ],
+      "height": "average",
+      "build": "average",
+      "age": "variable",
+      "personality_traits": [
+        "inspired",
+        "intense",
+        "passionate about art",
+        "observant"
+      ]
+    }
+  },
+  "metadata": {
+    "created_at": "2026-02-13T20:16:00+08:00",
+    "project": "picture-of-dorian-gray-20260213-20260213",
+    "total_characters": 10,
+    "version": "1.0"
+  }
+}
