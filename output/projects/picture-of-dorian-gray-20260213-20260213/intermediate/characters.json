@@ -1,0 +1,285 @@
+[
+  {
+    "name": "Dorian Gray",
+    "aliases": [
+      "Dorian",
+      "Mr. Gray",
+      "the boy"
+    ],
+    "role": "protagonist",
+    "age": "early 20s",
+    "gender": "male",
+    "height": "tall and beautiful",
+    "build": "athletic, ethereal",
+    "hair": {
+      "color": "black",
+      "style": "short",
+      "length": "curly"
+    },
+    "eyes": {
+      "color": "blue",
+      "shape": "deep"
+    },
+    "skin_tone": "pale",
+    "clothing": "elegant Victorian suits, fashionable attire",
+    "distinguishing_features": "extraordinary, almost supernatural beauty",
+    "personality": [
+      "vain",
+      "mysterious",
+      "charming",
+      "hedonistic",
+      "corrupt"
+    ],
+    "first_chapter": 1
+  },
+  {
+    "name": "Basil Hallward",
+    "aliases": [
+      "Basil",
+      "Mr. Hallward"
+    ],
+    "role": "deuteragonist",
+    "age": "late 20s",
+    "gender": "male",
+    "height": "average",
+    "build": "lean, artistic",
+    "hair": {
+      "color": "dark brown",
+      "style": "short"
+    },
+    "eyes": {
+      "color": "brown",
+      "shape": "honest"
+    },
+    "skin_tone": "fair",
+    "clothing": "artist smock, paint-stained clothes",
+    "distinguishing_features": "sincere eyes, artistic hands",
+    "personality": [
+      "humble",
+      "devoted",
+      "artistic",
+      "sincere",
+      "secretly in love with Dorian"
+    ],
+    "first_chapter": 1
+  },
+  {
+    "name": "Lord Henry Wotton",
+    "aliases": [
+      "Lord Henry",
+      "Harry",
+      "Mr. Wotton"
+    ],
+    "role": "antagonist",
+    "age": "mid 30s",
+    "gender": "male",
+    "height": "tall",
+    "build": "elegant, slender",
+    "hair": {
+      "color": "black",
+      "style": "short",
+      "length": "wavy"
+    },
+    "eyes": {
+      "color": "green",
+      "shape": "penetrating"
+    },
+    "skin_tone": "pale",
+    "clothing": "aristocratic suits, fine cravats, monocle",
+    "distinguishing_features": "sardonic smile, velvet voice",
+    "personality": [
+      "cynical",
+      "charming",
+      "manipulative",
+      "intellectual",
+      "amoral"
+    ],
+    "first_chapter": 1
+  },
+  {
+    "name": "Sibyl Vane",
+    "aliases": [
+      "Sibyl",
+      "Miss Vane"
+    ],
+    "role": "supporting",
+    "age": "early 20s",
+    "gender": "female",
+    "height": "average",
+    "build": "delicate",
+    "hair": {
+      "color": "auburn",
+      "style": "long",
+      "length": "wavy"
+    },
+    "eyes": {
+      "color": "gray",
+      "shape": "large, expressive"
+    },
+    "skin_tone": "fair",
+    "clothing": "theatrical costumes, simple dresses",
+    "distinguishing_features": "dramatic beauty, theatrical expressions",
+    "personality": [
+      "dramatic",
+      "romantic",
+      "innocent",
+      "passionate"
+    ],
+    "first_chapter": 2
+  },
+  {
+    "name": "James Vane",
+    "aliases": [
+      "James",
+      "Sibyl's brother"
+    ],
+    "role": "supporting",
+    "age": "late 20s",
+    "gender": "male",
+    "height": "tall",
+    "build": "sailor, muscular",
+    "hair": {
+      "color": "dark"
+    },
+    "eyes": {
+      "color": "blue",
+      "shape": "suspicious"
+    },
+    "skin_tone": "weathered",
+    "clothing": "sailor's uniform",
+    "distinguishing_features": "determined expression",
+    "personality": [
+      "protective",
+      "suspicious",
+      "revengeful"
+    ],
+    "first_chapter": 5
+  },
+  {
+    "name": "Lady Victoria Wotton",
+    "aliases": [
+      "Lady Wotton",
+      "the Duchess"
+    ],
+    "role": "supporting",
+    "age": "30s",
+    "gender": "female",
+    "height": "average",
+    "build": "slim",
+    "hair": {
+      "color": "blonde"
+    },
+    "eyes": {
+      "color": "blue"
+    },
+    "skin_tone": "fair",
+    "clothing": "elaborate Victorian dresses",
+    "distinguishing_features": "aristocratic bearing",
+    "personality": [
+      "social",
+      "witty"
+    ],
+    "first_chapter": 3
+  },
+  {
+    "name": "Alan Campbell",
+    "aliases": [
+      "Alan"
+    ],
+    "role": "supporting",
+    "age": "early 30s",
+    "gender": "male",
+    "height": "average",
+    "build": "thin",
+    "hair": {
+      "color": "dark"
+    },
+    "eyes": {
+      "color": "gray"
+    },
+    "skin_tone": "pale",
+    "clothing": "gentleman's suit",
+    "distinguishing_features": "scientific appearance",
+    "personality": [
+      "reserved",
+      "secretive",
+      "former friend"
+    ],
+    "first_chapter": 16
+  },
+  {
+    "name": "Lady Narborough",
+    "aliases": [
+      "Lady Narborough"
+    ],
+    "role": "supporting",
+    "age": "50s",
+    "gender": "female",
+    "height": "average",
+    "build": "full",
+    "hair": {
+      "color": "gray",
+      "style": "updo"
+    },
+    "eyes": {
+      "color": "brown"
+    },
+    "skin_tone": "fair",
+    "clothing": "elderly Victorian attire",
+    "distinguishing_features": "cosmetic enhancements",
+    "personality": [
+      "witty",
+      "worldly",
+      "cynical"
+    ],
+    "first_chapter": 8
+  },
+  {
+    "name": "Adrian Singleton",
+    "aliases": [
+      "Adrian"
+    ],
+    "role": "supporting",
+    "age": "20s",
+    "gender": "male",
+    "height": "average",
+    "build": "weak",
+    "hair": {
+      "color": "blonde"
+    },
+    "eyes": {
+      "color": "blue"
+    },
+    "skin_tone": "pale",
+    "clothing": "gentleman's suit",
+    "distinguishing_features": "intoxicated appearance",
+    "personality": [
+      "addicted",
+      "manipulated"
+    ],
+    "first_chapter": 14
+  },
+  {
+    "name": "The Painter (Van Gogh reference)",
+    "aliases": [],
+    "role": "minor",
+    "age": "30s",
+    "gender": "male",
+    "height": "average",
+    "build": "artistic",
+    "hair": {
+      "color": "red"
+    },
+    "eyes": {
+      "color": "blue"
+    },
+    "skin_tone": "fair",
+    "clothing": "artist clothes",
+    "distinguishing_features": "enthusiastic",
+    "personality": [
+      "passionate",
+      "artistic"
+    ],
+    "first_chapter": 19
+  }
+]
