@@ -28,7 +28,7 @@ class ChapterSegmenter:
             min_chapter_length: Minimum character length for a valid chapter
                                 (filters out table of contents entries)
         """
-        # Chapter marker patterns (in order of specificity)
+        # Standard chapter marker patterns (in order of specificity)
         self.chapter_patterns = [
             # "CHAPTER I.", "CHAPTER II.", etc.
             re.compile(r"^(CHAPTER\s+[IVXLCDM]+\.)", re.MULTILINE),
@@ -39,6 +39,19 @@ class ChapterSegmenter:
             # "Part I", "Part 2", etc.
             re.compile(r"^(Part\s+[IVXLCDM]+|\d+)", re.MULTILINE),
         ]
+        
+        # Title-based chapter patterns (for books without CHAPTER markers)
+        # These match ALL CAPS titles that could be chapter headings
+        self.title_patterns = [
+            # All caps lines with spaces and punctuation (apostrophes, hyphens, periods)
+            # Matches titles like "HENRY JEKYLL'S FULL STATEMENT" or "DR. LANYON'S NARRATIVE"
+            # Includes straight ('), curly ('), and other apostrophe variants
+            # Use ' ' instead of \s to avoid matching newlines
+            re.compile(r"^([A-Z][A-Z '\u2019'\.\-]{5,100}[A-Z])$", re.MULTILINE),
+            # Fallback: simpler all caps pattern (also with space only)
+            re.compile(r"^([A-Z][A-Z ]{10,80}[A-Z])$", re.MULTILINE),
+        ]
+        
         self.min_chapter_length = min_chapter_length
 
     def _is_table_of_contents_entry(self, text: str, start_line: int, end_line: int) -> bool:
@@ -116,6 +129,65 @@ class ChapterSegmenter:
         
         return 0
 
+    def _detect_title_based_chapters(self, text: str) -> List[Tuple[int, str]]:
+        """
+        Detect chapters based on title patterns (for books without CHAPTER markers).
+        
+        This looks for ALL CAPS titles that appear both in the TOC and as section headers.
+        
+        Args:
+            text: The cleaned text
+            
+        Returns:
+            List of (line_num, marker) tuples for detected chapters
+        """
+        lines = text.split("\n")
+        
+        # Find all potential title lines (ALL CAPS)
+        title_candidates = []
+        for pattern in self.title_patterns:
+            for match in pattern.finditer(text):
+                line_num = text[:match.start()].count('\n')
+                marker = match.group(0).strip()
+                # Only consider titles with reasonable length
+                if 10 <= len(marker) <= 80:
+                    title_candidates.append((line_num, marker))
+        
+        # Count occurrences of each title
+        title_counts = {}
+        for line_num, marker in title_candidates:
+            if marker not in title_counts:
+                title_counts[marker] = []
+            title_counts[marker].append(line_num)
+        
+        # Keep only titles that appear multiple times (TOC + actual chapter)
+        # or titles that have substantial content after them
+        chapter_starts = []
+        for marker, line_nums in title_counts.items():
+            if len(line_nums) >= 2:
+                # Appears multiple times - likely TOC entry + chapter
+                # Use the second occurrence (after TOC)
+                chapter_starts.append((line_nums[1], marker))
+            elif len(line_nums) == 1:
+                # Single occurrence - check if it has substantial content
+                line_num = line_nums[0]
+                # Look for next potential chapter or end of text
+                next_chapter_line = len(lines)
+                for other_marker, other_lines in title_counts.items():
+                    if other_marker != marker:
+                        for other_line in other_lines:
+                            if other_line > line_num and other_line < next_chapter_line:
+                                next_chapter_line = other_line
+                
+                segment_text = "\n".join(lines[line_num:next_chapter_line]).strip()
+                if len(segment_text) >= self.min_chapter_length:
+                    chapter_starts.append((line_num, marker))
+        
+        # Sort by line number
+        chapter_starts.sort(key=lambda x: x[0])
+        
+        return chapter_starts
+
     def segment(self, text: str) -> List[ChapterSegment]:
         """
         Segment text into chapters.
@@ -156,6 +228,10 @@ class ChapterSegmenter:
             if line_num not in unique_starts:
                 unique_starts[line_num] = (line_num, marker)
         chapter_starts = list(unique_starts.values())
+        
+        # If no standard chapter markers found, try title-based detection
+        if not chapter_starts:
+            chapter_starts = self._detect_title_based_chapters(text)
 
         # Find the first real chapter (Chapter I/1)
         first_chapter_line = self._find_first_real_chapter_line(
