@@ -78,12 +78,13 @@ class SceneBreakdown:
         Returns:
             Prompt string
         """
-        prompt = f"""You are analyzing a chapter from a novel to identify natural scene breaks.
+        prompt = f"""You are analyzing a chapter from a novel to identify natural scene breaks for manga adaptation.
 
 A scene is a continuous sequence of events that occurs:
 1. In the same location
 2. Without significant time jumps
 3. With the same set of characters (or characters entering/exiting naturally)
+4. From a consistent point of view (POV)
 
 Chapter {chapter_number}:
 {chapter_text}
@@ -92,8 +93,12 @@ Please identify ALL scenes in this chapter. For each scene, provide:
 1. Scene number (starting from 1)
 2. A 1-2 sentence summary of what happens
 3. The location where it takes place
-4. All characters present in the scene
-5. Approximate percentage of chapter where this scene ends (0-100%)
+4. Time context (time of day/period: e.g., "afternoon", "late evening", "dawn")
+5. All characters present in the scene
+6. Point of view character (whose perspective we experience the scene from, if clear)
+7. Emotional tone/mood (e.g., "tense", "joyful", "melancholy", "suspenseful", "romantic")
+8. Approximate percentage of chapter where this scene ends (0-100%)
+9. Estimated number of manga panels needed (1-12, based on scene complexity and dialogue)
 
 Return your response as JSON in this exact format:
 {{
@@ -102,15 +107,23 @@ Return your response as JSON in this exact format:
       "number": 1,
       "summary": "Two characters have a conversation in a studio",
       "location": "Basil's studio",
+      "time_context": "afternoon",
       "characters": ["Basil", "Lord Henry"],
-      "end_percentage": 35
+      "pov_character": "Basil",
+      "emotional_tone": "contemplative",
+      "end_percentage": 35,
+      "estimated_panels": 6
     }},
     {{
       "number": 2,
       "summary": "...",
       "location": "...",
+      "time_context": "...",
       "characters": [...],
-      "end_percentage": 70
+      "pov_character": "...",
+      "emotional_tone": "...",
+      "end_percentage": 70,
+      "estimated_panels": 4
     }}
   ]
 }}
@@ -119,6 +132,12 @@ Focus on:
 - Location changes (new location = new scene)
 - Time jumps (hours/days passing = new scene)
 - Character entrances/exits that change the dynamic
+- POV shifts (different narrator or perspective = new scene)
+
+For estimated_panels:
+- Simple dialogue scene: 2-4 panels
+- Action scene: 4-8 panels
+- Complex scene with multiple beats: 6-12 panels
 
 Be thorough but don't over-segment. A scene can be 5-50 paragraphs."""
         return prompt
@@ -236,7 +255,11 @@ Be thorough but don't over-segment. A scene can be 5-50 paragraphs."""
                 number=scene_data["number"],
                 summary=scene_data.get("summary", ""),
                 location=scene_data.get("location", "Unknown"),
+                time_context=scene_data.get("time_context"),
                 characters=scene_data.get("characters", []),
+                emotional_tone=scene_data.get("emotional_tone", "neutral"),
+                pov_character=scene_data.get("pov_character"),
+                estimated_panels=scene_data.get("estimated_panels", 4),
                 text_range=TextRange(
                     start=scene_data["start_line"],
                     end=scene_data["end_line"]
@@ -259,17 +282,21 @@ Be thorough but don't over-segment. A scene can be 5-50 paragraphs."""
             Mock JSON response
         """
         # Simplified mock - in production, use real LLM
-        mock_response = f'''{{
+        mock_response = '''{
   "scenes": [
-    {{
+    {
       "number": 1,
       "summary": "Introduction of main characters in an art studio discussing beauty and art",
       "location": "Basil's art studio",
+      "time_context": "afternoon",
       "characters": ["Basil Hallward", "Lord Henry Wotton"],
-      "end_percentage": 100
-    }}
+      "pov_character": "Basil",
+      "emotional_tone": "contemplative",
+      "end_percentage": 100,
+      "estimated_panels": 6
+    }
   ]
-}}'''
+}'''
         return mock_response
 
 

@@ -63,7 +63,11 @@ class Scene(BaseModel):
     number: int = Field(..., gt=0)
     summary: str = Field(..., min_length=1, max_length=2000)
     location: str = Field(..., min_length=1, max_length=200)
+    time_context: Optional[str] = Field(default=None, max_length=100)  # e.g., "afternoon", "late evening"
     characters: List[str] = Field(default_factory=list)
+    emotional_tone: str = Field(default="neutral", max_length=100)  # e.g., "tense", "joyful", "melancholy"
+    pov_character: Optional[str] = Field(default=None, max_length=200)  # Point of view character
+    estimated_panels: int = Field(default=4, ge=1, le=12)  # Estimated panels needed for manga adaptation
     text_range: TextRange
     text: Optional[str] = None  # Add text field for scene content
 

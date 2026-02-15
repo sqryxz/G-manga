@@ -105,6 +105,90 @@ Gutenberg Text
 - **Manga-First Design** - Native panel layouts, reading order, styling
 - **Configurable LLM Models** - Set different models per stage
 
+## 📖 Stage 2: Scene Breakdown
+
+Stage 2 processes cleaned text from Stage 1 and breaks chapters into discrete scenes suitable for manga adaptation.
+
+### Usage
+
+```python
+from stage2_preprocessing.scene_breakdown import SceneBreakdown
+
+# Initialize breakdown
+breakdown = SceneBreakdown()
+
+# Process a chapter
+scenes = breakdown.breakdown_chapter(
+    chapter_text="Your chapter text here...",
+    chapter_id="chapter-1",
+    chapter_number=1
+)
+
+# Access scene data
+for scene in scenes:
+    print(f"Scene {scene.number}: {scene.summary}")
+    print(f"  Location: {scene.location}")
+    print(f"  Time: {scene.time_context}")
+    print(f"  Characters: {scene.characters}")
+    print(f"  POV: {scene.pov_character}")
+    print(f"  Tone: {scene.emotional_tone}")
+    print(f"  Est. Panels: {scene.estimated_panels}")
+```
+
+### Scene Data Structure
+
+Each scene includes:
+
+| Field | Description |
+|-------|-------------|
+| `id` | Unique scene identifier (e.g., "chapter-1-scene-1") |
+| `chapter_id` | Parent chapter identifier |
+| `number` | Scene number within chapter |
+| `summary` | 1-2 sentence description of what happens |
+| `location` | Where the scene takes place |
+| `time_context` | Time of day/period (e.g., "afternoon", "late evening") |
+| `characters` | List of characters present |
+| `pov_character` | Point of view character |
+| `emotional_tone` | Mood/atmosphere (e.g., "tense", "joyful") |
+| `estimated_panels` | Estimated manga panels needed (1-12) |
+| `text_range` | Line numbers within chapter |
+
+### Example Output
+
+```json
+{
+  "scenes": [
+    {
+      "id": "chapter-1-scene-1",
+      "chapter_id": "chapter-1",
+      "number": 1,
+      "summary": "Mr. Utterson and Mr. Enfield discuss a mysterious door on their weekly walk",
+      "location": "London street",
+      "time_context": "Sunday afternoon",
+      "characters": ["Mr. Utterson", "Mr. Enfield"],
+      "pov_character": "Mr. Utterson",
+      "emotional_tone": "mysterious",
+      "estimated_panels": 6,
+      "text_range": {"start": 0, "end": 85}
+    }
+  ]
+}
+```
+
+### What Scene Breakdown Detects
+
+- **Location changes** - New setting = new scene
+- **Time jumps** - Hours/days passing = new scene  
+- **Character entrances/exits** - Dynamic changes
+- **POV shifts** - Different narrator perspective
+
+### Testing
+
+```bash
+# Test on Jekyll and Hyde
+python3 main.py --url "https://www.gutenberg.org/files/43/43-0.txt" --stage 2 --verbose
+```
+
 ## 📚 Documentation
 
 - [FRAMEWORK.md](./FRAMEWORK.md) - Detailed pipeline specification
