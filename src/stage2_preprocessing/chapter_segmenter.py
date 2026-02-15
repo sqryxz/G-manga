@@ -80,6 +80,9 @@ class ChapterSegmenter:
         This helps filter out table of contents entries that appear before
         the actual story content begins.
         
+        A "real" chapter has substantial content (> min_chapter_length chars)
+        and isn't just a TOC entry.
+        
         Args:
             chapter_starts: List of (line_num, marker, pattern_idx) tuples
             text: Full text
@@ -87,14 +90,30 @@ class ChapterSegmenter:
         Returns:
             Line number of first real chapter, or 0 if not found
         """
-        for line_num, marker, _ in chapter_starts:
+        lines = text.split("\n")
+        
+        for i, (line_num, marker, _) in enumerate(chapter_starts):
             marker_upper = marker.upper().strip()
             # Look for Chapter I, Chapter 1, CHAPTER I., etc.
             if (marker_upper == "CHAPTER I" or 
                 marker_upper == "CHAPTER I." or
                 marker_upper == "CHAPTER 1" or
                 marker_upper == "CHAPTER 1."):
-                return line_num
+                
+                # Check if this chapter has substantial content
+                # (i.e., it's not a TOC entry)
+                if i + 1 < len(chapter_starts):
+                    end_line = chapter_starts[i + 1][0]
+                else:
+                    end_line = len(lines)
+                
+                segment_text = "\n".join(lines[line_num:end_line]).strip()
+                
+                # If this CHAPTER I has substantial content, it's the real one
+                if len(segment_text) >= self.min_chapter_length:
+                    return line_num
+                # Otherwise, keep looking for the next CHAPTER I
+        
         return 0
 
     def segment(self, text: str) -> List[ChapterSegment]:
