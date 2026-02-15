@@ -54,3 +54,4 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+!output/projects/picture-of-dorian-gray-*/intermediate/script.json
