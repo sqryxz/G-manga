@@ -21,8 +21,13 @@ class ChapterSegment:
 class ChapterSegmenter:
     """Segments text into chapters using regex patterns."""
 
-    def __init__(self):
-        """Initialize Chapter Segmenter."""
+    def __init__(self, min_chapter_length: int = 1000):
+        """Initialize Chapter Segmenter.
+        
+        Args:
+            min_chapter_length: Minimum character length for a valid chapter
+                                (filters out table of contents entries)
+        """
         # Chapter marker patterns (in order of specificity)
         self.chapter_patterns = [
             # "CHAPTER I.", "CHAPTER II.", etc.
@@ -34,6 +39,39 @@ class ChapterSegmenter:
             # "Part I", "Part 2", etc.
             re.compile(r"^(Part\s+[IVXLCDM]+|\d+)", re.MULTILINE),
         ]
+        self.min_chapter_length = min_chapter_length
+
+    def _is_table_of_contents_entry(self, text: str, start_line: int, end_line: int) -> bool:
+        """
+        Check if a segment is a table of contents entry rather than a real chapter.
+        
+        Heuristics:
+        - Very short content (just a title line)
+        - No substantial text content
+        
+        Args:
+            text: Full text
+            start_line: Start line of segment
+            end_line: End line of segment
+            
+        Returns:
+            True if this appears to be a TOC entry
+        """
+        lines = text.split("\n")
+        segment_lines = lines[start_line:end_line]
+        segment_text = "\n".join(segment_lines).strip()
+        
+        # If segment is very short, it's likely a TOC entry
+        if len(segment_text) < self.min_chapter_length:
+            return True
+            
+        # Check if it contains only the chapter title/header
+        # and maybe a page number, but no substantial content
+        non_empty_lines = [l for l in segment_lines if l.strip()]
+        if len(non_empty_lines) <= 2:
+            return True
+            
+        return False
 
     def segment(self, text: str) -> List[ChapterSegment]:
         """
@@ -43,7 +81,7 @@ class ChapterSegmenter:
             text: The cleaned text
 
         Returns:
-            List of ChapterSegment objects
+            List of ChapterSegment objects (excluding table of contents entries)
         """
         lines = text.split("\n")
         segments = []
@@ -76,7 +114,8 @@ class ChapterSegmenter:
                 unique_starts[line_num] = (line_num, marker)
         chapter_starts = list(unique_starts.values())
 
-        # Create segments
+        # Create segments and filter out table of contents entries
+        valid_segments = []
         for i, (start_line, marker) in enumerate(chapter_starts):
             # Determine end line (next chapter start or end of text)
             if i + 1 < len(chapter_starts):
@@ -84,19 +123,23 @@ class ChapterSegmenter:
             else:
                 end_line = len(lines)
 
+            # Skip table of contents entries
+            if self._is_table_of_contents_entry(text, start_line, end_line):
+                continue
+
             # Extract title from marker
             title = self._extract_title(marker)
 
             # Create segment
             segment = ChapterSegment(
-                chapter_number=i + 1,
+                chapter_number=len(valid_segments) + 1,
                 title=title,
                 start_line=start_line,
                 end_line=end_line
             )
-            segments.append(segment)
+            valid_segments.append(segment)
 
-        return segments
+        return valid_segments
 
     def _extract_title(self, marker: str) -> Optional[str]:
         """

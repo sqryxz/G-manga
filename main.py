@@ -252,7 +252,7 @@ class ComicCreationEngine:
 
             result["project"] = project
             self.project = project
-            self.project_dir = Path(project.directory)
+            self.project_dir = project_dir
 
         self.log_timing(time.time() - stage_start, "Stage 1 total")
         return result
