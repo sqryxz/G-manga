@@ -216,7 +216,6 @@ class TextParser:
         # Remove common Gutenberg header lines before the actual content
         lines = text.split('\n')
         cleaned_lines = []
-        in_header = False
         content_started = False
         
         for line in lines:
@@ -226,6 +225,11 @@ class TextParser:
                 cleaned_lines.append(line)
             elif content_started:
                 cleaned_lines.append(line)
+        
+        # If no chapter markers found, return original text
+        # This handles books with title-based chapters (e.g., Jekyll and Hyde)
+        if not content_started:
+            return text
         
         return '\n'.join(cleaned_lines)
 

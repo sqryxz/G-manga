@@ -232,7 +232,9 @@ class ComicCreationEngine:
             self.log_subitem(f"Content Type: txt")
 
             parser = TextParser()
-            cleaned_text, content_type = parser.parse(raw_content)
+            parse_result = parser.parse(raw_content)
+            cleaned_text = parse_result[0]
+            content_type = parse_result[1]
 
             original = len(raw_content)
             cleaned = len(cleaned_text)
