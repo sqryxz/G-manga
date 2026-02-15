@@ -73,6 +73,30 @@ class ChapterSegmenter:
             
         return False
 
+    def _find_first_real_chapter_line(self, chapter_starts: List[Tuple[int, str, int]], text: str) -> int:
+        """
+        Find the line number of the first real chapter (Chapter I/1).
+        
+        This helps filter out table of contents entries that appear before
+        the actual story content begins.
+        
+        Args:
+            chapter_starts: List of (line_num, marker, pattern_idx) tuples
+            text: Full text
+            
+        Returns:
+            Line number of first real chapter, or 0 if not found
+        """
+        for line_num, marker, _ in chapter_starts:
+            marker_upper = marker.upper().strip()
+            # Look for Chapter I, Chapter 1, CHAPTER I., etc.
+            if (marker_upper == "CHAPTER I" or 
+                marker_upper == "CHAPTER I." or
+                marker_upper == "CHAPTER 1" or
+                marker_upper == "CHAPTER 1."):
+                return line_num
+        return 0
+
     def segment(self, text: str) -> List[ChapterSegment]:
         """
         Segment text into chapters.
@@ -87,7 +111,7 @@ class ChapterSegmenter:
         segments = []
 
         # Find all chapter markers with their line numbers
-        chapter_starts = []  # List of (line_num, marker)
+        chapter_starts = []  # List of (line_num, marker, pattern_idx)
 
         for pattern_idx, pattern in enumerate(self.chapter_patterns):
             # Only use the most specific pattern that matched
@@ -114,9 +138,19 @@ class ChapterSegmenter:
                 unique_starts[line_num] = (line_num, marker)
         chapter_starts = list(unique_starts.values())
 
+        # Find the first real chapter (Chapter I/1)
+        first_chapter_line = self._find_first_real_chapter_line(
+            [(ln, mk, 0) for ln, mk in chapter_starts], text
+        )
+
         # Create segments and filter out table of contents entries
         valid_segments = []
         for i, (start_line, marker) in enumerate(chapter_starts):
+            # Skip any chapter marker that appears before the first real Chapter I
+            # (these are table of contents entries)
+            if first_chapter_line > 0 and start_line < first_chapter_line:
+                continue
+            
             # Determine end line (next chapter start or end of text)
             if i + 1 < len(chapter_starts):
                 end_line = chapter_starts[i + 1][0]
