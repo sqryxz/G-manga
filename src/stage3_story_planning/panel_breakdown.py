@@ -38,7 +38,7 @@ class PanelBreakdown:
             "extreme-close-up", "action", "dialogue", "splash"
         ]
 
-    def _build_prompt(self, visual_beats: List[Dict[str, Any]], scene_summary: str) -> str:
+    def _build_prompt(self, visual_beats: List, scene_summary: str) -> str:
         """
         Build prompt for LLM panel breakdown.
 
@@ -49,9 +49,20 @@ class PanelBreakdown:
         Returns:
             Prompt string
         """
-        beats_text = "\n".join([
-            f"{i+1}. {beat.get('description', '')}" for i, beat in enumerate(visual_beats)
-        ])
+        # Handle both dict and dataclass/BaseModel objects
+        beats_list = []
+        for i, beat in enumerate(visual_beats):
+            if hasattr(beat, 'get'):
+                # It's a dict
+                desc = beat.get('description', '')
+            elif hasattr(beat, 'description'):
+                # It has description attribute
+                desc = beat.description
+            else:
+                desc = str(beat)
+            beats_list.append(f"{i+1}. {desc}")
+
+        beats_text = "\n".join(beats_list)
 
         prompt = f"""You are planning a manga panel breakdown for a scene.
 
@@ -222,7 +233,12 @@ Be specific and match panels to the visual beats provided. Each panel should cap
             beat = visual_beats[i] if i < len(visual_beats) else visual_beats[-1]
 
             # Determine panel type
-            beat_desc = beat.get("description", "").lower()
+            if hasattr(beat, 'get'):
+                beat_desc = beat.get("description", "").lower()
+            elif hasattr(beat, 'description'):
+                beat_desc = beat.description.lower()
+            else:
+                beat_desc = str(beat).lower()
             if "dialogue" in beat_desc:
                 panel_type = "dialogue"
             elif "enter" in beat_desc or "walk" in beat_desc:

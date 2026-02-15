@@ -7,6 +7,7 @@ Main entry point that runs the complete pipeline (Stages 1-9) with detailed logg
 import sys
 import time
 import json
+import os
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any
@@ -20,6 +21,7 @@ from config import Settings, get_settings
 from models.project import Metadata, Chapter, Scene, TextRange, generate_project_id
 from common.mocking import MockLLMClient
 from common.logging import setup_logger
+from common.llm_factory import create_llm_client, PROVIDER_ZAI, PROVIDER_OPENROUTER, PROVIDER_MOCK
 
 # Stage 1 modules
 from stage1_input.url_fetcher import URLFetcher
@@ -38,6 +40,8 @@ from stage3_story_planning.visual_adaptation import VisualAdaptation
 from stage3_story_planning.panel_breakdown import PanelBreakdown
 from stage3_story_planning.storyboard_generator import StoryboardGenerator
 from stage3_story_planning.page_calculator import PageCalculator
+from stage3_story_planning.visual_panel_merged import VisualPanelMerged
+from stage3_story_planning.detailed_storyboard import DetailedStoryboardGenerator
 
 # Stage 4 modules
 from stage4_character_design.character_extractor import CharacterExtractor
@@ -73,13 +77,38 @@ from stage9_output.exporters.metadata import MetadataExporter
 class ComicCreationEngine:
     """Main engine for the G-Manga comic creation pipeline."""
 
-    def __init__(self, use_mock: bool = True, verbose: bool = False):
+    def __init__(self, use_mock: bool = False, verbose: bool = False, workflow: str = "2-step", llm_provider: str = None, llm_model: str = None):
         self.use_mock = use_mock
         self.verbose = verbose
+        self.workflow = workflow
+        self.llm_provider = llm_provider
+        self.llm_model = llm_model
         self.start_time = None
         self.stage_timings: Dict[str, float] = {}
         self.logger = self._setup_logging()
-        self.llm_client = MockLLMClient() if use_mock else None
+        
+        # Create LLM client using factory
+        try:
+            self.llm_client = create_llm_client(
+                provider=None if llm_provider == "auto" else llm_provider,
+                model=llm_model,
+                use_mock=use_mock
+            )
+            
+            # Log provider info
+            if use_mock:
+                self.logger.info("🧪 Mock LLM client initialized")
+            else:
+                provider_info = self.llm_client.get_stats() if hasattr(self.llm_client, 'get_stats') else {}
+                provider_type = provider_info.get('client_type', 'unknown')
+                self.logger.info(f"🔧 {provider_type.upper()} LLM client initialized")
+                if self.llm_model:
+                    self.logger.info(f"   Model: {self.llm_model}")
+        except Exception as e:
+            self.logger.warning(f"⚠️ Failed to initialize LLM client: {e}")
+            self.logger.warning("⚠️ Falling back to mock LLM")
+            self.llm_client = MockLLMClient()
+        
         self.project = None
         self.project_dir = None
 
@@ -359,11 +388,11 @@ class ComicCreationEngine:
         return result
 
     # =========================================================================
-    # STAGE 3: STORY PLANNING
+    # STAGE 3: STORY PLANNING (3-step fallback)
     # =========================================================================
-    def run_stage_3(self, scenes: list, project_id: str) -> Dict[str, Any]:
-        """Run Stage 3: Story Planning."""
-        self.log_stage("STAGE 3", "STORY PLANNING")
+    def run_stage_3_3step(self, scenes: list, project_id: str) -> Dict[str, Any]:
+        """Run Stage 3: Story Planning (3-step legacy workflow)."""
+        self.log_stage("STAGE 3", "STORY PLANNING (3-step)")
         stage_start = time.time()
 
         result = {
@@ -383,14 +412,27 @@ class ComicCreationEngine:
             visual_adapt = VisualAdaptation(llm_client=self.llm_client)
 
             all_visual_beats = []
-            for scene in scenes[:10]:  # Process first 10 scenes
-                scene_text = scene.text if hasattr(scene, 'text') else ""
-                visual_beats = visual_adapt.adapt_scene(
-                    scene_text,
-                    scene.id,
-                    scene.number
-                )
-                all_visual_beats.extend(visual_beats)
+            # Process scenes in batches of 10
+            max_scenes = 100  # Process up to 100 scenes (0 = all)
+            batch_size = 10
+            
+            scenes_to_process = scenes[:max_scenes] if max_scenes > 0 else scenes
+            total_scenes = len(scenes_to_process)
+            
+            for batch_start in range(0, total_scenes, batch_size):
+                batch_end = min(batch_start + batch_size, total_scenes)
+                batch = scenes_to_process[batch_start:batch_end]
+                
+                self.log_subitem(f"Processing scenes {batch_start+1}-{batch_end} of {total_scenes}...")
+                
+                for scene in batch:
+                    scene_text = scene.text if hasattr(scene, 'text') else ""
+                    visual_beats = visual_adapt.adapt_scene(
+                        scene_text,
+                        scene.id,
+                        scene.number
+                    )
+                    all_visual_beats.extend(visual_beats)
 
             self.log_subitem(f"Generated: {len(all_visual_beats)} visual beats")
             result["visual_beats"] = all_visual_beats
@@ -402,14 +444,19 @@ class ComicCreationEngine:
             panel_breakdown = PanelBreakdown(llm_client=self.llm_client)
 
             all_panels = []
-            for scene in scenes[:10]:
-                scene_text = scene.text if hasattr(scene, 'text') else ""
-                panel_plan = panel_breakdown.breakdown_scene(
-                    visual_beats=all_visual_beats,
-                    scene_summary=scene.summary if hasattr(scene, 'summary') else "",
-                    scene_id=scene.id
-                )
-                all_panels.extend(panel_plan.panels)
+            # Process in batches
+            for batch_start in range(0, total_scenes, batch_size):
+                batch_end = min(batch_start + batch_size, total_scenes)
+                batch = scenes_to_process[batch_start:batch_end]
+                
+                for scene in batch:
+                    scene_text = scene.text if hasattr(scene, 'text') else ""
+                    panel_plan = panel_breakdown.breakdown_scene(
+                        visual_beats=all_visual_beats,
+                        scene_summary=scene.summary if hasattr(scene, 'summary') else "",
+                        scene_id=scene.id
+                    )
+                    all_panels.extend(panel_plan.panels)
 
             self.log_subitem(f"Panel Plan: {len(all_panels)} panels")
             result["total_panels"] = len(all_panels)
@@ -421,20 +468,36 @@ class ComicCreationEngine:
             storyboard_gen = StoryboardGenerator(llm_client=self.llm_client)
 
             storyboards = []
-            for scene in scenes[:5]:  # Generate for first 5 scenes
-                scene_text = scene.text if hasattr(scene, 'text') else ""
-                storyboard_panels = storyboard_gen.generate_storyboard(
-                    scene_text=scene_text,
-                    scene_id=scene.id,
-                    scene_number=scene.number,
-                    visual_beats=[vb for vb in all_visual_beats if vb.scene_id == scene.id][:5],
-                    panel_plan={"panels": [p for p in all_panels if p.scene_id == scene.id][:5]}
-                )
+            # Process in batches (use scenes_to_process from earlier)
+            for batch_start in range(0, total_scenes, batch_size):
+                batch_end = min(batch_start + batch_size, total_scenes)
+                batch = scenes_to_process[batch_start:batch_end]
+                
+                for scene in batch:
+                    # Handle both dict and dataclass objects
+                    scene_id = scene.id if hasattr(scene, 'id') else scene.get('id') if isinstance(scene, dict) else ""
+                    scene_number = scene.number if hasattr(scene, 'number') else scene.get('number') if isinstance(scene, dict) else 0
+                    
+                    # Filter visual beats and panels for this scene
+                    scene_vbs = [vb for vb in all_visual_beats 
+                               if (hasattr(vb, 'scene_id') and vb.scene_id == scene_id) or
+                                  (isinstance(vb, dict) and vb.get('scene_id') == scene_id)]
+                    scene_panels = [p for p in all_panels 
+                                  if (hasattr(p, 'scene_id') and p.scene_id == scene_id) or
+                                     (isinstance(p, dict) and p.get('scene_id') == scene_id)]
+                    
+                    storyboard_panels = storyboard_gen.generate_storyboard(
+                        scene_text=scene_text,
+                        scene_id=scene_id,
+                        scene_number=scene_number,
+                        visual_beats=scene_vbs[:5],
+                        panel_plan={"panels": scene_panels[:5]}
+                    )
 
-                storyboard_data = {
-                    "id": f"sb-{scene.id}",
-                    "scene_id": scene.id,
-                    "panels": [p.__dict__ for p in storyboard_panels]
+                    storyboard_data = {
+                        "id": f"sb-{scene_id}",
+                        "scene_id": scene_id,
+                        "panels": [p.__dict__ if hasattr(p, '__dict__') else p for p in storyboard_panels]
                 }
                 storyboards.append(storyboard_data)
                 persistence.save_storyboard(storyboard_data)
@@ -457,6 +520,131 @@ class ComicCreationEngine:
 
         self.log_timing(time.time() - stage_start, "Stage 3 total")
         return result
+
+    # =========================================================================
+    # STAGE 3: STORY PLANNING (2-step merged)
+    # =========================================================================
+    def run_stage_3_2step(self, scenes: list, project_id: str) -> Dict[str, Any]:
+        """Run Stage 3: Story Planning (2-step merged workflow)."""
+        self.log_stage("STAGE 3", "STORY PLANNING (2-step merged)")
+        stage_start = time.time()
+
+        result = {
+            "visual_beats_with_panels": [],
+            "storyboard": {},
+            "total_panels": 0
+        }
+
+        project_dir = self.project_dir or Path(f"output/projects/{project_id}")
+        persistence = StatePersistence(str(project_dir))
+
+        # 3.1.1 Visual Panel Merged
+        with self.timer("stage_3_visual_panel_merged"):
+            self.log_module("3.1.1", "Visual Panel Merged")
+            self.log_subitem("Converting prose to visual beats with integrated panel planning")
+
+            visual_panel = VisualPanelMerged(llm_client=self.llm_client)
+
+            visual_beats_with_panels = []
+            # Process in batches of 10
+            max_scenes_2step = 100
+            batch_size = 10
+            scenes_2step = scenes[:max_scenes_2step] if max_scenes_2step > 0 else scenes
+            
+            for batch_start in range(0, len(scenes_2step), batch_size):
+                batch_end = min(batch_start + batch_size, len(scenes_2step))
+                batch = scenes_2step[batch_start:batch_end]
+                
+                self.log_subitem(f"Processing scenes {batch_start+1}-{batch_end}...")
+                
+                for scene in batch:
+                    scene_text = scene.text if hasattr(scene, 'text') else ""
+                    merged_result = visual_panel.adapt_scene(
+                        scene_text,
+                        scene.id,
+                        scene.number
+                    )
+                    visual_beats_with_panels.extend(merged_result)
+
+            self.log_subitem(f"Generated: {len(visual_beats_with_panels)} visual beats with panels")
+            result["visual_beats_with_panels"] = visual_beats_with_panels
+
+            # Save visual beats for debugging
+            from pathlib import Path
+            import json
+            vb_path = project_dir / "intermediate" / "visual_beats.json"
+            with open(vb_path, 'w') as f:
+                json.dump([vb.to_dict() if hasattr(vb, 'to_dict') else vb for vb in visual_beats_with_panels], f, indent=2)
+            self.logger.info(f"  → Saved visual beats to {vb_path}")
+
+        # 3.1.2 Detailed Storyboard Generator
+        with self.timer("stage_3_detailed_storyboard"):
+            self.log_module("3.1.2", "Detailed Storyboard Generator")
+            self.log_subitem("Generating detailed storyboard from visual beats")
+
+            storyboard_gen = DetailedStoryboardGenerator(llm_client=self.llm_client)
+
+            # Generate detailed storyboard for scenes with visual beats
+            all_detailed_panels = []
+            # Process in batches
+            for batch_start in range(0, len(scenes_2step), batch_size):
+                batch_end = min(batch_start + batch_size, len(scenes_2step))
+                batch = scenes_2step[batch_start:batch_end]
+                
+                for scene in batch:
+                    # Find visual beats for this scene
+                    scene_beats = [vb for vb in visual_beats_with_panels 
+                                  if (hasattr(vb, 'scene_id') and vb.scene_id == scene_id) or
+                                     (isinstance(vb, dict) and vb.get('scene_id') == scene_id)]
+                    
+                    # Extract panel specs from beats
+                    panel_specs = []
+                    for beat in scene_beats:
+                        if hasattr(beat, 'panels') and beat.panels:
+                            panel_specs.extend(beat.panels)
+                        elif isinstance(beat, dict) and 'panels' in beat:
+                            panel_specs.extend(beat['panels'])
+                    
+                    if scene_beats and panel_specs:
+                        # Generate detailed panels
+                        detailed_panels = storyboard_gen.generate(
+                            scene_text=scene_text,
+                            visual_beats=scene_beats,
+                            panel_specs=panel_specs
+                        )
+                        all_detailed_panels.extend(detailed_panels)
+
+            total_panels = len(all_detailed_panels)
+            self.log_subitem(f"Generated: {total_panels} detailed panels")
+            
+            # Convert DetailedPanel objects to dicts for JSON serialization
+            panels_as_dicts = []
+            for panel in all_detailed_panels:
+                if hasattr(panel, 'to_dict'):
+                    panels_as_dicts.append(panel.to_dict())
+                elif hasattr(panel, '__dict__'):
+                    panels_as_dicts.append(panel.__dict__)
+                elif isinstance(panel, dict):
+                    panels_as_dicts.append(panel)
+            
+            result["storyboard"] = {"panels": panels_as_dicts, "total_panels": total_panels}
+            result["total_panels"] = total_panels
+
+            # Save storyboard to persistence
+            persistence.save_storyboard(result["storyboard"])
+
+        self.log_timing(time.time() - stage_start, "Stage 3 (2-step) total")
+        return result
+
+    # =========================================================================
+    # STAGE 3: STORY PLANNING (Router)
+    # =========================================================================
+    def run_stage_3(self, scenes: list, project_id: str) -> Dict[str, Any]:
+        """Run Stage 3: Story Planning. Routes to appropriate workflow."""
+        if self.workflow == "2-step":
+            return self.run_stage_3_2step(scenes, project_id)
+        else:
+            return self.run_stage_3_3step(scenes, project_id)
 
     # =========================================================================
     # STAGE 4: CHARACTER DESIGN
@@ -527,7 +715,7 @@ class ComicCreationEngine:
 
             for char in unique_chars[:5]:  # Generate for first 5 characters
                 name = char.get('name', '') if isinstance(char, dict) else char.name
-                ref_sheet = ref_gen.generate_reference_sheet(char)
+                ref_sheet = ref_gen.generate_ref_sheet(char)
 
             self.log_subitem(f"Generated: {min(len(unique_chars), 5)} reference sheets")
 
@@ -712,6 +900,12 @@ class ComicCreationEngine:
         }
 
         project_dir = self.project_dir or Path(f"output/projects/{project_id}")
+        project_dir_str = str(project_dir) if isinstance(project_dir, Path) else project_dir
+
+        # Create output directory for comic pages
+        comic_pages_dir = os.path.join(project_dir_str, "output", "comic_pages")
+        os.makedirs(comic_pages_dir, exist_ok=True)
+        self.log_subitem(f"Output directory: {comic_pages_dir}")
 
         # 7.1.1 Panel Arranger
         with self.timer("stage_7_arrange"):
@@ -723,7 +917,34 @@ class ComicCreationEngine:
             for panel in panels:
                 panel_types[panel.panel_id] = panel.type
 
-            arrangement = arranger.arrange_panels([], panel_types)
+            # Get panel IDs
+            panel_ids = [p.panel_id for p in panels]
+            
+            # Create mock panel fittings for arrangement
+            from stage7_layout.page_composer import PageComposer, PanelFitting
+            from stage7_layout.layout_templates import LayoutTemplateLibrary
+            
+            composer = PageComposer()
+            library = LayoutTemplateLibrary()
+            template = library.find_best_template(len(panel_ids))
+            
+            # Create panel fittings matching the template
+            mock_fittings = []
+            for i, slot in enumerate(sorted(template.slots, key=lambda s: s.order)):
+                if i < len(panel_ids):
+                    fitting = PanelFitting(
+                        panel_id=panel_ids[i],
+                        slot_id=slot.slot_id,
+                        slot=slot,
+                        panel_aspect_ratio=1.0,
+                        slot_aspect_ratio=slot.width / slot.height,
+                        gutter_size=template.gutter_size,
+                        fit_mode="fit",
+                        scale_factor=1.0
+                    )
+                    mock_fittings.append(fitting)
+
+            arrangement = arranger.arrange_panels(mock_fittings, panel_types)
             self.log_subitem(f"Arrangement: {arrangement.reading_order if arrangement else 'pending'}")
 
         # 7.1.2 Layout Templates
@@ -741,7 +962,6 @@ class ComicCreationEngine:
 
             composer = PageComposer()
 
-            panel_ids = [p.panel_id for p in panels]
             page_layout = composer.compose_page(panel_ids, preferred_template="4-panel-grid")
 
             self.log_subitem(f"Composed: {len(panels)} panels into pages")
@@ -750,8 +970,48 @@ class ComicCreationEngine:
         with self.timer("stage_7_assemble"):
             self.log_module("7.1.4", "Comic Assembler")
 
-            assembler = ComicAssembler(project_dir)
-            self.log_subitem("Assembler initialized")
+            assembler = ComicAssembler(project_dir=project_dir_str)
+            
+            # Load panel images from disk
+            panel_images = assembler.load_all_panel_images(panel_ids)
+            self.log_subitem(f"Loaded {len(panel_images)} panel images")
+            
+            # Assemble pages
+            if page_layout and panel_images:
+                comic_page = assembler.assemble_page(
+                    panel_images=panel_images,
+                    composition=page_layout,
+                    arrangement=arrangement,
+                    panel_fittings=page_layout.panel_fittings
+                )
+                
+                # Save the page
+                saved_path = assembler.save_page(comic_page, comic_pages_dir, page_number=1)
+                self.log_subitem(f"Saved page: {saved_path}")
+                
+                # Save page metadata
+                metadata = {
+                    "page_number": comic_page.page_number,
+                    "width": comic_page.width,
+                    "height": comic_page.height,
+                    "panel_count": comic_page.panel_count,
+                    "reading_order": comic_page.reading_order,
+                    "panel_positions": {k: list(v) for k, v in comic_page.panel_positions.items()},
+                    "saved_path": saved_path
+                }
+                metadata_path = os.path.join(comic_pages_dir, "page_001_metadata.json")
+                with open(metadata_path, 'w') as f:
+                    json.dump(metadata, f, indent=2)
+                self.log_subitem(f"Saved metadata: {metadata_path}")
+                
+                result["pages_composed"] = 1
+                result["layouts"].append({
+                    "template": page_layout.template_name,
+                    "panels": panel_ids,
+                    "saved_path": saved_path
+                })
+            else:
+                self.log_subitem("No layout or panel images available")
 
         self.log_timing(time.time() - stage_start, "Stage 7 total")
         return result
@@ -828,8 +1088,19 @@ class ComicCreationEngine:
         self.log_header("G-MANGA - Comic Creation Engine v1.0")
         self.logger.info("")
         self.logger.info("📖 Transforming literature into manga...")
-        self.logger.info(f"🔧 Mock Mode: {'Enabled' if self.use_mock else 'Disabled'}")
+        
+        # LLM configuration display
+        if self.use_mock:
+            self.logger.info("🧪 Mock Mode: Enabled")
+        else:
+            provider_info = self.llm_client.get_stats() if hasattr(self.llm_client, 'get_stats') else {}
+            provider_type = provider_info.get('client_type', 'unknown').upper()
+            model = self.llm_model or provider_info.get('default_model', '')
+            self.logger.info(f"🤖 LLM Provider: {provider_type}")
+            self.logger.info(f"   Model: {model}")
+        
         self.logger.info(f"📥 Source: {source}")
+        self.logger.info(f"🎯 Workflow: {self.workflow}")
         self.logger.info(f"🎯 Max Stage: {max_stage}")
         self.logger.info("")
 
@@ -1007,11 +1278,17 @@ Examples:
 
     parser.add_argument("--url", "-u", help="Project Gutenberg URL to fetch")
     parser.add_argument("--file", "-f", type=Path, help="Local text file path")
-    parser.add_argument("--mock", action="store_true", default=True, help="Use mock LLM (default: True)")
-    parser.add_argument("--no-mock", dest="mock", action="store_false", help="Use real LLM")
+    parser.add_argument("--mock", action="store_true", default=False, help="Use mock LLM (default: False)")
+    parser.add_argument("--no-mock", dest="mock", action="store_false", help="Use real LLM (default, requires API key)")
+    parser.add_argument("--provider", type=str, choices=["zai", "openrouter", "auto"], default="auto",
+                        help="LLM provider: zai, openrouter, or auto (from env var, default: auto)")
+    parser.add_argument("--model", type=str, default=None,
+                        help="Specific model to use (provider-dependent, e.g., 'glm-4.7' for Z.AI, 'openai/gpt-4o-mini' for OpenRouter)")
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose logging")
     parser.add_argument("--stage", "-s", type=int, default=9, choices=range(1, 10),
                         help="Run up to specified stage (1-9, default: 9)")
+    parser.add_argument("--workflow", type=str, default="2-step", choices=["2-step", "3-step"],
+                        help="Story planning workflow: 2-step (merged) or 3-step (legacy, default: 2-step)")
 
     args = parser.parse_args()
 
@@ -1021,7 +1298,13 @@ Examples:
     source = args.url or str(args.file)
     source_type = "url" if args.url else "file"
 
-    engine = ComicCreationEngine(use_mock=args.mock, verbose=args.verbose)
+    engine = ComicCreationEngine(
+        use_mock=args.mock, 
+        verbose=args.verbose, 
+        workflow=args.workflow,
+        llm_provider=args.provider,
+        llm_model=args.model
+    )
     success = engine.run(source, source_type, max_stage=args.stage)
 
     sys.exit(0 if success else 1)

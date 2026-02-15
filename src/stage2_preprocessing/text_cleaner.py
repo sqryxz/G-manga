@@ -171,13 +171,13 @@ class TextCleaner:
 
         return text
 
-    def clean(self, text: str, preserve_paragraphs: bool = True) -> str:
+    def clean(self, text: str, preserve_paragraphs: bool = False) -> str:
         """
         Apply all cleaning operations.
 
         Args:
             text: Input text
-            preserve_paragraphs: Whether to fix broken paragraphs
+            preserve_paragraphs: Whether to fix broken paragraphs (DISABLED by default - breaks chapter segmentation)
 
         Returns:
             Cleaned text
@@ -191,7 +191,9 @@ class TextCleaner:
         # Step 3: Fix whitespace
         text = self.fix_whitespace(text)
 
-        # Step 4: Fix paragraphs
+        # Step 4: Fix paragraphs - DISABLED by default
+        # This breaks line-number-based chapter segmentation
+        # Re-enable only if needed with explicit preserve_paragraphs=True
         if preserve_paragraphs:
             text = self.fix_paragraphs(text)
 

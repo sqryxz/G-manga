@@ -109,6 +109,8 @@ class StatePersistence:
             scene_dict['length'] = len(scene.text) if scene.text else 0
             scene_dict['start'] = scene.text_range.start
             scene_dict['end'] = scene.text_range.end
+            # Add actual scene text (CRITICAL FIX)
+            scene_dict['text'] = scene.text if scene.text else ""
             # Remove nested text_range from dict
             if 'text_range' in scene_dict:
                 del scene_dict['text_range']
@@ -154,7 +156,7 @@ class StatePersistence:
                     start=scene_data["start"],
                     end=scene_data["end"]
                 ),
-                text=None  # Text loaded separately
+                text=scene_data.get("text", "")  # Load scene text
             )
             scenes.append(scene)
 

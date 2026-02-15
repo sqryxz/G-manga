@@ -1,5 +1,8 @@
 """
 OpenRouter LLM Client - Unified API for 100+ AI models
+
+⚠️ SECURITY: API keys are loaded from config.settings, which reads from .env
+   Never hardcode keys in this file.
 """
 
 import json

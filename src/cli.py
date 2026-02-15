@@ -25,7 +25,9 @@ from rich.panel import Panel
 
 # Add src to path for imports
 src_path = Path(__file__).parent
+g_manga_root = src_path.parent
 sys.path.insert(0, str(src_path))
+sys.path.insert(0, str(g_manga_root))
 
 from config import Settings, get_settings
 from models.project import Project, Metadata, Chapter, Scene, TextRange, generate_project_id
@@ -123,6 +125,7 @@ def storyboard(
     project_id: str = typer.Argument(..., help="Project ID"),
     scene_id: Optional[str] = typer.Option(None, "--scene", "-s", help="Scene ID to generate storyboard for"),
     use_mock: bool = typer.Option(True, "--mock/--no-mock", help="Use mock LLM (default: True)"),
+    workflow: str = typer.Option("2-step", "--workflow", "-w", help="Story planning workflow: 2-step (merged) or 3-step (legacy)"),
 ):
     """
     Generate a storyboard for a project or scene.
@@ -256,6 +259,7 @@ def generate(
     output: str = typer.Option("output", "--output", "-o", help="Output directory for project"),
     project_name: Optional[str] = typer.Option(None, "--name", "-n", help="Project name (auto-generated if not provided)"),
     use_mock: bool = typer.Option(True, "--mock/--no-mock", help="Use mock data for testing (default: True)"),
+    workflow: str = typer.Option("2-step", "--workflow", "-w", help="Story planning workflow: 2-step (merged) or 3-step (legacy)"),
     run_all: bool = typer.Option(False, "--all", "-a", help="Run all pipeline stages (default: only stage 1)"),
     skip_storyboard: bool = typer.Option(False, "--skip-storyboard", help="Skip storyboard generation"),
     storyboard_id: Optional[str] = typer.Option(None, "--storyboard-id", "-sb", help="Use existing storyboard ID for image generation"),
@@ -273,6 +277,8 @@ def generate(
         raise typer.Exit(1)
 
     console.print("[bold green]🚀 Starting G-Manga pipeline...[/bold green]")
+    console.print(f"  Workflow: {workflow}")
+    console.print(f"  Mock mode: {'Enabled' if use_mock else 'Disabled'}")
 
     try:
         settings = get_settings()
@@ -434,6 +440,7 @@ def resume(
     project_id: str = typer.Argument(..., help="Project ID to resume"),
     from_stage: Optional[str] = typer.Option(None, "--from", help="Stage to resume from (default: current stage)"),
     use_mock: Optional[bool] = typer.Option(None, "--mock/--no-mock", help="Override mock mode"),
+    workflow: str = typer.Option("2-step", "--workflow", "-w", help="Story planning workflow: 2-step (merged) or 3-step (legacy)"),
     run_all: bool = typer.Option(False, "--all", "-a", help="Continue pipeline from current stage"),
 ):
     """
