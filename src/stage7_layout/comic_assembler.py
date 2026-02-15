@@ -34,6 +34,7 @@ class ComicAssembler:
 
     def __init__(
         self,
+        project_dir: Optional[str] = None,
         page_width: int = 2480,
         page_height: int = 3508,
         background_color: str = "#FFFFFF",
@@ -44,17 +45,50 @@ class ComicAssembler:
         Initialize Comic Assembler.
 
         Args:
+            project_dir: Project directory for loading/saving panels
             page_width: Page width in pixels (A4 at 300 DPI)
             page_height: Page height in pixels (A4 at 300 DPI)
             background_color: Page background color (hex)
             border_color: Panel border color (hex)
             border_thickness: Border thickness in pixels
         """
+        self.project_dir = project_dir
         self.page_width = page_width
         self.page_height = page_height
         self.background_color = background_color
         self.border_color = border_color
         self.border_thickness = border_thickness
+
+    def load_panel_image(self, panel_id: str) -> Optional[Image.Image]:
+        """Load a panel image from disk."""
+        if not self.project_dir:
+            return None
+        
+        panel_path = os.path.join(self.project_dir, "output", "panels", f"{panel_id}.png")
+        if os.path.exists(panel_path):
+            return Image.open(panel_path).convert("RGB")
+        return None
+
+    def load_all_panel_images(self, panel_ids: List[str]) -> Dict[str, Image.Image]:
+        """Load all panel images from disk."""
+        panel_images = {}
+        for panel_id in panel_ids:
+            img = self.load_panel_image(panel_id)
+            if img:
+                panel_images[panel_id] = img
+        return panel_images
+
+    def get_panels_dir(self) -> str:
+        """Get the panels directory path."""
+        if self.project_dir:
+            return os.path.join(self.project_dir, "output", "panels")
+        return ""
+
+    def get_output_dir(self) -> str:
+        """Get the comic pages output directory path."""
+        if self.project_dir:
+            return os.path.join(self.project_dir, "output", "comic_pages")
+        return ""
 
     def assemble_page(
         self,
@@ -100,19 +134,12 @@ class ComicAssembler:
                 print(f"Warning: Panel {panel_id} not found in panel_images")
                 continue
 
-            # Load panel image
+            # Load panel image from the passed-in dictionary (bytes)
             try:
-                panel_img = Image.open(
-                    sys.path.join(
-                        os.path.dirname(__file__),
-                        '../../..',
-                        'output',
-                        'panels',
-                        f"{panel_id}.png"
-                    )
-                ).convert("RGB")
-            except:
-                print(f"Warning: Could not load panel {panel_id}")
+                import io
+                panel_img = Image.open(io.BytesIO(panel_images[panel_id])).convert("RGB")
+            except Exception as e:
+                print(f"Warning: Could not load panel {panel_id}: {e}")
                 continue
 
             # Calculate panel position

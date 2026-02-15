@@ -256,7 +256,7 @@ def generate_flux_images(panels):
     project_dir = Path(f"/home/clawd/projects/g-manga/output/projects/{project_id}")
     
     # Get API key
-    api_key = os.environ.get("OPENROUTER_API_KEY", "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")
+    api_key = os.environ.get("OPENROUTER_API_KEY", "sk-or-YOUR-KEY-HERE")
     
     # Create provider config - use string for openrouter
     config = ProviderConfig(
@@ -304,7 +304,7 @@ def generate_flux_images(panels):
     project_dir = Path(f"/home/clawd/projects/g-manga/output/projects/{project_id}")
     
     # Get API key
-    api_key = os.environ.get("OPENROUTER_API_KEY", "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")
+    api_key = os.environ.get("OPENROUTER_API_KEY", "sk-or-YOUR-KEY-HERE")
     
     # Create provider config - use string for openrouter
     config = ProviderConfig(

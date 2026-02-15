@@ -1,5 +1,9 @@
 """
 Settings Management - Centralized configuration for G-Manga
+
+⚠️ SECURITY: Never hardcode API keys in this file or any Python file.
+   Load all keys from environment variables via .env file only.
+   See docs/API_KEY_POLICY.md for guidelines.
 """
 
 import os
@@ -7,6 +11,12 @@ from pathlib import Path
 from typing import Optional, List
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Load .env file if it exists
+from dotenv import load_dotenv
+env_path = Path(__file__).parent.parent / ".env"
+if env_path.exists():
+    load_dotenv(env_path)
 
 
 class ZAISettings(BaseSettings):
@@ -66,7 +76,7 @@ class LLMSettings(BaseSettings):
     
     # Provider selection
     provider: str = Field(
-        default="zai",
+        default="openrouter",
         description="LLM provider: openai, openrouter, or zai"
     )
     

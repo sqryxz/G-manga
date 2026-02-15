@@ -1,6 +1,9 @@
 """
 Z.AI LLM Client - Integration with Z.AI API (https://z.ai)
 Supports GLM-4.7 and other Z.AI models via OpenAI-compatible API
+
+⚠️ SECURITY: API keys are loaded from environment variable ZAI_API_KEY
+   Never hardcode keys in this file.
 """
 
 import json

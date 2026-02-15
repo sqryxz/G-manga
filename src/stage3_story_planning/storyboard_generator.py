@@ -51,16 +51,25 @@ class StoryboardGenerator:
         Returns:
             Prompt string
         """
+        # Handle both dict and dataclass/BaseModel objects
+        def get_attr(obj, key, default=None):
+            if hasattr(obj, 'get'):
+                return obj.get(key, default)
+            elif hasattr(obj, key):
+                return getattr(obj, key)
+            else:
+                return default
+
         # Map visual beats to panel references
-        beats_map = {beat['number']: beat for beat in visual_beats}
-        panels_map = {panel['number']: panel for panel in panel_plan}
+        beats_map = {get_attr(beat, 'number'): beat for beat in visual_beats}
+        panels_map = {get_attr(panel, 'number'): panel for panel in panel_plan}
 
         beats_text = "\n".join([
-            f"Beat {beat['number']}: {beat.get('description', '')}" for beat in visual_beats
+            f"Beat {get_attr(beat, 'number')}: {get_attr(beat, 'description', '')}" for beat in visual_beats
         ])
 
         panels_text = "\n".join([
-            f"Panel {panel['number']}: Type={panel.get('type', 'medium')}, Camera={panel.get('camera', 'eye-level')}" for panel in panel_plan
+            f"Panel {get_attr(panel, 'number')}: Type={get_attr(panel, 'type', 'medium')}, Camera={get_attr(panel, 'camera', 'eye-level')}" for panel in panel_plan
         ])
 
         prompt = f"""You are creating detailed manga panel descriptions for a storyboard.
