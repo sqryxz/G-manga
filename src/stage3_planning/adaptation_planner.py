@@ -142,7 +142,9 @@ class NovelLevelAnalyzer:
             chapters = set()
             for beat in analysis_result.plot_beats:
                 if hasattr(beat, 'chapter'):
-                    chapters.add(beat.chapter)
+                    ch = beat.chapter
+                    if ch and ch > 0:  # Filter out invalid chapter numbers
+                        chapters.add(ch)
             if chapters:
                 return max(chapters)
         return 10

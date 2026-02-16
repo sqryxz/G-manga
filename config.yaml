@@ -4,7 +4,7 @@
 # LLM Provider Configuration
 llm:
   # LLM Provider: "openai", "openrouter", or "zai"
-  provider: "zai"
+  provider: "openrouter"
 
   # OpenRouter API settings
   # Get your API key from https://openrouter.ai/keys
@@ -39,27 +39,49 @@ llm:
     timeout: 60
     max_retries: 3
 
+  # OpenRouter Configuration (https://openrouter.ai)
+  # Unified API for 100+ models from OpenAI, Anthropic, Google, etc.
+  openrouter:
+    enabled: true
+    api_key: ""  # Set via env: OPENROUTER_API_KEY
+    base_url: "https://openrouter.ai/api/v1"
+    default_model: "openai/gpt-4o-mini"
+    available_models:
+      # Fast & Cheap
+      - "openai/gpt-4o-mini"        # Fast, cheap, good for scene breakdown
+      - "google/gemini-2.0-flash-001"  # Fast, good for extraction
+      - "anthropic/claude-3.5-haiku"   # Fast, good reasoning
+      # Balanced
+      - "openai/gpt-4o"            # Strong reasoning, good for storyboard
+      - "anthropic/claude-3.5-sonnet"  # Excellent for creative writing
+      - "google/gemini-2.5-flash"   # Good vision + reasoning
+      # Premium
+      - "openai/gpt-4.5"           # Latest OpenAI
+      - "anthropic/claude-sonnet-4-20250514"  # Latest Anthropic
+      - "google/gemini-2.5-pro"    # Best vision model
+      - "minimax/minimax-m2.5". 
+    timeout: 60
+    max_retries: 3
+
   # Models per stage
-  # Use format: "provider/model" (e.g., "openai/gpt-4o", "zai/glm-4.7")
-  # See available models:
-  #   - OpenRouter: https://openrouter.ai/docs
-  #   - Z.AI: https://docs.z.ai/guides/overview/quick-start
-  scene_breakdown_model: "zai/glm-4.7"
+  # Use format: "provider/model" (e.g., "openai/gpt-4o", "openrouter/google/gemini-2.5-flash")
+  # See available models in openrouter section above
 
-  character_extraction_model: "zai/glm-4.7"
+  scene_breakdown_model: "minimax/minimax-m2.5"
 
-  visual_adaptation_model: "zai/glm-4.7"
+  character_extraction_model: "minimax/minimax-m2.5"
 
-  panel_breakdown_model: "zai/glm-4.7"
+  visual_adaptation_model: "google/gemini-3-flash-preview"
 
-  storyboard_generation_model: "zai/glm-4.7"
+  panel_breakdown_model: "google/gemini-3-flash-preview"
+
+  storyboard_generation_model: "minimax/minimax-m2.5"
 
   # Fallback model chain (tries in order if primary fails)
-  # Supports mixed providers: openai/gpt-4o, zai/glm-4.7, anthropic/claude-sonnet-4-20250514
   fallback_models:
-    - "zai/glm-4.7"
-    - "openai/gpt-4o"
-    - "anthropic/claude-sonnet-4-20250514"
+    - "openai/gpt-4o-mini"
+    - "google/gemini-2.0-flash-001"
+    - "anthropic/claude-3.5-haiku"
 
 # Image Generation Settings
 image:

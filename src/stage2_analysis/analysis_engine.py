@@ -5,9 +5,12 @@ import re
 from typing import List, Optional, Dict, Any
 from pathlib import Path
 
+from common.logging import get_logger
 from .schemas import (
     Character, Location, PlotBeat, Dialogue, KeyQuote, AnalysisResult
 )
+
+logger = get_logger(__name__)
 
 
 class AnalysisEngine:
@@ -139,46 +142,7 @@ Return ONLY valid JSON, no other text."""
                 c['chapter_first_appeared'] = chapter_num
             results['characters'] = [Character(**c) for c in chars]
         except Exception as e:
-            print(f"Character extraction error: {e}")
-            results['characters'] = []
-        
-        try:
-            # Extract locations
-            loc_response = self.llm_client.generate(loc_prompt, model=self.model)
-            loc_text = loc_response.text if hasattr(loc_response, "text") else str(loc_response)
-            locs = self._parse_json_array(loc_text, 'locations')
-            results['locations'] = [Location(**{**l, 'chapters_appeared': [chapter_num]}) for l in locs]
-        except Exception as e:
-            print(f"Location extraction error: {e}")
-            results['locations'] = []
-        
-        try:
-            # Extract plot beats
-            beats_response = self.llm_client.generate(beats_prompt, model=self.model)
-            beats_text = beats_response.text if hasattr(beats_response, "text") else str(beats_response)
-            beats = self._parse_json_array(beats_text, 'plot_beats')
-            for b in beats:
-                b['chapter'] = chapter_num
-            results['plot_beats'] = [PlotBeat(**b) for b in beats]
-        except Exception as e:
-            print(f"Plot beat extraction error: {e}")
-            results['plot_beats'] = []
-        
-        try:
-            # Extract dialogue
-            dial_response = self.llm_client.generate(dial_prompt, model=self.model)
-            dial_text = dial_response.text if hasattr(dial_response, "text") else str(dial_response)
-            dial = self._parse_json_array(dial_text, 'dialogue')
-            print(f"DEBUG: Parsed {len(dial)} dialogue items")
-            for d in dial:
-                print(f"  {d}")
-            for d in dial:
-                d['chapter'] = chapter_num
-            results['dialogue'] = [Dialogue(**d) for d in dial]
-        except Exception as e:
-            import traceback
-            print(f"Dialogue extraction error: {e}")
-            traceback.print_exc()
+            logger.warning(f"Dialogue extraction error: {e}")
             results['dialogue'] = []
         
         results['key_quotes'] = []
@@ -192,22 +156,66 @@ Return ONLY valid JSON, no other text."""
         )
     
     def _parse_json_array(self, response: str, field: str) -> List[Dict]:
-        """Parse JSON array from LLM response."""
+        """Parse JSON array from LLM response with robust error handling."""
         try:
-            # Clean up response (remove code block markers)
             import re
+            # Clean up response (remove code block markers)
             cleaned = re.sub(r'^```json\s*', '', response.strip())
             cleaned = re.sub(r'\s*```$', '', cleaned)
             cleaned = re.sub(r'^```\s*', '', cleaned)
             cleaned = re.sub(r'\s*```$', '', cleaned)
             
-            # Try to find JSON array
+            # Try direct parse first
+            try:
+                return json.loads(cleaned)
+            except json.JSONDecodeError:
+                pass
+            
+            # Try to find JSON array with better pattern
+            # Look for array that might be inside the response
             match = re.search(r'\[[\s\S]*\]', cleaned)
             if match:
-                return json.loads(match.group())
-        except json.JSONDecodeError as e:
-            print(f"JSON parse error for {field}: {e}")
+                try:
+                    return json.loads(match.group())
+                except json.JSONDecodeError as e2:
+                    # Try to fix common JSON issues
+                    fixed = self._fix_json(match.group())
+                    if fixed:
+                        return json.loads(fixed)
+            
+            # Last resort: try to extract any JSON-like objects
+            objects = re.findall(r'\{[^{}]*\}', cleaned)
+            if objects:
+                result = []
+                for obj in objects:
+                    try:
+                        result.append(json.loads(obj))
+                    except:
+                        continue
+                if result:
+                    return result
+                    
+        except Exception as e:
+            logger.debug(f"JSON parse error for {field}: {e}")
         return []
+    
+    def _fix_json(self, json_str: str) -> str:
+        """Attempt to fix common JSON formatting issues."""
+        import re
+        
+        # Fix trailing commas
+        fixed = re.sub(r',(\s*[}\]])', r'\1', json_str)
+        
+        # Fix missing quotes around keys
+        fixed = re.sub(r'([{,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)(\s*:)', r'\1"\2"\3', fixed)
+        
+        # Fix single quotes to double quotes
+        fixed = fixed.replace("'", '"')
+        
+        # Fix missing commas between objects
+        fixed = re.sub(r'}(\s+){', r'},{', fixed)
+        
+        return fixed
     
     def _regex_fallback(self, text: str, chapter_num: int):
         """Fallback extraction using regex when LLM unavailable."""

@@ -18,6 +18,9 @@ from .schemas import (
     PageType
 )
 
+from .adaptation_planner import AdaptationPlanner, NovelLevelAnalyzer, ChapterLevelPlanner
+from .adapter import Stage3Adapter
+
 __all__ = [
     'NovelLevelAnalysis',
     'NarrativeArc',
@@ -30,5 +33,9 @@ __all__ = [
     'AdaptationPlan',
     'ArcRole',
     'ChapterRole',
-    'PageType'
+    'PageType',
+    'AdaptationPlanner',
+    'NovelLevelAnalyzer',
+    'ChapterLevelPlanner',
+    'Stage3Adapter'
 ]

@@ -35,6 +35,9 @@ from stage2_preprocessing.chapter_segmenter import ChapterSegmenter
 from stage2_preprocessing.scene_breakdown import SceneBreakdown
 from stage2_preprocessing.state import StatePersistence
 
+# Stage 2 NEW modules (Analysis Engine)
+from stage2_analysis import Stage2Adapter, AnalysisEngine
+
 # Stage 3 modules
 from stage3_story_planning.visual_adaptation import VisualAdaptation
 from stage3_story_planning.panel_breakdown import PanelBreakdown
@@ -42,6 +45,9 @@ from stage3_story_planning.storyboard_generator import StoryboardGenerator
 from stage3_story_planning.page_calculator import PageCalculator
 from stage3_story_planning.visual_panel_merged import VisualPanelMerged
 from stage3_story_planning.detailed_storyboard import DetailedStoryboardGenerator
+
+# Stage 3 NEW modules (Adaptation Planner)
+from stage3_planning import Stage3Adapter, AdaptationPlanner
 
 # Stage 4 modules
 from stage4_character_design.character_extractor import CharacterExtractor
@@ -53,6 +59,9 @@ from stage5_panel_generation.panel_builder import PanelBuilder
 from stage5_panel_generation.panel_optimizer import PanelOptimizer
 from stage5_panel_generation.panel_state import PanelStateManager
 from stage5_panel_generation.panel_type_prompts import PanelTypePrompts
+
+# Stage 5 NEW modules (Script Generation)
+from stage5_script import Stage5Adapter, ScriptOrchestrator
 
 # Stage 6 modules
 from stage6_image_generation.queue_manager import ImageQueueManager
@@ -361,6 +370,55 @@ class ComicCreationEngine:
             self.log_subitem(f"Total Scenes: {len(all_scenes)}")
             result["scenes"] = all_scenes
 
+        # 2.1.3b NEW: Analysis Engine (Characters, Locations, Plot Beats, Dialogue)
+        if self.llm_client and not self.use_mock:
+            with self.timer("stage_2_analysis_engine"):
+                self.log_module("2.1.3b", "Analysis Engine (NEW)")
+                self.log_subitem("Extracting characters, locations, plot beats, dialogue")
+
+                # Get model from config or use default
+                from config import get_settings
+                settings = get_settings()
+                model = getattr(settings.llm, 'scene_breakdown_model', 'openai/gpt-4o-mini')
+                
+                # Use Stage2Adapter for unified processing
+                adapter = Stage2Adapter(
+                    llm_client=self.llm_client,
+                    model=model
+                )
+
+                # Run full analysis
+                analysis_result = adapter.run_full_analysis(
+                    cleaned_text=super_clean,
+                    chapters_data=chapters_data,
+                    run_analysis=True,
+                    run_scene_breakdown=False  # Already done above
+                )
+
+                # Extract results
+                analysis = analysis_result.get("analysis")
+                if analysis:
+                    self.log_subitem(f"Characters found: {analysis_result.get('character_count', 0)}")
+                    self.log_subitem(f"Locations found: {analysis_result.get('location_count', 0)}")
+                    self.log_subitem(f"Plot beats: {analysis_result.get('plot_beat_count', 0)}")
+                    self.log_subitem(f"Dialogue lines: {analysis_result.get('dialogue_count', 0)}")
+
+                    # Save analysis to file
+                    analysis_path = project_dir / "intermediate" / "analysis.json"
+                    adapter.save_analysis(analysis, str(analysis_path))
+                    self.log_subitem(f"Saved: {analysis_path.name}")
+
+                    # Convert to Stage 3 format and save
+                    stage3_format = adapter.analysis_to_stage3_format(analysis)
+                    stage3_path = project_dir / "intermediate" / "analysis_stage3_format.json"
+                    with open(stage3_path, 'w') as f:
+                        json.dump(stage3_format, f, indent=2)
+                    self.log_subitem(f"Saved: {stage3_path.name}")
+
+                    result["analysis"] = stage3_format
+                else:
+                    self.log_subitem("No LLM analysis available (using mock)")
+
         # 2.1.4 State Persistence
         with self.timer("stage_2_state_save"):
             self.log_module("2.1.4", "State Persistence")
@@ -635,14 +693,91 @@ class ComicCreationEngine:
             # Save storyboard to persistence
             persistence.save_storyboard(result["storyboard"])
 
+        # 3.1.3 NEW: Adaptation Planning (Novel-level analysis, page allocation)
+        if self.llm_client and not self.use_mock:
+            with self.timer("stage_3_adaptation_planner"):
+                self.log_module("3.1.3", "Adaptation Planner (NEW)")
+                self.log_subitem("Analyzing narrative structure and planning page allocation")
+
+                # Get model from config
+                from config import get_settings
+                settings = get_settings()
+                model = getattr(settings.llm, 'visual_adaptation_model', 'openai/gpt-4o-mini')
+                
+                # Get metadata for title/author (passed from Stage 2)
+                metadata = self._stage3_metadata or {}
+                title = metadata.get("title", "")
+                author = metadata.get("author", "")
+                
+                # Get target pages (default 100 for manga)
+                target_pages = 100
+                
+                # Use Stage3Adapter for adaptation planning
+                adapter = Stage3Adapter(
+                    llm_client=self.llm_client,
+                    model=model
+                )
+                
+                # Run adaptation planning using analysis from Stage 2
+                stage2_analysis = self._stage3_analysis or {}
+                
+                adaptation_result = adapter.run_adaptation_planning(
+                    analysis_result=stage2_analysis,
+                    target_pages=target_pages,
+                    title=title,
+                    author=author
+                )
+                
+                if adaptation_result.get("adaptation_plan"):
+                    summary = adaptation_result.get("summary", {})
+                    self.log_subitem(f"Novel: {title} by {author}")
+                    self.log_subitem(f"Target pages: {summary.get('target_pages', target_pages)}")
+                    self.log_subitem(f"Chapters: {summary.get('total_chapters', 'N/A')}")
+                    self.log_subitem(f"Narrative arcs: {summary.get('narrative_arcs', 0)}")
+                    self.log_subitem(f"Emotional peaks: {summary.get('emotional_peaks', 0)}")
+                    self.log_subitem(f"Splash pages: {summary.get('splash_pages', 0)}")
+                    self.log_subitem(f"Pages/chapter avg: {summary.get('pages_per_chapter_avg', 0):.1f}")
+                    self.log_subitem(f"Themes: {', '.join(summary.get('major_themes', [])[:3])}")
+                    self.log_subitem(f"Mood: {summary.get('mood_tone', 'N/A')}")
+                    
+                    # Save adaptation plan
+                    adaptation_path = project_dir / "intermediate" / "adaptation_plan.json"
+                    adapter.save_adaptation_plan(
+                        adaptation_result["adaptation_plan"], 
+                        str(adaptation_path)
+                    )
+                    self.log_subitem(f"Saved: {adaptation_path.name}")
+                    
+                    # Convert to Stage 4 format and save
+                    stage4_format = adapter.adaptation_plan_to_stage4_format(
+                        adaptation_result["adaptation_plan"]
+                    )
+                    stage4_path = project_dir / "intermediate" / "adaptation_stage4_format.json"
+                    import json
+                    with open(stage4_path, 'w') as f:
+                        json.dump(stage4_format, f, indent=2)
+                    self.log_subitem(f"Saved: {stage4_path.name}")
+                    
+                    result["adaptation_plan"] = stage4_format
+                    
+                    # Store for Stage 5
+                    self._stage3_adaptation_plan = adaptation_result.get("summary", {})
+                else:
+                    self.log_subitem("No LLM adaptation planning available (using mock)")
+
         self.log_timing(time.time() - stage_start, "Stage 3 (2-step) total")
         return result
 
     # =========================================================================
     # STAGE 3: STORY PLANNING (Router)
     # =========================================================================
-    def run_stage_3(self, scenes: list, project_id: str) -> Dict[str, Any]:
+    def run_stage_3(self, scenes: list, project_id: str, analysis: dict = None, metadata: dict = None) -> Dict[str, Any]:
         """Run Stage 3: Story Planning. Routes to appropriate workflow."""
+        # Store metadata and analysis for use in sub-methods
+        self._stage3_analysis = analysis
+        self._stage3_metadata = metadata or {}
+        self._stage3_adaptation_plan = None  # Will be set in run_stage_3_2step
+        
         if self.workflow == "2-step":
             return self.run_stage_3_2step(scenes, project_id)
         else:
@@ -823,6 +958,70 @@ class ComicCreationEngine:
                 })
 
             self.log_subitem(f"Saved: {len(all_panels)} panels")
+
+        # 5.1.5 NEW: Script Generation (from analysis + adaptation plan)
+        if self.llm_client and not self.use_mock:
+            with self.timer("stage_5_script_gen"):
+                self.log_module("5.1.5", "Script Generation (NEW)")
+                self.log_subitem("Generating manga script from analysis and adaptation plan")
+
+                # Get model from config
+                from config import get_settings
+                settings = get_settings()
+                model = getattr(settings.llm, 'storyboard_generation_model', 'openai/gpt-4o')
+                
+                # Get Stage 2 and Stage 3 data
+                stage2_analysis = getattr(self, '_stage3_analysis', None)
+                stage3_adaptation = getattr(self, '_stage3_adaptation_plan', None)
+                
+                # Get metadata for title/author
+                metadata = getattr(self, '_stage3_metadata', {})
+                title = metadata.get("title", "Unknown")
+                author = metadata.get("author", "Unknown")
+                
+                # Get target pages
+                target_pages = 100
+                
+                if stage2_analysis and stage3_adaptation:
+                    # Use Stage5Adapter for script generation
+                    adapter = Stage5Adapter(
+                        llm_client=self.llm_client,
+                        model=model
+                    )
+                    
+                    script_result = adapter.run_script_generation(
+                        analysis_result=stage2_analysis,
+                        adaptation_plan=stage3_adaptation,
+                        target_pages=target_pages,
+                        title=title,
+                        author=author
+                    )
+                    
+                    if script_result.get("script"):
+                        summary = script_result.get("summary", {})
+                        self.log_subitem(f"Script: {title} by {author}")
+                        self.log_subitem(f"Total pages: {summary.get('total_pages', 0)}")
+                        self.log_subitem(f"Total panels: {summary.get('total_panels', 0)}")
+                        self.log_subitem(f"Avg panels/page: {summary.get('avg_panels_per_page', 0):.1f}")
+                        
+                        # Save script
+                        script_path = project_dir / "intermediate" / "script.json"
+                        adapter.save_script(script_result["script"], str(script_path))
+                        self.log_subitem(f"Saved: {script_path.name}")
+                        
+                        # Convert to Stage 6 format and save
+                        stage6_format = adapter.script_to_stage6_format(script_result["script"])
+                        stage6_path = project_dir / "intermediate" / "script_stage6_format.json"
+                        import json
+                        with open(stage6_path, 'w') as f:
+                            json.dump(stage6_format, f, indent=2)
+                        self.log_subitem(f"Saved: {stage6_path.name}")
+                        
+                        result["script"] = stage6_format
+                    else:
+                        self.log_subitem("No script generated (check LLM)")
+                else:
+                    self.log_subitem("Missing Stage 2/3 data for script generation")
 
         self.log_timing(time.time() - stage_start, "Stage 5 total")
         return result
@@ -1139,7 +1338,9 @@ class ComicCreationEngine:
             # Stage 3: Story Planning
             stage3_result = self.run_stage_3(
                 stage2_result["scenes"],
-                stage1_result["project"].id
+                stage1_result["project"].id,
+                analysis=stage2_result.get("analysis"),  # Pass Stage 2 analysis to Stage 3
+                metadata=stage1_result.get("metadata", {})  # Pass metadata for title/author
             )
 
             if max_stage <= 3:

@@ -6,6 +6,8 @@ Extracts structured narrative data from raw text:
 - Plot Beats (2C)
 - Dialogue (2D)
 - Key Quotes
+
+Also provides adapters for backward compatibility with old preprocessing.
 """
 
 from .schemas import (
@@ -17,6 +19,7 @@ from .schemas import (
     AnalysisResult
 )
 from .analysis_engine import AnalysisEngine
+from .adapter import Stage2Adapter
 
 __all__ = [
     'Character',
@@ -25,5 +28,6 @@ __all__ = [
     'Dialogue',
     'KeyQuote',
     'AnalysisResult',
-    'AnalysisEngine'
+    'AnalysisEngine',
+    'Stage2Adapter'
 ]
