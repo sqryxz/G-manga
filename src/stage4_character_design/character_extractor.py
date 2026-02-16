@@ -18,6 +18,9 @@ class Character:
     appearance: Dict[str, Any]  # Age, hair, build, clothing, features, etc.
     role: Optional[str] = None  # Protagonist, antagonist, supporting, etc.
     first_appearance: Optional[int] = None  # Chapter number first appeared
+    relationships: Optional[Dict[str, str]] = None  # {character_name: relationship_type}
+    key_scenes: Optional[List[Dict[str, Any]]] = None  # [{chapter, description, importance}]
+    personality_traits: Optional[List[str]] = None  # List of personality characteristics
 
 
 class CharacterExtractor:
@@ -70,6 +73,8 @@ For EACH character, provide:
 12. **Clothing** - General style and typical attire (e.g., "Victorian gentleman's suit", "painting smock", "evening gown", "bohemian artist's clothes")
 13. **Distinguishing Features** - Any unique physical traits (scars, tattoos, glasses, distinctive jewelry, birthmarks, etc.)
 14. **Personality Traits** - Key personality characteristics (e.g., "arrogant", "artistic", "mysterious", "charming", "humble", "intellectual", "cynical")
+15. **Relationships** - Relationships to OTHER characters in this chapter (e.g., "father of", "employer of", "friend of", "enemy of", "lover of")
+16. **Key Scenes** - Important scenes this character appears in during this chapter (include chapter number, scene description, and importance level: major/minor)
 
 **INSTRUCTIONS:**
 - Be thorough - include both visual descriptions and personality
@@ -104,30 +109,11 @@ Return JSON in this exact format:
       "skin_tone": "pale",
       "clothing": "painting smock with paint stains, simple shirt, dark trousers",
       "distinguishing_features": "Often has paint on his hands and clothes",
-      "personality_traits": ["passionate", "devoted to art", "sensitive", "humble"]
-    }},
-    {{
-      "name": "Lord Henry Wotton",
-      "aliases": ["Lord Henry", "Harry"],
-      "role": "deuteragonist",
-      "first_appearance": null,
-      "age": "late 20s",
-      "gender": "male",
-      "height": "tall",
-      "build": "lean, aristocratic",
-      "hair": {{
-        "color": "golden blonde",
-        "style": "short, curled",
-        "length": "medium"
-      }},
-      "eyes": {{
-        "color": "blue",
-        "shape": "narrow"
-      }},
-      "skin_tone": "fair",
-      "clothing": "elegant gentleman's attire, frock coat, silk cravat",
-      "distinguishing_features": "Always looks bored and slightly cynical",
-      "personality_traits": ["cynical", "witty", "hedonistic", "influential", "charismatic"]
+      "personality_traits": ["passionate", "devoted to art", "sensitive", "humble"],
+      "relationships": {{"Lord Henry Wotton": "friend of", "Dorian Gray": "friend and subject of portrait"}},
+      "key_scenes": [
+        {{"chapter": {chapter_number}, "description": "Paints Dorian's portrait", "importance": "major"}}
+      ]
     }}
   ]
 }}
