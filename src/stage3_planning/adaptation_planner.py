@@ -138,7 +138,14 @@ class NovelLevelAnalyzer:
             return len(analysis_result.chapters)
         elif hasattr(analysis_result, 'total_chapters'):
             return analysis_result.total_chapters
-        return 20  # Default for Dorian Gray
+        elif hasattr(analysis_result, 'plot_beats') and analysis_result.plot_beats:
+            chapters = set()
+            for beat in analysis_result.plot_beats:
+                if hasattr(beat, 'chapter'):
+                    chapters.add(beat.chapter)
+            if chapters:
+                return max(chapters)
+        return 10
     
     def _analyze_narrative_arcs(
         self,
@@ -146,37 +153,76 @@ class NovelLevelAnalyzer:
         total_chapters: int,
         analysis_result
     ) -> List[NarrativeArc]:
-        """Analyze narrative arcs (Act 1, 2, 3 structure)."""
+        """Analyze narrative arcs (Act 1, 2, 3 structure) from plot beats."""
         arcs = []
         
-        # For Dorian Gray-like structure:
-        # Act 1: Chapters 1-7 (Setup, Dorian introduced, wish made)
-        # Act 2: Chapters 8-15 (Rising action, corruption deepens)
-        # Act 3: Chapters 16-20 (Falling action, tragedy unfolds)
+        # If we have actual plot beats, derive arcs from them
+        if plot_beats and len(plot_beats) > 0:
+            arcs = self._derive_arcs_from_beats(plot_beats, total_chapters)
         
-        act_themes = [
-            ("Introduction and the Fatal Wish", ArcRole.SETUP),
-            ("The Corruption of Youth", ArcRole.RISING_ACTION),
-            ("The Price of Beauty", ArcRole.CLIMAX),
-            ("Retribution and Tragedy", ArcRole.FALLING_ACTION),
-            ("Conclusion", ArcRole.RESOLUTION)
+        # If no arcs derived or not enough data, create generic arc structure
+        if not arcs:
+            arcs = self._create_generic_arcs(total_chapters)
+        
+        return arcs
+    
+    def _derive_arcs_from_beats(
+        self,
+        plot_beats: List,
+        total_chapters: int
+    ) -> List[NarrativeArc]:
+        """Derive narrative arcs from actual plot beats."""
+        arcs = []
+        
+        # Group beats by chapter to find act boundaries
+        beats_by_chapter = {}
+        for beat in plot_beats:
+            chapter = getattr(beat, 'chapter', 1)
+            if chapter not in beats_by_chapter:
+                beats_by_chapter[chapter] = []
+            beats_by_chapter[chapter].append(beat)
+        
+        # Determine act boundaries based on chapter distribution
+        # Standard 3-act structure: 25%, 50%, 25%
+        act_boundaries = [
+            (1, int(total_chapters * 0.25), ArcRole.SETUP, "Setup"),
+            (int(total_chapters * 0.25) + 1, int(total_chapters * 0.75), ArcRole.RISING_ACTION, "Rising Action"),
+            (int(total_chapters * 0.75) + 1, total_chapters, ArcRole.CLIMAX, "Climax")
         ]
         
-        # Calculate chapter distribution
-        act_size = total_chapters // len(act_themes)
+        # Add falling action and resolution for longer works
+        if total_chapters > 10:
+            act_boundaries = [
+                (1, int(total_chapters * 0.20), ArcRole.SETUP, "Setup"),
+                (int(total_chapters * 0.20) + 1, int(total_chapters * 0.50), ArcRole.RISING_ACTION, "Rising Action"),
+                (int(total_chapters * 0.50) + 1, int(total_chapters * 0.75), ArcRole.RISING_ACTION, "Escalation"),
+                (int(total_chapters * 0.75) + 1, int(total_chapters * 0.90), ArcRole.CLIMAX, "Climax"),
+                (int(total_chapters * 0.90) + 1, total_chapters, ArcRole.FALLING_ACTION, "Falling Action"),
+                (total_chapters, total_chapters, ArcRole.RESOLUTION, "Resolution")
+            ]
         
-        for i, (theme, arc_role) in enumerate(act_themes):
-            start_ch = i * act_size + 1
-            end_ch = min((i + 1) * act_size, total_chapters)
+        # Filter valid boundaries
+        act_boundaries = [(s, e, r, t) for s, e, r, t in act_boundaries if s <= total_chapters]
+        
+        for i, (start, end, arc_role, theme_base) in enumerate(act_boundaries):
+            # Get beats in this act
+            act_beats = []
+            for ch in range(start, min(end + 1, total_chapters + 1)):
+                if ch in beats_by_chapter:
+                    for beat in beats_by_chapter[ch]:
+                        desc = getattr(beat, 'description', str(beat))
+                        if desc:
+                            act_beats.append(desc[:100])  # Truncate for storage
             
-            chapters = list(range(start_ch, end_ch + 1))
+            # Unique events only
+            key_events = list(dict.fromkeys(act_beats))[:5]  # Max 5 key events per act
             
-            # Get key events for this act
-            key_events = self._get_act_events(i, plot_beats)
+            # Generate theme from beats if available
+            theme = self._generate_theme_from_beats(key_events, arc_role, theme_base)
             
             arcs.append(NarrativeArc(
                 act_number=i + 1,
-                chapters=chapters,
+                chapters=list(range(start, min(end + 1, total_chapters + 1))),
                 theme=theme,
                 arc_role=arc_role,
                 key_events=key_events,
@@ -185,17 +231,58 @@ class NovelLevelAnalyzer:
         
         return arcs
     
-    def _get_act_events(self, act_num: int, plot_beats: List) -> List[str]:
-        """Get key events for an act."""
-        # Simplified - would use LLM for detailed events
-        act_events = {
-            0: ["Dorian introduced", "Portrait painted", "Fatal wish made"],
-            1: ["Dorian's corruption begins", "Relationship with Sibyl", "Blackmail begins"],
-            2: ["Crimes catch up", "Dorian confronts past", "Portrait deteriorates"],
-            3: ["Final revelations", "Dorian's despair", "Destruction"],
-            4: ["Aftermath", "Final statement"]
+    def _generate_theme_from_beats(
+        self,
+        key_events: List[str],
+        arc_role: ArcRole,
+        default_theme: str
+    ) -> str:
+        """Generate a theme description from key events."""
+        if not key_events:
+            return default_theme
+        
+        # Use first significant event as theme anchor
+        first_event = key_events[0] if key_events else default_theme
+        
+        # Map arc role to appropriate theme framing
+        role_themes = {
+            ArcRole.SETUP: f"Introduction: {first_event}",
+            ArcRole.RISING_ACTION: f"Development: {first_event}",
+            ArcRole.CLIMAX: f"Crisis: {first_event}",
+            ArcRole.FALLING_ACTION: f"Resolution: {first_event}",
+            ArcRole.RESOLUTION: f"Conclusion: {first_event}"
         }
-        return act_events.get(act_num, [])
+        
+        return role_themes.get(arc_role, default_theme)
+    
+    def _create_generic_arcs(self, total_chapters: int) -> List[NarrativeArc]:
+        """Create generic arc structure when no plot beats available."""
+        arcs = []
+        
+        # Standard 5-act structure
+        act_configs = [
+            (1, int(total_chapters * 0.20), ArcRole.SETUP, "Setup and Introduction"),
+            (int(total_chapters * 0.20) + 1, int(total_chapters * 0.50), ArcRole.RISING_ACTION, "Rising Action"),
+            (int(total_chapters * 0.50) + 1, int(total_chapters * 0.75), ArcRole.CLIMAX, "Climax"),
+            (int(total_chapters * 0.75) + 1, int(total_chapters * 0.90), ArcRole.FALLING_ACTION, "Falling Action"),
+            (int(total_chapters * 0.90) + 1, total_chapters, ArcRole.RESOLUTION, "Resolution")
+        ]
+        
+        for i, (start, end, role, theme) in enumerate(act_configs):
+            if start > total_chapters:
+                break
+            end = min(end, total_chapters)
+            
+            arcs.append(NarrativeArc(
+                act_number=i + 1,
+                chapters=list(range(start, end + 1)),
+                theme=theme,
+                arc_role=role,
+                key_events=[],
+                emotional_tone=self._get_act_tone(role)
+            ))
+        
+        return arcs
     
     def _get_act_tone(self, arc_role: ArcRole) -> str:
         """Get emotional tone for arc role."""
@@ -240,28 +327,175 @@ class NovelLevelAnalyzer:
         dialogue: List,
         total_chapters: int
     ) -> List[EmotionalPeak]:
-        """Identify emotional peaks in the story."""
+        """Identify emotional peaks in the story from plot beats and dialogue."""
         peaks = []
         
-        # Standard peaks for Dorian Gray structure
-        peak_data = [
-            (1, "The First Meeting", "climax", 9.0, "Dorian meets Lord Henry, his path is set"),
-            (5, "The Fatal Wish", "revelation", 8.5, "Dorian wishes to stay young forever"),
-            (11, "Sibel Vane's Death", "tragedy", 9.0, "Dorian's cruelty leads to suicide"),
-            (14, "Basil's Confrontation", "climax", 9.5, "Dorian demands Basil see the portrait"),
-            (18, "The Portrait's Horror", "revelation", 10.0, "Dorian sees the true horror of his soul"),
-            (20, "The Final Destruction", "tragedy", 9.5, "Dorian destroys the portrait and himself"),
+        # Derive peaks from plot beats if available
+        if plot_beats and len(plot_beats) > 0:
+            peaks = self._derive_peaks_from_beats(plot_beats, total_chapters)
+        
+        # Also check dialogue for emotional intensity
+        if dialogue and len(dialogue) > 0:
+            dialogue_peaks = self._derive_peaks_from_dialogue(dialogue, total_chapters)
+            # Merge with beat-derived peaks
+            existing_chapters = {p.chapter for p in peaks}
+            for peak in dialogue_peaks:
+                if peak.chapter not in existing_chapters:
+                    peaks.append(peak)
+        
+        # Sort by chapter
+        peaks.sort(key=lambda p: p.chapter)
+        
+        # If still no peaks, generate based on structural positions
+        if not peaks:
+            peaks = self._generate_structural_peaks(total_chapters)
+        
+        return peaks
+    
+    def _derive_peaks_from_beats(
+        self,
+        plot_beats: List,
+        total_chapters: int
+    ) -> List[EmotionalPeak]:
+        """Derive emotional peaks from plot beats."""
+        peaks = []
+        
+        # Find major beats (is_major=True) or emotional/decision types
+        major_beats = [
+            b for b in plot_beats
+            if (getattr(b, 'is_major', False) or 
+                getattr(b, 'beat_type', '') in ['emotional', 'decision', 'revelation'])
         ]
         
-        for chapter, desc, peak_type, intensity, moment in peak_data:
+        # Group by chapter and score by intensity
+        chapter_scores = {}
+        for beat in major_beats:
+            chapter = getattr(beat, 'chapter', 1)
+            beat_type = getattr(beat, 'beat_type', 'action')
+            
+            # Score based on beat type
+            type_scores = {
+                'revelation': 8.5,
+                'decision': 8.0,
+                'emotional': 9.0,
+                'action': 6.0
+            }
+            score = type_scores.get(beat_type, 6.0)
+            
+            if chapter not in chapter_scores:
+                chapter_scores[chapter] = {'score': 0, 'beats': [], 'type': beat_type}
+            
+            if score > chapter_scores[chapter]['score']:
+                chapter_scores[chapter]['score'] = score
+                chapter_scores[chapter]['beats'] = [getattr(beat, 'description', 'Key moment')]
+                chapter_scores[chapter]['type'] = beat_type
+        
+        # Convert to EmotionalPeak objects
+        for chapter, data in chapter_scores.items():
             if chapter <= total_chapters:
+                peak_type_map = {
+                    'revelation': 'revelation',
+                    'decision': 'tension',
+                    'emotional': 'climax',
+                    'action': 'action'
+                }
+                
                 peaks.append(EmotionalPeak(
                     chapter=chapter,
-                    description=desc,
-                    intensity=intensity,
-                    peak_type=peak_type,
-                    key_moment=moment
+                    description=data['beats'][0] if data['beats'] else f"Chapter {chapter} peak",
+                    intensity=data['score'],
+                    peak_type=peak_type_map.get(data['type'], 'tension'),
+                    key_moment=data['beats'][0] if data['beats'] else ""
                 ))
+        
+        return peaks
+    
+    def _derive_peaks_from_dialogue(
+        self,
+        dialogue: List,
+        total_chapters: int
+    ) -> List[EmotionalPeak]:
+        """Derive emotional peaks from dialogue intensity."""
+        peaks = []
+        
+        # Find chapters with high emotional dialogue
+        emotional_tones = {'angry', 'sad', 'intense', 'dramatic', 'desperate', 'joyful'}
+        
+        chapter_emotions = {}
+        for dial in dialogue:
+            chapter = getattr(dial, 'chapter', 0)
+            if chapter == 0:
+                continue
+            tone = getattr(dial, 'tone', 'neutral').lower()
+            
+            if tone in emotional_tones:
+                if chapter not in chapter_emotions:
+                    chapter_emotions[chapter] = {'count': 0, 'tones': set()}
+                chapter_emotions[chapter]['count'] += 1
+                chapter_emotions[chapter]['tones'].add(tone)
+        
+        # Convert to peaks
+        for chapter, data in chapter_emotions.items():
+            if chapter <= total_chapters and data['count'] >= 2:
+                peaks.append(EmotionalPeak(
+                    chapter=chapter,
+                    description=f"Emotional dialogue scene",
+                    intensity=7.0 + (data['count'] * 0.5),
+                    peak_type='emotional',
+                    key_moment=f"Tone: {', '.join(data['tones'])}"
+                ))
+        
+        return peaks
+    
+    def _generate_structural_peaks(self, total_chapters: int) -> List[EmotionalPeak]:
+        """Generate peaks at structural positions when no data available."""
+        peaks = []
+        
+        # Standard structural peak positions
+        if total_chapters >= 3:
+            peaks.append(EmotionalPeak(
+                chapter=1,
+                description="Opening incident",
+                intensity=7.0,
+                peak_type='setup',
+                key_moment="Story begins"
+            ))
+        
+        if total_chapters >= 5:
+            peaks.append(EmotionalPeak(
+                chapter=max(1, int(total_chapters * 0.25)),
+                description="First turning point",
+                intensity=7.5,
+                peak_type='turning_point',
+                key_moment="Major plot development"
+            ))
+        
+        if total_chapters >= 10:
+            peaks.append(EmotionalPeak(
+                chapter=max(1, int(total_chapters * 0.50)),
+                description="Midpoint",
+                intensity=8.0,
+                peak_type='revelation',
+                key_moment="Mid-story revelation"
+            ))
+        
+        if total_chapters >= 15:
+            peaks.append(EmotionalPeak(
+                chapter=max(1, int(total_chapters * 0.75)),
+                description="Pre-climax",
+                intensity=8.5,
+                peak_type='tension',
+                key_moment="Building to climax"
+            ))
+        
+        if total_chapters >= 3:
+            peaks.append(EmotionalPeak(
+                chapter=total_chapters,
+                description="Final confrontation",
+                intensity=9.0,
+                peak_type='climax',
+                key_moment="Story climax"
+            ))
         
         return peaks
     
@@ -271,105 +505,280 @@ class NovelLevelAnalyzer:
         plot_beats: List,
         total_chapters: int
     ) -> List[CharacterArc]:
-        """Analyze character arcs."""
+        """Analyze character arcs from character data and plot beats."""
         arcs = []
         
-        # Dorian's arc
-        dorian_arc = CharacterArc(
-            character_name="Dorian Gray",
-            role="protagonist",
-            arc_beats=[
-                {"chapter": 1, "description": "Innocent, beautiful young man", "change": "meeting Henry"},
-                {"chapter": 5, "description": "Makes the fatal wish", "change": "corruption begins"},
-                {"chapter": 11, "description": "Causes Sibyl's death", "change": "moral decay"},
-                {"chapter": 14, "description": "Threatens Basil", "change": "complete corruption"},
-                {"chapter": 18, "description": "Sees horror of portrait", "change": "despair"},
-                {"chapter": 20, "description": "Destroys portrait and himself", "change": "destruction"}
-            ],
-            transformation_summary="From innocent beauty to corrupted soul",
-            starting_state="Beautiful, innocent, impressionable",
-            ending_state="Damned, despairing, destroyed"
-        )
-        arcs.append(dorian_arc)
+        # If we have characters from Stage 2, derive arcs from them
+        if characters and len(characters) > 0:
+            arcs = self._derive_arcs_from_characters(characters, plot_beats, total_chapters)
         
-        # Lord Henry's arc (static - corrupting influence)
-        henry_arc = CharacterArc(
-            character_name="Lord Henry Wotton",
-            role="antagonist",  # Though not traditional antagonist
-            arc_beats=[
-                {"chapter": 1, "description": "Introduces cynical philosophy", "change": "influences Dorian"},
-                {"chapter": 7, "description": "Continues corrupting influence", "change": "maintains control"},
-                {"chapter": 15, "description": "Observes Dorian's decline", "change": "enjoys the spectacle"}
-            ],
-            transformation_summary="Constant corrupter, never changes",
-            starting_state="Cynical, manipulative, hedonistic",
-            ending_state="Same - reflects on Dorian's fate"
-        )
-        arcs.append(henry_arc)
+        # If no arcs derived, try to infer from plot beats
+        if not arcs and plot_beats and len(plot_beats) > 0:
+            arcs = self._infer_arcs_from_beats(plot_beats, total_chapters)
         
-        # Basil Hallward's arc
-        basil_arc = CharacterArc(
-            character_name="Basil Hallward",
-            role="supporting",
-            arc_beats=[
-                {"chapter": 1, "description": "Paints Dorian's portrait", "change": "becomes obsessed"},
-                {"chapter": 14, "description": "Confronts Dorian about the portrait", "change": "is threatened"},
-                {"chapter": 15, "description": "Is murdered by Dorian", "change": "death"}
-            ],
-            transformation_summary="From devoted artist to victim of his creation",
-            starting_state="Talented, devoted, caring",
-            ending_state="Murdered, betrayed"
-        )
-        arcs.append(basil_arc)
+        return arcs
+    
+    def _derive_arcs_from_characters(
+        self,
+        characters: List,
+        plot_beats: List,
+        total_chapters: int
+    ) -> List[CharacterArc]:
+        """Derive character arcs from Stage 2 character data."""
+        arcs = []
+        
+        # Group plot beats by character mentions
+        character_beats = {c.name: [] for c in characters}
+        
+        # Use character relationships and first appearances
+        
+        for char in characters:
+            name = char.name
+            role = getattr(char, 'role', 'supporting')
+            relationships = getattr(char, 'relationships', {})
+            first_chapter = getattr(char, 'chapter_first_appeared', 1)
+            
+            # Determine transformation based on role
+            if role == 'protagonist':
+                starting_state = "Beginning of story"
+                ending_state = "End of story"
+                transformation_summary = f"{name}'s journey throughout the story"
+            elif role == 'antagonist':
+                starting_state = "Initial opposition"
+                ending_state = "Final confrontation"
+                transformation_summary = f"{name}'s conflict with protagonist"
+            else:
+                starting_state = "Introduction"
+                ending_state = "Conclusion"
+                transformation_summary = f"{name}'s role in the story"
+            
+            # Create arc beats from relationships
+            arc_beats = []
+            if first_chapter > 0:
+                arc_beats.append({
+                    "chapter": first_chapter,
+                    "description": f"{name} introduced",
+                    "change": "First appearance"
+                })
+            
+            # Add beats from relationships
+            for other, rel in list(relationships.items())[:3]:
+                arc_beats.append({
+                    "chapter": min(first_chapter + 5, total_chapters),
+                    "description": f"{name} and {other}: {rel}",
+                    "change": "Relationship established"
+                })
+            
+            arcs.append(CharacterArc(
+                character_name=name,
+                role=role,
+                arc_beats=arc_beats,
+                transformation_summary=transformation_summary,
+                starting_state=starting_state,
+                ending_state=ending_state
+            ))
+        
+        return arcs
+    
+    def _infer_arcs_from_beats(
+        self,
+        plot_beats: List,
+        total_chapters: int
+    ) -> List[CharacterArc]:
+        """Infer character arcs when no character data available."""
+        arcs = []
+        
+        # Find unique "characters" mentioned in plot beats
+        # This is a heuristic - would be better with actual character data
+        unique_mentions = {}
+        
+        for beat in plot_beats[:20]:  # Sample first 20 beats
+            desc = getattr(beat, 'description', '')
+            if not desc:
+                continue
+            # Very basic extraction - first capitalized phrase
+            words = desc.split()
+            for i, word in enumerate(words):
+                if word and word[0].isupper() and len(word) > 2:
+                    if word not in unique_mentions:
+                        unique_mentions[word] = getattr(beat, 'chapter', 1)
+        
+        # Create arcs for first 3 "characters" found
+        for i, (name, chapter) in enumerate(list(unique_mentions.items())[:3]):
+            role = 'protagonist' if i == 0 else 'supporting'
+            
+            arcs.append(CharacterArc(
+                character_name=name,
+                role=role,
+                arc_beats=[
+                    {"chapter": chapter, "description": f"{name} appears", "change": "Introduction"}
+                ],
+                transformation_summary=f"The journey of {name}",
+                starting_state="Beginning",
+                ending_state="Conclusion"
+            ))
         
         return arcs
     
     def _identify_themes(self, analysis_result) -> List[str]:
-        """Identify major themes."""
-        return [
-            "The danger of beauty and youth",
-            "The corruption of the soul",
-            "The relationship between art and life",
-            "The price of hedonism",
-            "The duality of human nature",
-            "The unreliability of appearances"
-        ]
+        """Identify major themes from analysis result or key quotes."""
+        themes = []
+        
+        # Try to extract from key quotes if available
+        if hasattr(analysis_result, 'key_quotes') and analysis_result.key_quotes:
+            for quote in analysis_result.key_quotes[:5]:
+                significance = getattr(quote, 'significance', '')
+                if significance:
+                    themes.append(significance)
+        
+        # If still no themes, derive from plot beats
+        if not themes:
+            plot_beats = self._extract_plot_beats(analysis_result)
+            if plot_beats:
+                themes = self._derive_themes_from_beats(plot_beats)
+        
+        # Final fallback
+        if not themes:
+            themes = ["Central conflict and character development"]
+        
+        return themes[:6]  # Return max 6 themes
+    
+    def _derive_themes_from_beats(self, plot_beats: List) -> List[str]:
+        """Derive themes from plot beats."""
+        # Simple heuristic - look for recurring concepts
+        theme_indicators = {
+            'love': ['love', 'heart', 'affection', 'romance'],
+            'conflict': ['fight', 'battle', 'war', 'conflict', 'struggle'],
+            'death': ['death', 'die', 'kill', 'murder', 'dead'],
+            'power': ['power', 'control', 'rule', 'authority'],
+            'identity': ['self', 'identity', 'who am I', 'become'],
+            'transformation': ['change', 'transform', 'become', 'grow'],
+            'truth': ['truth', 'real', 'reveal', 'secret'],
+            ' sacrifice': ['sacrifice', 'give up', 'price', 'cost']
+        }
+        
+        # Count occurrences
+        theme_counts = {t: 0 for t in theme_indicators}
+        
+        for beat in plot_beats:
+            desc = getattr(beat, 'description', '').lower()
+            for theme, keywords in theme_indicators.items():
+                if any(kw in desc for kw in keywords):
+                    theme_counts[theme] += 1
+        
+        # Return themes with highest counts
+        sorted_themes = sorted(theme_counts.items(), key=lambda x: x[1], reverse=True)
+        return [t for t, count in sorted_themes if count > 0][:6]
     
     def _determine_mood_tone(self, analysis_result) -> str:
-        """Determine overall mood/tone."""
-        return "Gothic, decadent, cautionary, psychologically dark"
+        """Determine overall mood/tone from analysis data."""
+        # Try dialogue tones first
+        if hasattr(analysis_result, 'dialogue') and analysis_result.dialogue:
+            tone_counts = {}
+            for dial in analysis_result.dialogue[:50]:  # Sample
+                tone = getattr(dial, 'tone', 'neutral')
+                tone_counts[tone] = tone_counts.get(tone, 0) + 1
+            
+            if tone_counts:
+                dominant_tone = max(tone_counts.items(), key=lambda x: x[1])[0]
+                return f"Primarily {dominant_tone} with variations"
+        
+        # Check plot beat types
+        plot_beats = self._extract_plot_beats(analysis_result)
+        if plot_beats:
+            beat_types = [getattr(b, 'beat_type', 'action') for b in plot_beats[:20]]
+            action_count = beat_types.count('action')
+            emotional_count = beat_types.count('emotional')
+            revelation_count = beat_types.count('revelation')
+            
+            if emotional_count > action_count:
+                return "Emotionally intense, character-driven narrative"
+            elif revelation_count > 2:
+                return "Mystery-driven with revelations throughout"
+            else:
+                return "Action-oriented plot-driven narrative"
+        
+        return "Balanced narrative with character and plot development"
     
     def _identify_symbols(self, analysis_result) -> List[str]:
-        """Identify key symbols."""
-        return [
-            "The Portrait - the true self revealed",
-            "The Red Roses - beauty and its decay",
-            "The Yellow Book - corrupting influence",
-            "The Theatre Box - voyeurism and performance"
-        ]
+        """Identify key symbols from analysis data."""
+        symbols = []
+        
+        # Try to extract from key quotes
+        if hasattr(analysis_result, 'key_quotes') and analysis_result.key_quotes:
+            for quote in analysis_result.key_quotes[:3]:
+                context = getattr(quote, 'context', '')
+                if context and len(context) > 10:
+                    symbols.append(f"Symbolic element in: {context[:50]}")
+        
+        # Try locations as symbolic settings
+        locations = self._extract_locations(analysis_result)
+        if locations and len(locations) > 0:
+            for loc in locations[:3]:
+                name = getattr(loc, 'name', '')
+                if name:
+                    symbols.append(f"Key location: {name}")
+        
+        # Fallback
+        if not symbols:
+            symbols = ["Recurring motifs and symbolic elements"]
+        
+        return symbols[:4]
     
     def _find_protagonist(self, characters: List) -> str:
-        """Find protagonist name."""
+        """Find protagonist name from character list."""
+        # First, look for explicit protagonist role
         for char in characters:
             if hasattr(char, 'role') and char.role == 'protagonist':
                 return char.name
-        return "Dorian Gray"  # Default for Dorian Gray
+        
+        # Second, look for main/main_character role
+        for char in characters:
+            if hasattr(char, 'role') and char.role in ('main', 'main_character'):
+                return char.name
+        
+        # Third, try first appearance as proxy for protagonist
+        if characters:
+            first_char = min(characters, key=lambda c: getattr(c, 'chapter_first_appeared', 999))
+            return first_char.name
+        
+        # Fallback
+        return "Unknown Protagonist"
     
     def _identify_central_conflict(
         self,
         plot_beats: List,
         themes: List[str]
     ) -> str:
-        """Identify central conflict."""
-        return "The conflict between appearance and reality, beauty and corruption, pleasure and consequence"
+        """Identify central conflict from plot beats and themes."""
+        if themes and len(themes) > 0:
+            return f"Central conflict: {themes[0]}"
+        
+        if plot_beats and len(plot_beats) > 0:
+            # Use first major beat as conflict indicator
+            major_beats = [b for b in plot_beats if getattr(b, 'is_major', False)]
+            if major_beats:
+                return f"Conflict: {getattr(major_beats[0], 'description', 'unknown')[:100]}"
+        
+        return "Primary narrative conflict"
     
     def _determine_story_rhythm(
         self,
         plot_beats: List,
         total_chapters: int
     ) -> str:
-        """Determine story rhythm."""
-        return "deliberate"  # Literary fiction with building tension
+        """Determine story rhythm based on beat density."""
+        if not plot_beats or total_chapters == 0:
+            return "moderate"
+        
+        beats_per_chapter = len(plot_beats) / total_chapters
+        
+        if beats_per_chapter > 3:
+            return "fast-paced"
+        elif beats_per_chapter > 1.5:
+            return "moderate"
+        else:
+            return "deliberate"
     
     def analyze_with_llm(
         self,
@@ -522,33 +931,49 @@ class ChapterLevelPlanner:
         chapter_num: int,
         arc_role: ArcRole
     ) -> ChapterRole:
-        """Determine chapter role."""
+        """Determine chapter role based on structural position."""
         total_chapters = self.novel_context.total_chapters
         
-        # Inciting incident
         if chapter_num == 1:
             return ChapterRole.INCITING_INCIDENT
         
-        # Climax chapters (typically late in arc)
         climax_threshold = int(total_chapters * 0.80)
         if chapter_num >= climax_threshold:
             return ChapterRole.CLIMAX
         
-        # Turning points
-        turning_points = [5, 11, 14, 18]
-        if chapter_num in turning_points:
+        turning_point_chapters = self._get_structural_turning_points(total_chapters)
+        if chapter_num in turning_point_chapters:
             return ChapterRole.TURNING_POINT
         
-        # Resolution
         if chapter_num > int(total_chapters * 0.90):
             return ChapterRole.RESOLUTION
         
-        # Bridge chapters
         if chapter_num % 3 == 0:
             return ChapterRole.BRIDGE
         
-        # Default to development
         return ChapterRole.DEVELOPMENT
+    
+    def _get_structural_turning_points(self, total_chapters: int) -> List[int]:
+        """Get turning point chapters based on story structure."""
+        if total_chapters <= 5:
+            return [max(1, total_chapters - 1)]
+        elif total_chapters <= 10:
+            return [max(1, int(total_chapters * 0.25)), max(1, int(total_chapters * 0.50))]
+        elif total_chapters <= 20:
+            return [
+                max(1, int(total_chapters * 0.20)),
+                max(1, int(total_chapters * 0.40)),
+                max(1, int(total_chapters * 0.60)),
+                max(1, int(total_chapters * 0.80))
+            ]
+        else:
+            return [
+                max(1, int(total_chapters * 0.15)),
+                max(1, int(total_chapters * 0.30)),
+                max(1, int(total_chapters * 0.50)),
+                max(1, int(total_chapters * 0.70)),
+                max(1, int(total_chapters * 0.85))
+            ]
     
     def _determine_narrative_function(
         self,
@@ -556,88 +981,105 @@ class ChapterLevelPlanner:
         arc_role: ArcRole,
         chapter_role: ChapterRole
     ) -> str:
-        """Determine narrative function."""
-        functions = {
-            1: "Introduce characters, establish setting, present the fatal wish",
-            2: "Develop relationship dynamics",
-            3: "Deeper character exploration",
-            4: "Build toward corruption",
-            5: "CLIMAX: The wish is made, fate is sealed",
-            6: "Explore consequences",
-            7: "Introduce new character (Sibyl)",
-            8: "Romantic subplot develops",
-            9: "Tension builds",
-            10: "Complications arise",
-            11: "CLIMAX: Sibyl's death, Dorian's coldness revealed",
-            12: "Aftermath and reflection",
-            13: "Basil becomes concerned",
-            14: "CLIMAX: Confrontation with Basil",
-            15: "Consequences unfold",
-            16: "Secrets threaten to surface",
-            17: "Dorian's double life intensifies",
-            18: "CLIMAX: The portrait's horror revealed",
-            19: "Desperation and decline",
-            20: "CLIMAX/RESOLUTION: Final destruction"
-        }
+        """Determine narrative function from novel context."""
+        total = self.novel_context.total_chapters
         
-        return functions.get(chapter_num, f"Advance the {arc_role.value} arc")
+        if chapter_role == ChapterRole.INCITING_INCIDENT:
+            return f"Chapter {chapter_num}: Introduce characters and establish setting"
+        
+        if chapter_role == ChapterRole.CLIMAX:
+            return f"Chapter {chapter_num}: Climax of the story arc"
+        
+        if chapter_role == ChapterRole.TURNING_POINT:
+            return f"Chapter {chapter_num}: Major turning point in the narrative"
+        
+        if chapter_role == ChapterRole.RESOLUTION:
+            return f"Chapter {chapter_num}: Resolve story threads"
+        
+        arc_name = arc_role.value.replace('_', ' ')
+        return f"Chapter {chapter_num}: Develop {arc_name} thread"
     
     def _determine_emotional_trajectory(
         self,
         chapter_num: int,
         chapter_role: ChapterRole
     ) -> str:
-        """Determine emotional trajectory."""
+        """Determine emotional trajectory from chapter role."""
         if chapter_role == ChapterRole.CLIMAX:
             return "building_tension_to_release"
-        elif chapter_role == ChapterRole.TURNING_POINT:
+        if chapter_role == ChapterRole.TURNING_POINT:
             return "sudden_shift"
-        elif chapter_role == ChapterRole.RESOLUTION:
+        if chapter_role == ChapterRole.RESOLUTION:
             return "catharsis"
-        elif chapter_num == 11:
-            return "tragedy"  # Sibyl's death
-        elif chapter_num == 1:
+        if chapter_role == ChapterRole.INCITING_INCIDENT:
             return "introduction"
-        else:
-            return "development"
+        
+        peaks = self.novel_context.emotional_peaks
+        for peak in peaks:
+            if peak.chapter == chapter_num:
+                if peak.peak_type in ['tragedy', 'climax']:
+                    return "intense"
+                elif peak.peak_type == 'revelation':
+                    return "revelation"
+        
+        return "development"
     
     def _identify_key_scenes(self, chapter_num: int) -> List[str]:
-        """Identify key scenes in chapter."""
-        scenes = {
-            1: ["Basil's studio", "First meeting with Lord Henry", "Dorian introduced"],
-            5: ["The portrait inspection", "Dorian's wish", "Lord Henry's influence"],
-            11: ["The theatre scene", "Sibyl's performance", "Her death"],
-            14: ["Basil arrives", "The confrontation", "The threat"],
-            18: ["The locked room", "The portrait revealed", "Dorian's horror"],
-            20: ["The final scene", "The destroyed portrait", "The dead Dorian"]
-        }
-        return scenes.get(chapter_num, ["Standard chapter scenes"])
+        """Identify key scenes from novel context."""
+        scenes = []
+        
+        for arc in self.novel_context.narrative_arcs:
+            if chapter_num in arc.chapters:
+                scenes.extend(arc.key_events[:3])
+        
+        peaks = [p for p in self.novel_context.emotional_peaks if p.chapter == chapter_num]
+        for peak in peaks:
+            if peak.key_moment and peak.key_moment not in scenes:
+                scenes.append(peak.key_moment)
+        
+        if not scenes:
+            scenes = [f"Chapter {chapter_num} development"]
+        
+        return scenes[:5]
     
     def _identify_locations(self, chapter_num: int) -> List[str]:
-        """Identify locations in chapter."""
-        locations = {
-            1: ["Basil's studio"],
-            5: ["Basil's studio"],
-            7: ["The theatre", "Dorian's home"],
-            11: ["The theatre", "Sibyl's home"],
-            14: ["Dorian's home"],
-            18: ["The locked room"],
-            20: ["Dorian's home"]
-        }
-        return locations.get(chapter_num, ["Various"])
+        """Identify locations from novel context."""
+        locations = []
+        
+        if hasattr(self.novel_context, 'character_arcs'):
+            for arc in self.novel_context.character_arcs:
+                for beat in arc.arc_beats:
+                    if beat.get('chapter') == chapter_num:
+                        desc = beat.get('description', '')
+                        if desc and desc not in locations:
+                            locations.append(desc)
+        
+        if not locations:
+            total = self.novel_context.total_chapters
+            position = "early" if chapter_num <= total * 0.33 else "middle" if chapter_num <= total * 0.66 else "late"
+            locations = [f"Chapter {chapter_num} ({position})"]
+        
+        return locations[:3]
     
     def _determine_character_focus(self, chapter_num: int) -> List[str]:
-        """Determine character focus."""
-        focus = {
-            1: ["Dorian Gray", "Basil Hallward", "Lord Henry"],
-            5: ["Dorian Gray", "Lord Henry"],
-            7: ["Dorian Gray", "Sibyl Vane"],
-            11: ["Dorian Gray", "Sibyl Vane", "Lord Henry"],
-            14: ["Dorian Gray", "Basil Hallward"],
-            18: ["Dorian Gray"],
-            20: ["Dorian Gray"]
-        }
-        return focus.get(chapter_num, ["Dorian Gray"])
+        """Determine character focus from novel context."""
+        characters = []
+        
+        for arc in self.novel_context.character_arcs:
+            for beat in arc.arc_beats:
+                if beat.get('chapter') == chapter_num:
+                    name = arc.character_name
+                    if name not in characters:
+                        characters.append(name)
+        
+        protagonist = self.novel_context.protagonist
+        if protagonist and protagonist not in characters and chapter_num <= 3:
+            characters.insert(0, protagonist)
+        
+        if not characters:
+            characters = [self.novel_context.protagonist or "Main Character"]
+        
+        return characters[:4]
     
     def _check_splash_page_candidate(
         self,
@@ -670,38 +1112,59 @@ class ChapterLevelPlanner:
         chapter_num: int,
         chapter_role: ChapterRole
     ) -> bool:
-        """Assess if chapter is visually dense."""
-        # Higher visual density for:
-        # - Opening chapters
-        # - Climax chapters
-        # - Emotionally intense chapters
-        
+        """Assess if chapter is visually dense based on role and position."""
         if chapter_role in [ChapterRole.CLIMAX, ChapterRole.TURNING_POINT]:
             return True
-        if chapter_num <= 3:
+        
+        total = self.novel_context.total_chapters
+        if chapter_num <= int(total * 0.15):
             return True
-        if chapter_num >= 18:
+        if chapter_num >= int(total * 0.85):
             return True
+        
+        peaks = self.novel_context.emotional_peaks
+        for peak in peaks:
+            if peak.chapter == chapter_num and peak.intensity >= 8.0:
+                return True
+        
         return False
     
     def _assess_dialogue_density(self, chapter_num: int) -> str:
-        """Assess dialogue density."""
-        # Dorian Gray is dialogue-heavy throughout
-        if chapter_num <= 5:
-            return "high"  # Heavy dialogue in opening
-        elif chapter_num >= 14 and chapter_num <= 18:
-            return "high"  # Confrontation and revelation
+        """Assess dialogue density from emotional peaks and chapter role."""
+        peaks = self.novel_context.emotional_peaks
+        
+        for peak in peaks:
+            if peak.chapter == chapter_num:
+                if peak.peak_type in ['revelation', 'decision']:
+                    return "high"
+                if peak.intensity >= 8.0:
+                    return "medium"
+        
+        total = self.novel_context.total_chapters
+        if chapter_num <= int(total * 0.20):
+            return "high"
+        
+        arc_role = self._determine_arc_role(chapter_num)
+        if arc_role == ArcRole.CLIMAX:
+            return "high"
+        
         return "medium"
     
     def _assess_action_density(self, chapter_num: int) -> str:
-        """Assess action density."""
-        # Mostly psychological/action-light, with bursts
-        if chapter_num == 11:
-            return "high"  # Sibyl's death scene
-        if chapter_num == 14:
-            return "high"  # Confrontation
-        if chapter_num == 20:
-            return "high"  # Final destruction
+        """Assess action density from emotional peaks and pacing."""
+        peaks = self.novel_context.emotional_peaks
+        
+        for peak in peaks:
+            if peak.chapter == chapter_num:
+                if peak.peak_type in ['action', 'climax', 'tragedy']:
+                    return "high"
+                if peak.intensity >= 9.0:
+                    return "high"
+        
+        arc_role = self._determine_arc_role(chapter_num)
+        if arc_role == ArcRole.CLIMAX:
+            return "high"
+        
         return "low"
     
     def _get_act_number(self, chapter_num: int) -> int:
@@ -716,25 +1179,31 @@ class ChapterLevelPlanner:
         return 4
     
     def _get_setup_for(self, chapter_num: int) -> List[int]:
-        """Get chapters this chapter sets up."""
-        setups = {
-            1: [5, 7, 11],  # Sets up corruption, Sibyl, tragedy
-            5: [11, 14],    # Sets up consequences
-            7: [11],        # Sets up Sibyl's fate
-            11: [14, 18],   # Sets up further corruption and reckoning
-            14: [18, 20],   # Sets up final confrontation
-        }
-        return setups.get(chapter_num, [])
+        """Get chapters this chapter sets up based on narrative structure."""
+        setups = []
+        total = self.novel_context.total_chapters
+        
+        if chapter_num == 1:
+            setups = [max(1, int(total * 0.25)), max(1, int(total * 0.50))]
+        
+        turning_points = self._get_structural_turning_points(total)
+        for tp in turning_points:
+            if tp > chapter_num:
+                setups.append(tp)
+        
+        return list(dict.fromkeys(setups))[:3]
     
     def _get_payoff_from(self, chapter_num: int) -> List[int]:
-        """Get chapters this chapter pays off from."""
-        payoffs = {
-            5: [11, 14, 18, 20],  # Wish pays off throughout
-            11: [14, 18, 20],     # Death affects everything
-            14: [18, 20],         # Confrontation leads to climax
-            18: [20],             # Horror leads to destruction
-        }
-        return payoffs.get(chapter_num, [])
+        """Get chapters this chapter pays off from based on narrative structure."""
+        payoffs = []
+        total = self.novel_context.total_chapters
+        
+        turning_points = self._get_structural_turning_points(total)
+        for tp in turning_points:
+            if tp < chapter_num:
+                payoffs.append(tp)
+        
+        return list(dict.fromkeys(payoffs))[-3:]
 
 
 class AdaptationPlanner:
